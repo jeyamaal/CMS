@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div style="width:auto; background-color:aqua">
+        @if (Session["LogedUserID"] != null)
+        {
+            
+            @Html.ActionLink("Log Out", "logout", "Home")
+        }
+        else
+        {
+            @*@Html.ActionLink("Register", "Register", "Register")
+            <span> | </span>
+            @Html.ActionLink("Log In", "Login", "Home")*@
+        }
+    </div>
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+           
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

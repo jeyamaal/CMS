@@ -1,0 +1,154 @@
+﻿@model AccessControlManagement.Models.user
+
+@{
+    ViewBag.Title = "Login";
+   
+}
+
+<head>
+     @*@Styles.Render("~/Content/bootstrapcss")*@
+    <link href="@Url.Content("~/Content/Login.css")" rel="stylesheet" type="text/css" />
+ 
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-login">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a href="#" class="active" id="login-form-link">Login</a>
+                            </div>
+                            <div class="col-xs-6">
+                                <a href="/Register/Register" id="register-form-link">Register</a>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+              
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                            {
+                                //this  is for create form tag
+                                @Html.AntiForgeryToken()
+
+                                // this is for prevent CSRF attack
+                                @Html.ValidationSummary(true)
+
+                                if (@ViewBag.Message != null)
+                                {
+                                    <div style="border: 1px solid red">
+                                        @ViewBag.Message
+                                    </div>
+                                }
+
+
+                                <div class="form-group">
+                                   
+                                    @Html.TextBoxFor(a => a.username, new { @required = "true", @class = "form-control", @placeholder = "User name", @tabindex = "1", @size = "35" })
+                                  
+                                </div>
+
+                                    <div class="form-group">
+                                        @Html.PasswordFor(a => a.password, new { @class = "form-control ", @required = "true", @placeholder = "Password", @tabindex = "1" })
+                                    </div>
+
+
+
+                                    <div class="form-group text-center">
+                                        <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                        <label for="remember"> Remember Me</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-sm-offset-3">
+                                                <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="text-center">
+                                                    <a href="#" data-target="#pwdModal" data-toggle="modal">Forgot my password</a>
+                                                    @*<a href="/RecoverPassword/RecoverPassword" tabindex="5" class="forgot-password" onclick="location.href = '/RecoverPassword/RecoverPassword'">Forgot Password?</a>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+   </div>
+
+
+
+    <!--modal-->
+    <div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h1 class="text-center">What's My Password?</h1>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="text-center">
+
+                                    <p>If you have forgotten your password you can reset it here.</p>
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                @using (Html.BeginForm("RecoverPassword", "Home", FormMethod.Post))
+                                                {
+                                                    @Html.TextBoxFor(a => a.email_id,new { @class= "form-control input-lg", @placeholder = "E-mail Address" })
+
+                                                  
+
+                                                    <input class="btn btn-lg btn-primary btn-block" value="Send My Password" type="submit">
+                                                }
+                                            </div>
+
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-md-12">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+
+
+
+@* This below line is for create javascript section *@
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}
