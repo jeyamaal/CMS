@@ -14,7 +14,7 @@ namespace AccessControlManagement.Controllers
     public class HomeController : Controller
     {
 
-        private CMSEntity db = new CMSEntity();
+        private CMSEntities db = new CMSEntities();
 /**
         public ActionResult Index()
         {
@@ -49,7 +49,7 @@ namespace AccessControlManagement.Controllers
             // this action is for handle post (login)
             if (ModelState.IsValid) // this is check validity
             {
-                using (CMSEntity cm= new CMSEntity())
+                using (CMSEntities cm= new CMSEntities())
                 {
                     var v = cm.users.Where(a => a.username.Equals(u.username) && a.password.Equals(u.password)).FirstOrDefault();
                     if (v != null)
@@ -106,7 +106,7 @@ namespace AccessControlManagement.Controllers
               if (ModelState.IsValid) // this is check validity
                 {
 
-                using (CMSEntity cm = new CMSEntity())
+                using (CMSEntities cm = new CMSEntities())
                 {
                     user us = new user();
 
@@ -184,7 +184,7 @@ namespace AccessControlManagement.Controllers
 
             if (ModelState.IsValid) // this is check validity
             {
-                using (CMSEntity cm = new CMSEntity())
+                using (CMSEntities cm = new CMSEntities())
                 {
                     var v = cm.users.Where(a => a.email_id.Equals(u.email_id)).FirstOrDefault();
 

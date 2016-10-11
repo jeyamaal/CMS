@@ -136,24 +136,39 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\EmailForm.cs" />
-    <Compile Include="Models\User.Context.cs">
+    <Compile Include="Models\Advertisement.cs">
+      <DependentUpon>CMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Article.cs">
+      <DependentUpon>CMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArticleHasAd.cs">
+      <DependentUpon>CMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Category.cs">
+      <DependentUpon>CMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CMSModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>User.Context.tt</DependentUpon>
+      <DependentUpon>CMSModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CMSModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CMSModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CMSModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmailForm.cs" />
+    <Compile Include="Models\Post.cs">
+      <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\user.cs">
-      <DependentUpon>User.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\User.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>User.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\User1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>User.tt</DependentUpon>
+      <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -170,24 +185,24 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\User.Context.tt">
+    <Content Include="Models\CMSModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>User.edmx</DependentUpon>
-      <LastGenOutput>User.Context.cs</LastGenOutput>
+      <DependentUpon>CMSModel.edmx</DependentUpon>
+      <LastGenOutput>CMSModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\User.tt">
+    <Content Include="Models\CMSModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>User.edmx</DependentUpon>
-      <LastGenOutput>User1.cs</LastGenOutput>
+      <DependentUpon>CMSModel.edmx</DependentUpon>
+      <LastGenOutput>CMSModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\User.edmx">
+    <EntityDeploy Include="Models\CMSModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>User.Designer.cs</LastGenOutput>
+      <LastGenOutput>CMSModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\User.edmx.diagram">
-      <DependentUpon>User.edmx</DependentUpon>
+    <Content Include="Models\CMSModel.edmx.diagram">
+      <DependentUpon>CMSModel.edmx</DependentUpon>
     </Content>
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
