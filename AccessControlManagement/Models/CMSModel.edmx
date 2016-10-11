@@ -1,0 +1,499 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Advertisement">
+          <Key>
+            <PropertyRef Name="post_id" />
+            <PropertyRef Name="post_date" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="post_id" Type="int" Nullable="false" />
+          <Property Name="post_date" Type="date" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="ad_name" Type="varchar" MaxLength="100" />
+          <Property Name="expire_date" Type="date" />
+        </EntityType>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="post_id" />
+            <PropertyRef Name="post_date" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="post_id" Type="int" Nullable="false" />
+          <Property Name="post_date" Type="date" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="100" />
+          <Property Name="content" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="ArticleHasAd">
+          <Key>
+            <PropertyRef Name="post_id" />
+            <PropertyRef Name="post_date" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="post_id" Type="int" Nullable="false" />
+          <Property Name="post_date" Type="date" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="int" Nullable="false" />
+          <Property Name="category_name" Type="varchar" MaxLength="200" />
+          <Property Name="status" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="post_id" />
+            <PropertyRef Name="post_date" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="post_id" Type="int" Nullable="false" />
+          <Property Name="post_date" Type="date" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="category_id" Type="int" />
+          <Property Name="picture" Type="varchar" MaxLength="1000" />
+          <Property Name="post_description" Type="nvarchar(max)" />
+          <Property Name="activity_log" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" />
+          <Property Name="fullname" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="email_id" Type="varchar" MaxLength="100" />
+          <Property Name="picture" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <Association Name="fk_a">
+          <End Role="Post" Type="Self.Post" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="post_id" />
+              <PropertyRef Name="post_date" />
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="post_id" />
+              <PropertyRef Name="post_date" />
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ad">
+          <End Role="Post" Type="Self.Post" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Advertisement" Type="Self.Advertisement" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="post_id" />
+              <PropertyRef Name="post_date" />
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Advertisement">
+              <PropertyRef Name="post_id" />
+              <PropertyRef Name="post_date" />
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ahd">
+          <End Role="Post" Type="Self.Post" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ArticleHasAd" Type="Self.ArticleHasAd" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="post_id" />
+              <PropertyRef Name="post_date" />
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="ArticleHasAd">
+              <PropertyRef Name="post_id" />
+              <PropertyRef Name="post_date" />
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_p">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_p1">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="usp_Category_delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="catname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_Category_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="categoryID" Type="int" Mode="In" />
+          <Parameter Name="catname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_Category_update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="oldcatname" Type="varchar" Mode="In" />
+          <Parameter Name="newCatName" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="CMSModelStoreContainer">
+          <EntitySet Name="Advertisement" EntityType="Self.Advertisement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticleHasAd" EntityType="Self.ArticleHasAd" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_a" Association="Self.fk_a">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ad" Association="Self.fk_ad">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Advertisement" EntitySet="Advertisement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ahd" Association="Self.fk_ahd">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="ArticleHasAd" EntitySet="ArticleHasAd" />
+          </AssociationSet>
+          <AssociationSet Name="fk_p" Association="Self.fk_p">
+            <End Role="user" EntitySet="user" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="fk_p1" Association="Self.fk_p1">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Advertisement">
+          <Key>
+            <PropertyRef Name="post_id" />
+            <PropertyRef Name="post_date" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="post_id" Type="Int32" Nullable="false" />
+          <Property Name="post_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="ad_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="expire_date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Post" Relationship="Self.fk_ad" FromRole="Advertisement" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="post_id" />
+            <PropertyRef Name="post_date" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="post_id" Type="Int32" Nullable="false" />
+          <Property Name="post_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="content" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Post" Relationship="Self.fk_a" FromRole="Article" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="ArticleHasAd">
+          <Key>
+            <PropertyRef Name="post_id" />
+            <PropertyRef Name="post_date" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="post_id" Type="Int32" Nullable="false" />
+          <Property Name="post_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="Self.fk_ahd" FromRole="ArticleHasAd" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="Int32" Nullable="false" />
+          <Property Name="category_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Posts" Relationship="Self.fk_p1" FromRole="Category" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="post_id" />
+            <PropertyRef Name="post_date" />
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="post_id" Type="Int32" Nullable="false" />
+          <Property Name="post_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="category_id" Type="Int32" />
+          <Property Name="picture" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="post_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="activity_log" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Advertisement" Relationship="Self.fk_ad" FromRole="Post" ToRole="Advertisement" />
+          <NavigationProperty Name="Article" Relationship="Self.fk_a" FromRole="Post" ToRole="Article" />
+          <NavigationProperty Name="ArticleHasAd" Relationship="Self.fk_ahd" FromRole="Post" ToRole="ArticleHasAd" />
+          <NavigationProperty Name="Category" Relationship="Self.fk_p1" FromRole="Post" ToRole="Category" />
+          <NavigationProperty Name="user" Relationship="Self.fk_p" FromRole="Post" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email_id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="picture" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Posts" Relationship="Self.fk_p" FromRole="user" ToRole="Post" />
+        </EntityType>
+        <Association Name="fk_ad">
+          <End Role="Post" Type="Self.Post" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Advertisement" Type="Self.Advertisement" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="post_id" />
+              <PropertyRef Name="post_date" />
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Advertisement">
+              <PropertyRef Name="post_id" />
+              <PropertyRef Name="post_date" />
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_a">
+          <End Role="Post" Type="Self.Post" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="post_id" />
+              <PropertyRef Name="post_date" />
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="post_id" />
+              <PropertyRef Name="post_date" />
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ahd">
+          <End Role="Post" Type="Self.Post" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ArticleHasAd" Type="Self.ArticleHasAd" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="post_id" />
+              <PropertyRef Name="post_date" />
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="ArticleHasAd">
+              <PropertyRef Name="post_id" />
+              <PropertyRef Name="post_date" />
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_p1">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_p">
+          <End Role="user" Type="Self.user" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Advertisements" EntityType="Self.Advertisement" />
+          <EntitySet Name="Articles" EntityType="Self.Article" />
+          <EntitySet Name="ArticleHasAds" EntityType="Self.ArticleHasAd" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Posts" EntityType="Self.Post" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="fk_ad" Association="Self.fk_ad">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Advertisement" EntitySet="Advertisements" />
+          </AssociationSet>
+          <AssociationSet Name="fk_a" Association="Self.fk_a">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Article" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ahd" Association="Self.fk_ahd">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="ArticleHasAd" EntitySet="ArticleHasAds" />
+          </AssociationSet>
+          <AssociationSet Name="fk_p1" Association="Self.fk_p1">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_p" Association="Self.fk_p">
+            <End Role="user" EntitySet="users" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <FunctionImport Name="usp_Category_delete">
+            <Parameter Name="catname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Category_insert">
+            <Parameter Name="categoryID" Mode="In" Type="Int32" />
+            <Parameter Name="catname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Category_update">
+            <Parameter Name="oldcatname" Mode="In" Type="String" />
+            <Parameter Name="newCatName" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CMSModelStoreContainer" CdmEntityContainer="CMSEntities">
+          <EntitySetMapping Name="Advertisements">
+            <EntityTypeMapping TypeName="CMSModel.Advertisement">
+              <MappingFragment StoreEntitySet="Advertisement">
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="post_date" ColumnName="post_date" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="ad_name" ColumnName="ad_name" />
+                <ScalarProperty Name="expire_date" ColumnName="expire_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Articles">
+            <EntityTypeMapping TypeName="CMSModel.Article">
+              <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="post_date" ColumnName="post_date" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="content" ColumnName="content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArticleHasAds">
+            <EntityTypeMapping TypeName="CMSModel.ArticleHasAd">
+              <MappingFragment StoreEntitySet="ArticleHasAd">
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="post_date" ColumnName="post_date" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="CMSModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="CMSModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="post_date" ColumnName="post_date" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+                <ScalarProperty Name="post_description" ColumnName="post_description" />
+                <ScalarProperty Name="activity_log" ColumnName="activity_log" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="CMSModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email_id" ColumnName="email_id" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_Category_delete" FunctionName="CMSModel.Store.usp_Category_delete" />
+          <FunctionImportMapping FunctionImportName="usp_Category_insert" FunctionName="CMSModel.Store.usp_Category_insert" />
+          <FunctionImportMapping FunctionImportName="usp_Category_update" FunctionName="CMSModel.Store.usp_Category_update" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -25,7 +25,7 @@ namespace AccessControlManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (CMSEntity cm = new CMSEntity())
+                using (CMSEntities cm = new CMSEntities())
                 {
                     //you should check duplicate registration here 
 

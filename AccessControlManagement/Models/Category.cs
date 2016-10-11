@@ -12,20 +12,17 @@ namespace AccessControlManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class Category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public user()
+        public Category()
         {
             this.Posts = new HashSet<Post>();
         }
     
-        public int user_id { get; set; }
-        public string username { get; set; }
-        public string fullname { get; set; }
-        public string password { get; set; }
-        public string email_id { get; set; }
-        public string picture { get; set; }
+        public int category_id { get; set; }
+        public string category_name { get; set; }
+        public string status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Posts { get; set; }
