@@ -24,6 +24,11 @@ namespace AccessControlManagement.Models
         public string username { get; set; }
         public string fullname { get; set; }
         public string password { get; set; }
+
+        public string ConfirmPassword { get; set; }
+
+        public string newPassword { get; set; }
+
         public string email_id { get; set; }
         public string picture { get; set; }
     
