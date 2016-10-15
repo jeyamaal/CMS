@@ -11,16 +11,21 @@ namespace AccessControlManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     public partial class Post
     {
         public int post_id { get; set; }
+        [DisplayName("Published Date")]
         public System.DateTime post_date { get; set; }
         public int user_id { get; set; }
         public Nullable<int> category_id { get; set; }
         public string picture { get; set; }
+        [DisplayName("Description")]
         public string post_description { get; set; }
+        [DisplayName("Status")]
         public string activity_log { get; set; }
+        [DisplayName("Title")]
         public string title { get; set; }
     
         public virtual Advertisement Advertisement { get; set; }
