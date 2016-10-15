@@ -17,7 +17,7 @@
 
 @if (Session["LogedUserFullname"] != null)
 {
-
+    
     <div class="col-md-3">
         <ul class="nav nav-pills nav-stacked">
             <li class="active"><a href="#">Home</a></li>
@@ -27,7 +27,7 @@
             <li><a href="#">Change Template</a></li>
             @Html.ActionLink("Deactive Account", "DeactiveAccount", "Home",
            new { onclick = "return confirm('Are you sure you wish to Deactive the Account');" })
-            <li><a href="#">FeedBack</a></li>
+            <li><a href="#" id="test-1">FeedBack</a></li>
 
         </ul>
     </div>
@@ -127,6 +127,29 @@
     $("#imgInp").change(function () {
         readURL(this);
     });
+
+    //function sucess() {
+    //    document.querySelector('#test-1').onclick = function () {
+    //        swal("Here's a message!");
+    //    };
+    //}
+
+    document.querySelector('#test-1').onclick = function () {
+
+        
+        $.post("/Home/RecoverPassword", {}, function (result)
+        {
+            if(result=="Successfully inserted")
+            {
+                swal("Here's a message!");
+            }
+        
+        })
+
+
+            
+            
+    };
 
 </script>
 }

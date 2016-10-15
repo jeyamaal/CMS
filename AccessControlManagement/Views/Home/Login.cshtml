@@ -5,7 +5,7 @@
 }
 
 <head>
-    @Styles.Render("~/Content/bootstrapcss")
+    @*@Styles.Render("~/Content/bootstrapcss")*@
     <link href="@Url.Content("~/Content/Login.css")" rel="stylesheet" type="text/css" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -69,7 +69,7 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">
-                                                <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                                <input type="submit"  id="login_submit" tabindex="4" class="form-control btn btn-login" value="Log In">
                                             </div>
                                         </div>
                                     </div>
@@ -117,11 +117,9 @@
                                             <div class="form-group">
                                                 @using (Html.BeginForm("RecoverPassword", "Home", FormMethod.Post))
                                                 {
-                                                    @Html.TextBoxFor(a => a.email_id,new { @class= "form-control input-lg", @placeholder = "E-mail Address" , @autocomplete = "off" })
+                                                    @Html.TextBoxFor(a => a.email_id,new { @required = "true", @type = "email", @class = "form-control input-lg", @placeholder = "E-mail Address" , @autocomplete = "off"  })
 
-                                                  
-
-                                                    <input class="btn btn-lg btn-primary btn-block" value="Send My Password" type="submit">
+                                                    <input class="btn btn-lg btn-primary btn-block" value="Send My Password" type="submit" id="Recover_Password">
                                                 }
                                             </div>
 
@@ -152,8 +150,42 @@
 @* This below line is for create javascript section *@
 
 @section Scripts{
-    @Scripts.Render("~/bundles/jqueryval")
+   @Scripts.Render("~/bundles/jqueryval")
    @Scripts.Render("~/bundles/jquery")
    @Scripts.Render("~/bundles/bootstrap")
- 
+
+
+
+    <script>
+        document.querySelector('#Recover_Password').onclick = function () {
+
+            $.post("/Home/RecoverPassword", function (result) {
+                if ('@ViewBag.IsLocal' == 'True') {
+                    swal({ title: "Error!", text: "Here's my error message!", type: "error", confirmButtonText: "Cool" });
+
+                    location.reload();
+                }
+
+            });
+        };
+
+
+        document.querySelector('#login_submit').onclick = function () {
+
+            $.post("/Home/Login", function (result) {
+                if ('@ViewBag.IsLocal' == 'True') {
+                    swal({ title: "Error!", text: "Here's my error message!", type: "error", confirmButtonText: "Cool" });
+
+                }
+
+            });
+        };
+
+
+
+    </script>
+
+
+   
+
 }

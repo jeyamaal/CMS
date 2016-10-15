@@ -9,6 +9,8 @@ using System.Data.Entity;
 using System.Web.Security;
 using System.Net.Mail;
 using System.IO;
+using System.Web.UI;
+
 
 namespace AccessControlManagement.Controllers
 {
@@ -37,8 +39,6 @@ namespace AccessControlManagement.Controllers
         }
 */
       
-        
-
         public ActionResult Login()
         {
             return View();
@@ -59,23 +59,23 @@ namespace AccessControlManagement.Controllers
             {
                 using (CMSEntities cm= new CMSEntities())
                 {
-                    var v = cm.users.Where(a => a.username.Equals(u.username) && a.password.Equals(u.password)).FirstOrDefault();
+                    var v = cm.users.Where(a => a.username.Equals(u.username) && a.password.Equals(u.password) && a.status.Equals("active")).FirstOrDefault();
+
                     if (v != null)
+
                     {
-
-
                         Session["LogedUserID"] = v.user_id.ToString();
                         Session["LogedUserFullname"] = v.username.ToString();
                         return RedirectToAction("AfterLogin");
                     }
 
-                    else
+                    else 
                     {
-                        TempData["Message"] = "Check user name or password";
+                        //TempData["Message"] = "Check user name or password";
+                        //return View(u);
+                        ViewBag.IsLocal = true;
                         return View(u);
                     }
-
-
                 }
             }
             return View(u);
@@ -89,10 +89,8 @@ namespace AccessControlManagement.Controllers
           if (Session["LogedUserID"] != null)
             {
                int  i =  int.Parse(Session["LogedUserID"].ToString());
-
                user u = db.users.Find(i);
-
-                return View(u);
+               return View(u);
             }
             else
             {
@@ -103,61 +101,40 @@ namespace AccessControlManagement.Controllers
      public ActionResult ChangePassword(user u)
         {
             if (Session["LogedUserID"] != null)
-
             {
-
               if (ModelState.IsValid) // this is check validity
                 {
-
-                using (CMSEntities cm = new CMSEntities())
+                   using (CMSEntities cm = new CMSEntities())
                 {
                     user us = new user();
 
-                  
-                       
-                      try
+                     try
                         {
                             int ii = int.Parse(Session["LogedUserID"].ToString());
                             us = db.users.Find(ii);
-
-                       
-
 
                             if (u.password==us.password && u.ConfirmPassword==u.newPassword)
                             {
 
                                 string s;
-
                                 s = u.newPassword.ToString();
-
                                 us.password = u.newPassword;
-
-
                                 db.Entry(us).State = EntityState.Modified;
                                 db.SaveChanges();
-                              
-                                // TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
-
+                              // TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
                                 return View("ChangePassword");
-
                             }
 
                             else
                             {
                                 TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
-
                             }
 
-
-                         }
-
-                            catch (Exception ex)
+                        }catch (Exception ex)
                             {
 
                             }
-
-
-                      }
+                    }
                }
             }
 
@@ -167,25 +144,19 @@ namespace AccessControlManagement.Controllers
             }
 
             return View();
-
         }
 
 
 
         public ActionResult logout()
         {
-
-           
-            Session.Abandon(); // it will clear the session at the end of request
-            
-            return RedirectToAction("Login", "Home");
-
+             Session.Abandon(); // it will clear the session at the end of request
+             return RedirectToAction("Login", "Home");
         }
 
         public ActionResult RecoverPassword(user u)
         {
-
-            if (ModelState.IsValid) // this is check validity
+           if (ModelState.IsValid) // this is check validity
             {
                 using (CMSEntities cm = new CMSEntities())
                 {
@@ -195,7 +166,6 @@ namespace AccessControlManagement.Controllers
                     {
 
                         var email = cm.users.Where(a => a.email_id.Equals(u.email_id)).FirstOrDefault();
-
                         string pwd = email.password;
 
                         try
@@ -222,9 +192,6 @@ namespace AccessControlManagement.Controllers
                                 TempData["notice1"] = "Sucessfully Send";
 
                                 return View("Login");
-
-
-
                             }
 
 
@@ -233,25 +200,28 @@ namespace AccessControlManagement.Controllers
                         {
 
                         }
-
                         TempData["notice"] = "Check your mail password is" + pwd;
                         return View(u);
-
                     }
 
                     else
                     {
-                        TempData["Message"] = "Invalid Email Address";
-                        return View(u);
+                        //return JavaScript("success()");
+                        // var script = "$('#message').html('Message from Server');";
+                        // return JavaScript(script);
+
+    
+
+                        //return Content("WrongEmail");
+
+
+                        //TempData["Message"] = "Invalid Email Address";
+
                     }
-
-
                 }
             }
 
-
-
-            return View(u);
+           return View(u);
         }
 
         public ActionResult ChangeProfilePicture()
@@ -262,16 +232,12 @@ namespace AccessControlManagement.Controllers
         [HttpPost]
         public ActionResult ChangeProfilePicture(HttpPostedFileBase file, user u)
         {
-
-
-            try
+           try
             {
                 user us = new user();
                 string db_path = null;
-
                 int ii = int.Parse(Session["LogedUserID"].ToString());
                 us = db.users.Find(ii);
-
 
                 if (file.ContentLength > 0 && file.ContentType.Contains("image"))
                 {
@@ -282,23 +248,19 @@ namespace AccessControlManagement.Controllers
                     {
 
                         string filestring = fileName.ToString();
-
                         var path = Path.Combine(Server.MapPath("/Resources/jeyamaal_images"), fileName);
                         file.SaveAs(path);
                         string absoulte_path = path.ToString();
                         db_path = "\\" + GetRightPartOfPath(absoulte_path, "Resources") + "\\" + filestring;
-
-
                     }
 
                     u.picture = db_path;
                     us.picture = u.picture;
-
                     db.Entry(us).State = EntityState.Modified;
                     db.SaveChanges();
 
-
                 }
+
                 ViewBag.Message = "Upload successful";
                 return RedirectToAction("AfterLogin");
             }
@@ -337,30 +299,24 @@ namespace AccessControlManagement.Controllers
 
         public ActionResult DeactiveAccount()
         {
-
             try
             {
                 user us = new user();
                 int ii = int.Parse(Session["LogedUserID"].ToString());
                 us = db.users.Find(ii);
                 us.status = "deactive";
-
                 db.Entry(us).State = EntityState.Modified;
                 db.SaveChanges();
                 Session.Abandon(); // it will clear the session at the end of request
-
                 return RedirectToAction("Login", "Home");
-
-
             }
+
             catch (Exception ex)
             {
-
+               
             }
 
             return View();
-                 
-
         }
 
 
