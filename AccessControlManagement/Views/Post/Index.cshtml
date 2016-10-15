@@ -1,0 +1,81 @@
+﻿@model System.Collections.Generic.IEnumerable<AccessControlManagement.Models.Post>
+
+
+@{
+    ViewBag.Title = "History of Posts";
+    int postNumber = 1;
+}
+
+@*<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>*@
+
+<h2>History of Posts</h2>
+
+<p>
+    @Html.ActionLink("Create New Posts", "Create")
+</p>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            Post Number
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.category_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.post_date)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.picture)
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.post_description)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.activity_log)
+        </th>
+        <th></th>
+    </tr>
+    
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayName(postNumber.ToString())    
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.category_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.post_date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.activity_log)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.picture)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.post_description)
+        </td>*@
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { id = item.post_id }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.Prima ryKey */ })
+        </td>
+    </tr>
+    postNumber++;
+}
+    
+</table>
+
+
