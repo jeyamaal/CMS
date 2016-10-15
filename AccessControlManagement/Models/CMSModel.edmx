@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Advertisement">
           <Key>
             <PropertyRef Name="post_id" />
@@ -72,6 +72,7 @@
           <Property Name="password" Type="varchar" MaxLength="50" />
           <Property Name="email_id" Type="varchar" MaxLength="100" />
           <Property Name="picture" Type="varchar" MaxLength="1000" />
+          <Property Name="status" Type="varchar" MaxLength="15" />
         </EntityType>
         <Association Name="fk_a">
           <End Role="Post" Type="Self.Post" Multiplicity="1">
@@ -194,8 +195,7 @@
             <End Role="Post" EntitySet="Post" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -276,6 +276,7 @@
           <Property Name="email_id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="picture" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Posts" Relationship="Self.fk_p" FromRole="user" ToRole="Post" />
+          <Property Name="status" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="fk_ad">
           <End Role="Post" Type="Self.Post" Multiplicity="1">
@@ -387,7 +388,7 @@
             <End Role="Post" EntitySet="Posts" />
           </AssociationSet>
           <FunctionImport Name="usp_Category_delete">
-            <Parameter Name="catname" Mode="In" Type="String" />
+          <Parameter Name="catname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="usp_Category_insert">
             <Parameter Name="categoryID" Mode="In" Type="Int32" />
@@ -461,6 +462,7 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="CMSModel.user">
               <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="fullname" ColumnName="fullname" />

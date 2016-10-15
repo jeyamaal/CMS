@@ -8,6 +8,7 @@ using AccessControlManagement.Controllers;
 using System.Data.Entity;
 using System.Web.Security;
 using System.Net.Mail;
+using System.IO;
 
 namespace AccessControlManagement.Controllers
 {
@@ -35,13 +36,20 @@ namespace AccessControlManagement.Controllers
             return View();
         }
 */
+      
+        
 
         public ActionResult Login()
         {
             return View();
         }
 
-
+       
+        /// <summary>
+        /// Checking Login Credentials
+        /// </summary>
+        /// <param name="u"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(user u)
@@ -92,12 +100,7 @@ namespace AccessControlManagement.Controllers
             }
         }
 
-
-
-       
-
-
-        public ActionResult ChangePassword(user u)
+     public ActionResult ChangePassword(user u)
         {
             if (Session["LogedUserID"] != null)
 
@@ -250,5 +253,120 @@ namespace AccessControlManagement.Controllers
 
             return View(u);
         }
+
+        public ActionResult ChangeProfilePicture()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangeProfilePicture(HttpPostedFileBase file, user u)
+        {
+
+
+            try
+            {
+                user us = new user();
+                string db_path = null;
+
+                int ii = int.Parse(Session["LogedUserID"].ToString());
+                us = db.users.Find(ii);
+
+
+                if (file.ContentLength > 0 && file.ContentType.Contains("image"))
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var files = Path.GetExtension(".jpg");
+
+                    if (files != null)
+                    {
+
+                        string filestring = fileName.ToString();
+
+                        var path = Path.Combine(Server.MapPath("/Resources/jeyamaal_images"), fileName);
+                        file.SaveAs(path);
+                        string absoulte_path = path.ToString();
+                        db_path = "\\" + GetRightPartOfPath(absoulte_path, "Resources") + "\\" + filestring;
+
+
+                    }
+
+                    u.picture = db_path;
+                    us.picture = u.picture;
+
+                    db.Entry(us).State = EntityState.Modified;
+                    db.SaveChanges();
+
+
+                }
+                ViewBag.Message = "Upload successful";
+                return RedirectToAction("AfterLogin");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = "Upload failed";
+                return RedirectToAction("Index");
+            }
+
+
+        }
+
+        private static string GetRightPartOfPath(string path, string startAfterPart)
+        {
+            // use the correct seperator for the environment
+            var pathParts = path.Split(Path.DirectorySeparatorChar);
+
+            // this assumes a case sensitive check. If you don't want this, you may want to loop through the pathParts looking
+            // for your "startAfterPath" with a StringComparison.OrdinalIgnoreCase check instead
+            int startAfter = Array.IndexOf(pathParts, startAfterPart);
+
+            if (startAfter == -1)
+            {
+                // path path not found
+                return null;
+            }
+
+            // try and work out if last part was a directory - if not, drop the last part as we don't want the filename
+            var lastPartWasDirectory = pathParts[pathParts.Length - 1].EndsWith(Path.DirectorySeparatorChar.ToString());
+            return string.Join(
+                Path.DirectorySeparatorChar.ToString(),
+                pathParts, startAfter,
+                pathParts.Length - startAfter - (lastPartWasDirectory ? 0 : 1));
+        }
+
+
+        public ActionResult DeactiveAccount()
+        {
+
+            try
+            {
+                user us = new user();
+                int ii = int.Parse(Session["LogedUserID"].ToString());
+                us = db.users.Find(ii);
+                us.status = "deactive";
+
+                db.Entry(us).State = EntityState.Modified;
+                db.SaveChanges();
+                Session.Abandon(); // it will clear the session at the end of request
+
+                return RedirectToAction("Login", "Home");
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return View();
+                 
+
+        }
+
+
+
+
+
+
     }
 }

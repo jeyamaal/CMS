@@ -1,13 +1,15 @@
 ﻿@model AccessControlManagement.Models.user
 
 @{
-    ViewBag.Title = "Login";
-   
+     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <head>
-     @*@Styles.Render("~/Content/bootstrapcss")*@
+    @Styles.Render("~/Content/bootstrapcss")
     <link href="@Url.Content("~/Content/Login.css")" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    
  
 </head>
 
@@ -115,7 +117,7 @@
                                             <div class="form-group">
                                                 @using (Html.BeginForm("RecoverPassword", "Home", FormMethod.Post))
                                                 {
-                                                    @Html.TextBoxFor(a => a.email_id,new { @class= "form-control input-lg", @placeholder = "E-mail Address" })
+                                                    @Html.TextBoxFor(a => a.email_id,new { @class= "form-control input-lg", @placeholder = "E-mail Address" , @autocomplete = "off" })
 
                                                   
 
@@ -151,4 +153,7 @@
 
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
+   @Scripts.Render("~/bundles/jquery")
+   @Scripts.Render("~/bundles/bootstrap")
+ 
 }

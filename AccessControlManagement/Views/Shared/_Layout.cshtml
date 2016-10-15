@@ -1,27 +1,53 @@
-﻿<!DOCTYPE html>
+﻿@model AccessControlManagement.Models.user
+
+<!DOCTYPE html>
 <html>
-<head>
-    
+<head> 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div style="width:auto; background-color:aqua">
-        @if (Session["LogedUserID"] != null)
-        {
-            
-            @Html.ActionLink("Log Out", "logout", "Home")
-        }
-        else
-        {
-            @*@Html.ActionLink("Register", "Register", "Register")
-            <span> | </span>
-            @Html.ActionLink("Log In", "Login", "Home")*@
-        }
-    </div>
+<nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+               
+                 @*<div style="width:auto; background-color:aqua">*@
+                    @if (Session["LogedUserID"] != null)
+                    {
+
+                        if (Model.picture != null)
+                        {
+                            <img src=@Url.Content(Model.picture) height="55" width="55">
+                        }
+
+                        else
+                        {
+                            <img src=# height="55" width="55">
+                        }
+
+                            <br>
+                        
+                        @Html.DisplayFor(model => model.username)
+                        <br>
+                        @Html.ActionLink("Log Out", "logout", "Home")
+
+                    }
+                    else
+                    {
+                        @*@Html.ActionLink("Register", "Register", "Register")
+                <span> | </span>
+                @Html.ActionLink("Log In", "Login", "Home")*@
+                    }
+                @*</div>*@
+            </ul>
+        </div>
+    </nav>
 
 
-    <div class="container body-content">
+ <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>

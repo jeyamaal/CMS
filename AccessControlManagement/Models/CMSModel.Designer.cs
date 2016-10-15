@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\Studies\SLIIT\3rd Year\2nd Semester\SEP II\Project Folder\Repository Folder\AccessControlManagement\Models\CMSModel.edmx'. 
+﻿// T4 code generation is enabled for model 'F:\SEP-II\AcceesControll-Git\AccessControlManagement\Models\CMSModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
