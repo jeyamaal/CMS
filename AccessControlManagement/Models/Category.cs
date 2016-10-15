@@ -11,7 +11,7 @@ namespace AccessControlManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
     public partial class Category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,6 +21,7 @@ namespace AccessControlManagement.Models
         }
     
         public int category_id { get; set; }
+        [DisplayName("Catergory Name")]
         public string category_name { get; set; }
         public string status { get; set; }
     
