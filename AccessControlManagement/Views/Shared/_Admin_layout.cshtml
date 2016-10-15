@@ -1,8 +1,9 @@
 ﻿<!DOCTYPE html>
+
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width" />
+    
     <title>Content Management System</title>
     <link rel="icon" href="~/favicon.png" />
 
@@ -10,8 +11,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-
-    @*<div id="nav-area" class="panel panel-default pull-left">
+    <div id="nav-area" class="panel panel-default pull-left">
         <div class="panel-body">
             <div class="row">
                 <div id="home-link" class="panel panel-default pull-left nav-clicked nav-links" data-toggle="tooltip" data-placement="left" title="Home">
@@ -34,13 +34,13 @@
                     </div>
                 </div>
             </div>
-           <div class="row">
+            @*<div class="row">
                     <div id="exit-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Logout">
                         <div class="panel-body">
                             <i class="fa fa-minus-circle fa-2x"></i>
                         </div>
                     </div>
-                </div>
+                </div>*@
         </div>
     </div>
 
@@ -69,14 +69,10 @@
                 </div>
             </div>
         </div>
-    </div>*@
-
-    <div>
-        @RenderBody()
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    
 </body>
 </html>
