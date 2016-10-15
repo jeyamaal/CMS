@@ -9,7 +9,8 @@ namespace CMS
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/category.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -22,12 +23,19 @@ namespace CMS
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
-                      "~/Scripts/style.js"));
+                      "~/Scripts/alertify.js",
+                      "~/Scripts/alertify.min.js",
+                      "~/Scripts/style.js",
+                      "~/Scripts/category.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                       "~/Content/style.css",
+                      "~/Content/style.css",
+                      "~/Content/alertifyjs/themes/alertify.css",
+                      "~/Content/alertifyjs/themes/alertify.min.css",
+                      "~/Content/alertifyjs/themes/alertify.rtl.css",
+                      "~/Content/alertifyjs/themes/alertify.rtl.min.css",
                       "~/Content/font-awesome.css",
                       "~/Content/font-awesome.min.css"));
         }

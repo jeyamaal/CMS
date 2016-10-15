@@ -27,10 +27,23 @@
 
 
                         } else if (index == 1) {
-                                ;
+                                
                         } else if (index == 2) {
+                            //Settings
+                            $("#load-view").load("/Categories/Index", function () {
 
-                        } else if (index == 3) {
+                                //$(".add-new-btn").removeAttr("id");
+                                //$(".add-new-btn").attr("data-target", "#add-new-usedby-model");
+
+                                //$("#header").fadeTo("1000", 1, function () { });
+                                //$("#load-view").fadeTo("1000", 1, function () {
+                                //    $("#loading-place").removeClass("still-loading");
+                                //    $(".nav-links").css("pointer-events", "");
+                                //});
+                            }).error(function (a) {
+
+                            });
+                        } else {
 
                         }
                     });

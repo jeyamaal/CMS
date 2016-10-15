@@ -1,0 +1,77 @@
+﻿@model IEnumerable<AccessControlManagement.Models.Category>
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<div id="table-category" class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <table class="table table-hover" style="border:2px solid black; margin-top:50px">
+            <tr style="border:2px solid black; background-color:#DADBDE">
+                <th style="border-right:2px solid black; text-align:center">
+                    Category Name
+                </th>
+                <th style="border-right:2px solid black; text-align:center">
+                    Status
+                </th>
+                <th style="width:170px"></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="border-right:2px solid black; text-align:center" data-toggle="tooltip" data-placement="left" title="@item.category_name">
+                        @Html.DisplayFor(modelItem => item.category_name)
+                    </td>
+                    <td style="border-right:2px solid black; text-align:center">
+                        @Html.DisplayFor(modelItem => item.status)
+                    </td>
+                    <td style="border-right:2px solid black; width:170px">
+                        <button id="edit-btn-category" type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-modal-category"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="edit-modal-category" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Edit Category Name</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3" for="group-name">Name of Category:</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" id="txt-edit-category-name" name="edit-category-name" class="form-control single-line" value="@item.category_name" disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="margin-top:10px">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3" for="group-name">New Name of Category:</label>
+                                                <div class="col-md-9">
+                                                    <input type="text" id="txt-edit-new-category-name" name="edit-new-category-name" class="form-control single-line" value="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" value="Update" id="btn-edit-cat" onclick="CategorySaveChanges()">Update</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <button id="view-btn-category" type="button" class="btn btn-success"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                        <button id="delete-btn-category" type="button" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+
