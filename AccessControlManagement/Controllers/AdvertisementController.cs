@@ -32,9 +32,25 @@ namespace AccessControlManagement.Controllers
         }
 
         // GET: Advertisement/Create
-        public ActionResult Create()
+        public ActionResult Create(InsertAdd s)
         {
+            try
+            {
+                s.status = "Pending";
+                db.InsertAdds.Add(s);
+                db.SaveChanges();
+                ModelState.Clear();
+
+                ViewBag.Message = "Successfully add your addvertisment";
+
+            }
+
+            catch (Exception e)
+            {
+
+            }
             return View();
+
         }
 
         // POST: Advertisement/Create
