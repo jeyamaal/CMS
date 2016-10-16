@@ -131,6 +131,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdvertisementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Global.asax.cs">
@@ -164,6 +165,9 @@
       <DependentUpon>CMSModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\EmailForm.cs" />
+    <Compile Include="Models\InsertAdd.cs">
+      <DependentUpon>CMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Post.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
@@ -233,6 +237,7 @@
     <Content Include="Views\Home\AfterLogin.cshtml" />
     <Content Include="Views\Register\Register.cshtml" />
     <Content Include="Views\Home\ChangePassword.cshtml" />
+    <Content Include="Views\Advertisement\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
