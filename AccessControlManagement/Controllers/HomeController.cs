@@ -51,35 +51,42 @@ namespace AccessControlManagement.Controllers
         /// <param name="u"></param>
         /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(user u)
+      //  [ValidateAntiForgeryToken]
+        public ActionResult Login(string un,string pwd)
         {
-            // this action is for handle post (login)
-            if (ModelState.IsValid) // this is check validity
+            try
             {
-                using (CMSEntities cm= new CMSEntities())
+
+                if (ModelState.IsValid)
                 {
-                    var v = cm.users.Where(a => a.username.Equals(u.username) && a.password.Equals(u.password) && a.status.Equals("active")).FirstOrDefault();
+                   
+                        var v = db.users.Where(a => a.username.Equals(un) && a.password.Equals(pwd) && a.status.Equals("active")).FirstOrDefault();
 
-                    if (v != null)
+                        if (v != null)
 
-                    {
-                        Session["LogedUserID"] = v.user_id.ToString();
-                        Session["LogedUserFullname"] = v.username.ToString();
-                        return RedirectToAction("AfterLogin");
-                    }
+                        {
+                            Session["LogedUserID"] = v.user_id.ToString();
+                            Session["LogedUserFullname"] = v.username.ToString();
+                            return RedirectToAction("AfterLogin");
+                        }
 
-                    else 
-                    {
-                        //TempData["Message"] = "Check user name or password";
-                        //return View(u);
-                        ViewBag.IsLocal = true;
-                        return View(u);
-                    }
+                        else if(v==null)
+                        {
+                            return Json("WrongCredits");
+
+                        }
+                    
                 }
+                return RedirectToAction("AfterLogin");
+
             }
-            return View(u);
-        }
+            catch (Exception ex) {
+                return Json("WrongCredits");
+            }
+
+       }
+
+
       
 
         public ActionResult AfterLogin()
@@ -154,74 +161,54 @@ namespace AccessControlManagement.Controllers
              return RedirectToAction("Login", "Home");
         }
 
-        public ActionResult RecoverPassword(user u)
+
+        [HttpPost]
+        public ActionResult RecoverPassword(string email )
         {
-           if (ModelState.IsValid) // this is check validity
-            {
-                using (CMSEntities cm = new CMSEntities())
+          try{
+                var user = (from u1 in db.users
+                            where u1.email_id == email
+                            select u1).ToList(); // shangavi created
+
+                if (user != null) // shangavi changed v to user
                 {
-                    var v = cm.users.Where(a => a.email_id.Equals(u.email_id)).FirstOrDefault();
+                    var emailId = db.users.Where(a => a.email_id.Equals(email)).FirstOrDefault();
+                    string pwd = emailId.password;
 
-                    if (v != null)
+                    if (ModelState.IsValid)
                     {
-
-                        var email = cm.users.Where(a => a.email_id.Equals(u.email_id)).FirstOrDefault();
-                        string pwd = email.password;
-
-                        try
-                        {
-                            if (ModelState.IsValid)
-                            {
-                                MailMessage mail = new MailMessage();
-                                mail.To.Add(u.email_id);
-                                TempData["notice"] = "Check your mail password is" + "  " + pwd.ToString();
-                                mail.From = new MailAddress("sender@outlook.com");
-                                mail.Subject = "Recover Password";
-                                string Body = "Your password is" + "  " + pwd.ToString();
-                                mail.Body = Body;
-                                mail.IsBodyHtml = true;
-                                SmtpClient smtp = new SmtpClient();
-                                smtp.Host = "smtp.gmail.com";
-                                smtp.Port = 587;
-                                smtp.UseDefaultCredentials = false;
-                                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                                smtp.Credentials = new System.Net.NetworkCredential("ranjaraman5", "ranja123");// Enter seders User name and password
-                                smtp.EnableSsl = true;
-                                smtp.Send(mail);
-
-                                TempData["notice1"] = "Sucessfully Send";
-
-                                return View("Login");
-                            }
-
-
-                        }
-                        catch (Exception ex)
-                        {
-
-                        }
-                        TempData["notice"] = "Check your mail password is" + pwd;
-                        return View(u);
+                        MailMessage mail = new MailMessage();
+                        mail.To.Add(email);
+                        TempData["notice"] = "Check your mail password is" + "  " +pwd;
+                        mail.From = new MailAddress("sender@outlook.com");
+                        mail.Subject = "Recover Password";
+                        string Body = "Your password is" + "  " +pwd;
+                        mail.Body = Body;
+                        mail.IsBodyHtml = true;
+                        SmtpClient smtp = new SmtpClient();
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.Port = 587;
+                        smtp.UseDefaultCredentials = false;
+                        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        smtp.Credentials = new System.Net.NetworkCredential("ranjaraman5", "ranja123");// Enter seders User name and password
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                        
+                        return View("Login");
                     }
+                 }
 
-                    else
-                    {
-                        //return JavaScript("success()");
-                        // var script = "$('#message').html('Message from Server');";
-                        // return JavaScript(script);
-
-    
-
-                        //return Content("WrongEmail");
-
-
-                        //TempData["Message"] = "Invalid Email Address";
-
-                    }
+                else
+                {
+                   return Json("WrongEmail");
                 }
             }
+            catch (Exception ex) {
+                   return Json("WrongEmail");
+             }
 
-           return View(u);
+            return Json("WrongEmail");
+
         }
 
         public ActionResult ChangeProfilePicture()

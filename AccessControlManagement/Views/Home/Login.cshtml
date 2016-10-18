@@ -52,12 +52,12 @@
 
                                 <div class="form-group">
                                    
-                                    @Html.TextBoxFor(a => a.username, new { @required = "true", @class = "form-control", @placeholder = "User name", @tabindex = "1", @size = "35" })
+                                    @Html.TextBoxFor(a => a.username, new { @required = "true", @class = "form-control", @placeholder = "User name", @tabindex = "1", @size = "35",@id="username" })
                                   
                                 </div>
 
                                     <div class="form-group">
-                                        @Html.PasswordFor(a => a.password, new { @class = "form-control ", @required = "true", @placeholder = "Password", @tabindex = "1" })
+                                        @Html.PasswordFor(a => a.password, new { @class = "form-control ", @required = "true", @placeholder = "Password", @tabindex = "1", @id = "password" })
                                     </div>
 
 
@@ -69,7 +69,9 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">
-                                                <input type="submit"  id="login_submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                                <button type="button"  id="login_submit"   onclick="OnLogin(this)" tabindex="4" class="form-control btn btn-login" value="Log In">Log In </button>
+
+                                              
                                             </div>
                                         </div>
                                     </div>
@@ -115,12 +117,13 @@
                                     <div class="panel-body">
                                         <fieldset>
                                             <div class="form-group">
-                                                @using (Html.BeginForm("RecoverPassword", "Home", FormMethod.Post))
-                                                {
-                                                    @Html.TextBoxFor(a => a.email_id,new { @required = "true", @type = "email", @class = "form-control input-lg", @placeholder = "E-mail Address" , @autocomplete = "off"  })
+                                               
+                                                @Html.TextBoxFor(a=>a.email_id, new { @required = "true", @type ="email", @class = "form-control input-lg",@placeholder = "E-mail Address", @autocomplete = "off", @id = "emailID" })
+                                                <br>
+                                                <button type="button" class="btn btn-primary"  onclick="OnRecoverPassword(this)"> Recover Password</button>  
 
-                                                    <input class="btn btn-lg btn-primary btn-block" value="Send My Password" type="submit" id="Recover_Password">
-                                                }
+                                               
+                                               
                                             </div>
 
                                         </fieldset>
@@ -157,29 +160,67 @@
 
 
     <script>
-        document.querySelector('#Recover_Password').onclick = function () {
 
-            $.post("/Home/RecoverPassword", function (result) {
-                if ('@ViewBag.IsLocal' == 'True') {
-                    swal({ title: "Error!", text: "Here's my error message!", type: "error", confirmButtonText: "Cool" });
+        // Validation for Revcover Password
+        function OnRecoverPassword(content) {
 
-                    location.reload();
+            var mymail = $("#emailID").val();
+
+            console.log(mymail);
+
+            $.ajax({
+                type:"POST",
+                url:'@Url.Action("RecoverPassword", "Home")',
+                data: { "email": mymail},
+                success:function (data) {
+
+                    if (data == "WrongEmail")
+                    {
+                        sweetAlert("Invalid Email...", "Input the correct Email Address!", "error");
+                    }
+                    else
+                    {
+                        swal("Email has sent!", "Please Check email for passoword!", "success");
+                    }
+
                 }
 
             });
-        };
+
+        }
 
 
-        document.querySelector('#login_submit').onclick = function () {
+        // Validation Login
+        function OnLogin(content) {
 
-            $.post("/Home/Login", function (result) {
-                if ('@ViewBag.IsLocal' == 'True') {
-                    swal({ title: "Error!", text: "Here's my error message!", type: "error", confirmButtonText: "Cool" });
+            var username = $("#username").val();
+            var password = $("#password").val();
+
+            console.log(username);
+            console.log(password);
+
+            $.ajax({
+                type:"POST",
+                url: '@Url.Action("Login", "Home")',
+                data: {"un":username, "pwd":password},
+                success: function (data) {
+
+                    if (data == "WrongCredits") {
+                        sweetAlert("Invalid UserName or Password", "Input the correct credentials!", "error");
+                    }
+
+                    else
+                    {
+                        window.location.replace("home/AfterLogin");
+                    }
+                   
 
                 }
 
             });
-        };
+
+        }
+      
 
 
 
