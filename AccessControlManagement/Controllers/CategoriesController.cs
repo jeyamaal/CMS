@@ -17,7 +17,12 @@ namespace AccessControlManagement.Controllers
         // GET: Categories
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            List<object> myModel = new List<object>();
+            myModel.Add(db.Categories.ToList());
+            myModel.Add(db.Posts.ToList());
+            myModel.Add(db.ArticleHasAds.ToList());
+
+            return PartialView(myModel);
         }
 
         // GET: Categories/Details/5
@@ -79,6 +84,27 @@ namespace AccessControlManagement.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult DeleteCategory(string category) {
+            try
+            {
+                int resultDeleteCategory = db.usp_Category_delete(category);
+
+                if (resultDeleteCategory == 1)
+                {
+                    return Content("Success");
+                }
+                else
+                {
+                    return Content("Not Success");
+                }
+            }
+
+            catch (Exception e)
+            {
+                return Content("Error to load the Procedure");
+            }
+        }
         // GET: Categories/Edit/5
         public ActionResult Edit(int? id)
         {

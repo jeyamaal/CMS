@@ -36,4 +36,34 @@
         }).error(function (e) {
         });
     });
+
+    $(".category-delete").on('click', function () {
+        var name = $(this).attr('id').split('-')[4];
+        console.log(name);
+
+        $.post("/Categories/DeleteCategory",
+            { category: name },
+            function (result) {
+                if (result == "Success") {
+                    $("#delete-modal-category").hide();
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                    alertify.success("Successfully Category " + name + "Deleted");
+                }
+                else if (result == "Not Success") {
+                    $("#delete-modal-category").hide();
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                    alertify.error("Category " + name + "is not Successfuly Deleted");
+                }
+                else {
+                    $("#delete-modal-category").hide();
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                    alertify.error(result);
+                }
+            }).error(function (e) {
+                console.log(e);
+            });
+    });
 }

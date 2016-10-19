@@ -165,6 +165,9 @@
       <DependentUpon>CMSModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\EmailForm.cs" />
+    <Compile Include="Models\InsertAdd.cs">
+      <DependentUpon>CMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Post.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>

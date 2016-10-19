@@ -120,30 +120,30 @@ namespace AccessControlManagement.Controllers
                        
 
 
-                            if (u.password==us.password && u.ConfirmPassword==u.newPassword)
-                            {
+                            //if (u.password==us.password && u.ConfirmPassword==u.newPassword)
+                            //{
 
-                                string s;
+                            //    string s;
 
-                                s = u.newPassword.ToString();
+                            //    s = u.newPassword.ToString();
 
-                                us.password = u.newPassword;
+                            //    us.password = u.newPassword;
 
 
-                                db.Entry(us).State = EntityState.Modified;
-                                db.SaveChanges();
+                            //    db.Entry(us).State = EntityState.Modified;
+                            //    db.SaveChanges();
                               
-                                // TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
+                            //    // TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
 
-                                return View("ChangePassword");
+                            //    return View("ChangePassword");
 
-                            }
+                            //}
 
-                            else
-                            {
-                                TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
+                            //else
+                            //{
+                            //    TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
 
-                            }
+                            //}
 
 
                          }
