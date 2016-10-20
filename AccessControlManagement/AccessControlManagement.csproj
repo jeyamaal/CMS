@@ -193,6 +193,7 @@
       <LastGenOutput>CMSModel.cs</LastGenOutput>
     </Content>
     <Content Include="Resources\jeyamaal_images\loding_login.gif" />
+    <Content Include="Resources\jeyamaal_images\prof-pic.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\CMSModel.edmx">
