@@ -1,5 +1,4 @@
 ﻿//Validation for OnRecoverpassword 
-
 function OnRecoverPassword() {
 
     var mymail = $("#emailID").val();
@@ -29,6 +28,11 @@ function OnRecoverPassword() {
 // Validation Login
 function OnLogin(content) {
 
+    $(document).ready(function () {
+        $('#loading-image').show();
+        
+    });
+
     var username = $("#username").val();
     var password = $("#password").val();
 
@@ -44,10 +48,18 @@ function OnLogin(content) {
         type: "POST",
         url: window.location.pathname + 'Home/Login/',
         data: { "un": username, "pwd": password },
-        success: function (data) {
 
-            if (data == "WrongCredits") {
-                sweetAlert("Invalid UserName or Password", "Input the correct credentials!", "error");
+
+        success: function (data) {
+           if (data == "WrongCredits") {
+
+               sweetAlert("Invalid UserName or Password", "Input the correct credentials!", "error");
+
+               //hide the login loading image
+               $(document).ready(function () {
+                    $('#loading-image').hide();
+
+                });
             }
 
             else {

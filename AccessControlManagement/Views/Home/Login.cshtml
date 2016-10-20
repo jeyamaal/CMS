@@ -74,6 +74,11 @@
 
                                               
                                             </div>
+
+                                            <div class="col-sm-6 col-sm-offset-5">
+                                                <img id="loading-image" src="~/Resources/jeyamaal_images/loding_login.gif" alt="Loading..." />
+                                            </div>
+
                                         </div>
                                     </div>
 
@@ -151,54 +156,7 @@
    @Scripts.Render("~/bundles/jquery")
    @Scripts.Render("~/bundles/bootstrap")
 
-@*<script>
-    // Validation For RecoverPassword
-    function OnRecoverPassword(content) {
-        var mymail = $("#emailID").val();
-        console.log(mymail);
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("RecoverPassword", "Home")',
-            data: { "email": mymail },
-            success: function (data) {
-
-                if (data == "WrongEmail") {
-                    sweetAlert("Invalid Email...", "Input the correct Email Address!", "error");
-                }
-                else {
-                    swal("Email has sent!", "Please Check email for passoword!", "success");
-                }
-
-            }
-
-        });
-
-    }
-    // Validation Login
-    function OnLogin(content) {
-        var username = $("#username").val();
-        var password = $("#password").val();
-        console.log(username);
-        console.log(password);
-
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("Login", "Home")',
-            data: { "un": username, "pwd": password },
-            success: function (data) {
-
-                if (data == "WrongCredits") {
-                    sweetAlert("Invalid UserName or Password", "Input the correct credentials!", "error");
-                }
-                else {
-                    window.location.replace("home/AfterLogin");
-                }
-            }
-
-        });
-     }
-
-</script>*@
+<script onload="javascript: document.getElementById('loading-image').style.display = 'none'" src="~/Scripts/jquery-1.10.2.min.js">    </script>
 
 
 

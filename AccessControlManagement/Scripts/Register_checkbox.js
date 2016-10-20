@@ -1,4 +1,10 @@
-﻿$(function () {
+﻿/*
+   Animation for check box in Register.cshtml
+
+*/
+
+
+$(function () {
     $('.button-checkbox').each(function () {
 
         // Settings

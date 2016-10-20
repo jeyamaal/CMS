@@ -32,7 +32,16 @@
         </ul>
     </div>
 
+    <div class="col-md-5">
+        <div class="panel-heading">Posts</div>
+        <div class="panel-body">Graph</div>
+        <div id="chartContainer" style="height: 300px; width: 100%;"> </div>
+    </div>
 
+
+
+
+    <div>  
 
     <text>
         Welcome @Session["LogedUserFullname"].ToString()
@@ -50,7 +59,7 @@
         Your username is @Html.DisplayFor(model => model.username)
     </text>
 
-  
+  </div>
 
 }
 
@@ -127,13 +136,14 @@
         readURL(this);
     });
 
-    //function sucess() {
-    //    document.querySelector('#test-1').onclick = function () {
-    //        swal("Here's a message!");
-    //    };
-    //}
-
  
-
 </script>
+
+
+ @*Graph for no of posts of month*@
+<script type="text/javascript" src="~/Scripts/jquery.canvasjs.min.js"></script>
+<script type="text/javascript" src="~/Scripts/graphNoOfposts.js"></Script>
+
+
+
 }
