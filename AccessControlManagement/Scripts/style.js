@@ -5,8 +5,8 @@
         $(this).click(function () {
 
             if (index != 4) {
-                $("#dashboard-link").css('color', '');
-                $("#dashboard-link").css('background-color', '');
+                $("#home-link").css('color', '');
+                $("#home-link").css('background-color', '');
 
                 $(".nav-clicked").addClass("effect-1");
                 $(".nav-clicked").addClass("effect-2");
@@ -21,7 +21,6 @@
                 (function (index) {
                     $("#header").fadeTo("1000", 0, function () { });
                     $("#load-view").fadeTo("1000", 0, function () {
-                        $("#loading-place").addClass("still-loading");
 
                         if (index == 0) {
 
@@ -31,7 +30,7 @@
                         } else if (index == 2) {
                             //Settings
                             $("#load-view").load("/Categories/Index", function () {
-
+                                CategorySaveChanges();
                                 //$(".add-new-btn").removeAttr("id");
                                 //$(".add-new-btn").attr("data-target", "#add-new-usedby-model");
 

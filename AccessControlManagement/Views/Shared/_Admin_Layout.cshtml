@@ -15,15 +15,17 @@
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 </head>
 <body>
 
     <div id="nav-area" class="panel panel-default pull-left">
         <div class="panel-body">
             <div class="row">
-                <div id="home-link" class="panel panel-default pull-left nav-clicked nav-links" data-toggle="tooltip" data-placement="left" title="Home">
+                <div id="settings-link" class="panel panel-default pull-left nav-clicked nav-links" data-toggle="tooltip" data-placement="left" title="Home">
                     <div class="panel-body">
-                        <i class="fa fa-home fa-2x"></i>
+                        <i class="fa fa-cogs fa-2x"></i>
                     </div>
                 </div>
             </div>
@@ -35,9 +37,9 @@
                 </div>
             </div>
             <div class="row">
-                <div id="settings-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Settings">
+                <div id="home-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Settings">
                     <div class="panel-body">
-                        <i class="fa fa-cogs fa-2x"></i>
+                        <i class="fa fa-home fa-2x"></i>
                     </div>
                 </div>
             </div>

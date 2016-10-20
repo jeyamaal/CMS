@@ -22,10 +22,10 @@ namespace CMS
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/style.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/alertify.js",
                       "~/Scripts/alertify.min.js",
-                      "~/Scripts/style.js",
                       "~/Scripts/category.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
