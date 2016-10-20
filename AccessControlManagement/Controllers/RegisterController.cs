@@ -34,6 +34,7 @@ namespace AccessControlManagement.Controllers
 
                     else
                     {
+                        var myrole = u.role.ToString();
                         u.status = "active";
                         cm.users.Add(u);
                         cm.SaveChanges();

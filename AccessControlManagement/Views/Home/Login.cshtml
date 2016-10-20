@@ -10,7 +10,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     
- 
+    <script type="text/javascript" src="/Scripts/validation.js"></script>
+
 </head>
 
 <body>
@@ -52,7 +53,7 @@
 
                                 <div class="form-group">
                                    
-                                    @Html.TextBoxFor(a => a.username, new { @required = "true", @class = "form-control", @placeholder = "User name", @tabindex = "1", @size = "35",@id="username" })
+                                    @Html.TextBoxFor(a => a.username, new { @required = "true", @class = "form-control", @placeholder = "User name", @tabindex = "1", @size = "35",@id="username", @autocomplete="off" })
                                   
                                 </div>
 
@@ -100,6 +101,7 @@
 
 
     <!--modal-->
+    <!--RecoverPassword-->
     <div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -120,12 +122,9 @@
                                                
                                                 @Html.TextBoxFor(a=>a.email_id, new { @required = "true", @type ="email", @class = "form-control input-lg",@placeholder = "E-mail Address", @autocomplete = "off", @id = "emailID" })
                                                 <br>
-                                                <button type="button" class="btn btn-primary"  onclick="OnRecoverPassword(this)"> Recover Password</button>  
+                                                <button type="button" class="btn btn-primary"  onclick="OnRecoverPassword()"> Recover Password</button>  
 
-                                               
-                                               
-                                            </div>
-
+                                               </div>
                                         </fieldset>
                                     </div>
                                 </div>
@@ -141,11 +140,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 </body>
 
 
@@ -157,76 +151,55 @@
    @Scripts.Render("~/bundles/jquery")
    @Scripts.Render("~/bundles/bootstrap")
 
+@*<script>
+    // Validation For RecoverPassword
+    function OnRecoverPassword(content) {
+        var mymail = $("#emailID").val();
+        console.log(mymail);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("RecoverPassword", "Home")',
+            data: { "email": mymail },
+            success: function (data) {
 
-
-    <script>
-
-        // Validation for Revcover Password
-        function OnRecoverPassword(content) {
-
-            var mymail = $("#emailID").val();
-
-            console.log(mymail);
-
-            $.ajax({
-                type:"POST",
-                url:'@Url.Action("RecoverPassword", "Home")',
-                data: { "email": mymail},
-                success:function (data) {
-
-                    if (data == "WrongEmail")
-                    {
-                        sweetAlert("Invalid Email...", "Input the correct Email Address!", "error");
-                    }
-                    else
-                    {
-                        swal("Email has sent!", "Please Check email for passoword!", "success");
-                    }
-
+                if (data == "WrongEmail") {
+                    sweetAlert("Invalid Email...", "Input the correct Email Address!", "error");
+                }
+                else {
+                    swal("Email has sent!", "Please Check email for passoword!", "success");
                 }
 
-            });
+            }
 
-        }
+        });
 
+    }
+    // Validation Login
+    function OnLogin(content) {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        console.log(username);
+        console.log(password);
 
-        // Validation Login
-        function OnLogin(content) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Login", "Home")',
+            data: { "un": username, "pwd": password },
+            success: function (data) {
 
-            var username = $("#username").val();
-            var password = $("#password").val();
-
-            console.log(username);
-            console.log(password);
-
-            $.ajax({
-                type:"POST",
-                url: '@Url.Action("Login", "Home")',
-                data: {"un":username, "pwd":password},
-                success: function (data) {
-
-                    if (data == "WrongCredits") {
-                        sweetAlert("Invalid UserName or Password", "Input the correct credentials!", "error");
-                    }
-
-                    else
-                    {
-                        window.location.replace("home/AfterLogin");
-                    }
-                   
-
+                if (data == "WrongCredits") {
+                    sweetAlert("Invalid UserName or Password", "Input the correct credentials!", "error");
                 }
+                else {
+                    window.location.replace("home/AfterLogin");
+                }
+            }
 
-            });
+        });
+     }
 
-        }
-      
-
-
-
-    </script>
+</script>*@
 
 
-   
 
 }
