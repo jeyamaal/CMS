@@ -1,8 +1,8 @@
 ﻿/*
    Animation for check box in Register.cshtml
-
+   Created by Jeyamaal
+   Date:-01-10-2016
 */
-
 
 $(function () {
     $('.button-checkbox').each(function () {

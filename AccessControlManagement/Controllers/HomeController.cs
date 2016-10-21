@@ -46,12 +46,8 @@ namespace AccessControlManagement.Controllers
         }
 
        
-        /// <summary>
-        /// Checking Login Credentials
-        /// </summary>
-        /// <param name="u"></param>
-        /// <returns></returns>
-        [HttpPost]
+     
+          [HttpPost]
       //  [ValidateAntiForgeryToken]
         public ActionResult Login(string un,string pwd)
         {
@@ -107,52 +103,42 @@ namespace AccessControlManagement.Controllers
         }
 
      public ActionResult ChangePassword(user u)
-        {
-            if (Session["LogedUserID"] != null)
-            {
-              if (ModelState.IsValid) // this is check validity
-                {
-                   using (CMSEntities cm = new CMSEntities())
-                {
-                    user us = new user();
+     {
+       if (Session["LogedUserID"] != null)
+       {
 
-                     try
+          try{
+                if (ModelState.IsValid) // this is check validity
+                 {
+                        user us = new user();
+                        int ii = int.Parse(Session["LogedUserID"].ToString());
+                        us = db.users.Find(ii);
+                        if (u.password == us.password && u.ConfirmPassword == u.newPassword)
                         {
-                            int ii = int.Parse(Session["LogedUserID"].ToString());
-                            us = db.users.Find(ii);
+                            string s;
+                            s = u.newPassword.ToString();
+                            us.password = u.newPassword;
+                            db.Entry(us).State = EntityState.Modified;
+                            db.SaveChanges();
+                            Session.Abandon(); // it will clear the session at the end of request
+                            return RedirectToAction("Login", "Home");
+                        
+                        }
+                  }
 
-                            if (u.password==us.password && u.ConfirmPassword==u.newPassword)
-                            {
-
-                                string s;
-                                s = u.newPassword.ToString();
-                                us.password = u.newPassword;
-                                db.Entry(us).State = EntityState.Modified;
-                                db.SaveChanges();
-                              // TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
-                                return View("ChangePassword");
-                            }
-
-                            else
-                            {
-                                TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
-                            }
-
-                        }catch (Exception ex)
+                }catch (Exception ex)
                             {
 
                             }
-                    }
-               }
-            }
-
-            else
-            {
+                    
+         }
+         else
+         {
                 return RedirectToAction("Login");
-            }
+         }
 
             return View();
-        }
+    }
 
 
 

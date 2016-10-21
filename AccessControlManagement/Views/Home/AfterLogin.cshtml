@@ -22,7 +22,7 @@
         <ul class="nav nav-pills nav-stacked">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#" data-target="#profPicModal" data-toggle="modal">Change Profile Picture</a>
-            <li><a href="#">Change Password</a></li>
+            <li><a href="#" data-target="#ChangePasswordModal" data-toggle="modal" >Change Password</a></li>
             <li><a href="#">Reports</a></li>
             <li><a href="#">Change Template</a></li>
             @Html.ActionLink("Deactive Account", "DeactiveAccount", "Home",
@@ -116,6 +116,69 @@
         </div>
     </div>
 </div>
+
+
+ <!--modal-->
+<!--Changa Password-->
+<div id="ChangePasswordModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h1 class="text-center">Change Password </h1>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <p>Smile Please.</p>
+                                <div class="panel-body">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            @using (Html.BeginForm("ChangePassword", "Home", FormMethod.Post))
+                                            {
+                                                <fieldset>
+                                                    <legend>Change password</legend>
+                                                    <div class="col-sm-offset-3">
+                                                     
+                                                        @Html.PasswordFor(a => a.password)
+
+                                                        
+                                                        @Html.PasswordFor(a => a.ConfirmPassword)
+                                                    
+                                                        @Html.PasswordFor(a => a.newPassword)
+
+                                                        <input type="submit" value="ResetPassword" />
+
+                                                    </div>
+                                                </fieldset>
+
+
+                                            }
+                                        </div>
+
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 
 @section Scripts{
 <script>

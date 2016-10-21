@@ -158,6 +158,13 @@
 
 <script onload="javascript: document.getElementById('loading-image').style.display = 'none'" src="~/Scripts/jquery-1.10.2.min.js">    </script>
 
+<script>
+    $("#password").keyup(function (event) {
+        if (event.keyCode == 13) {
+            $("#login_submit").click();
+        }
+    });
 
+</script>
 
 }
