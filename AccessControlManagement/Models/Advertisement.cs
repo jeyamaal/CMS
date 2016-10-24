@@ -15,8 +15,8 @@ namespace AccessControlManagement.Models
     public partial class Advertisement
     {
         public int post_id { get; set; }
-        public System.DateTime post_date { get; set; }
-        public int user_id { get; set; }
+        public Nullable<System.DateTime> post_date { get; set; }
+        public Nullable<int> user_id { get; set; }
         public string ad_name { get; set; }
         public Nullable<System.DateTime> expire_date { get; set; }
     
