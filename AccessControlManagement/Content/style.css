@@ -1,0 +1,259 @@
+﻿body {
+     font-family:Calibri;
+     padding-bottom: 0px;
+     /*padding-top: 100px;*/
+     background-color: #EEEDFC;
+}
+
+#welcome-screen{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: rgba(149, 0, 184, 1);
+    z-index: 100;
+}
+
+#welcome-screen .panel{
+    height: 280px;
+    width: 400px;
+    position: absolute;
+    top: calc(50% - 100px);
+    top: -moz-calc(50% - 100px);
+    top: -webkit-calc(50% - 100px);
+    left: calc(68% - 200px);
+    left: -moz-calc(68% - 200px);
+    left: -webkit-calc(68% - 200px);
+    margin: auto;
+}
+
+.nav-links{
+    text-align: center;
+    width: 60px;
+    position: fixed;
+    cursor: pointer;
+    z-index: 15;
+}
+
+/*#logo-area{
+    -webkit-box-shadow: 0px 3px 5px -3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 3px 5px -3px rgba(0,0,0,0.75);
+    box-shadow: 0px 3px 5px -3px rgba(0,0,0,0.75);
+
+    background-color: #883e8f;
+    height: 100px;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;    
+}
+
+#logo-area::before{
+    content: "Driver And Vehicle Management System";
+    width: 590px;
+    height: 90px;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    color: white;
+    font-size: 35px;
+}
+
+#logo-area::after{
+    content: "";
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    right: 0px;
+    top: 5px;
+    background: url('../img/ifs.png') no-repeat center center;
+    background-size: contain;
+}*/
+
+#header .panel-body:before{
+    content: "";
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    left: 0px;
+    top: 5px;
+    background-size: contain;
+}
+
+.still-loading::before{
+    content: "";
+    width: 100%;
+    height: 700px;
+    position: absolute;
+    z-index: 13;
+}
+
+#nav-area::before{
+    content: "";
+    height: 356px;
+    width: 20px;
+    position: absolute;
+    margin-top: -1px;
+    z-index: 1;
+    background-color: #EEEDFC;
+}
+
+#nav-area{
+    height: 355px;
+    width: 70px;
+    position: fixed;
+    top: 150px;
+    padding-bottom: 5px;
+    z-index: 15;
+    background-color: #EEEDFC;
+
+}
+#home-link{
+    margin-top: 65px;
+}
+
+#post-link{
+    margin-top: 130px;
+}
+
+#settings-link{
+    margin-top: 195px;
+}
+
+/*#exit-link{
+    margin-top: 260px;
+}*/
+
+#site-area{
+    background-color: #f5f5f5;
+    border-radius: 0px;
+    width: calc(100% - 20px);
+    width: -moz-calc(100% - 20px);
+    width: -webkit-calc(100% - 20px);
+    margin-left: 20px;
+    margin-bottom: 0px;
+}
+
+#site-main-area{
+    background-color: #fdf7fd;
+    margin-bottom: 10px;    
+}
+
+#loading-place{
+    background-color: #FDF7FD;
+}
+
+#site-other-relevent{
+    display: none;    
+}
+
+.hr-divider{
+    border-top: 1px solid #c5c5c5;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+#header{
+    height: 80px;
+}
+
+.add-new-btn{
+    height: 60px;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 20px;
+    margin: auto;
+}
+
+#nav-time{
+    font-size: 28px;
+    position: absolute;
+    right: 100px;
+    top: 20px;
+}
+
+#nav-place{
+    font-size: 32px;
+    margin-left: 70px;
+}
+
+#header .panel{
+    bottom: 10px;
+}
+
+.effect-1 {
+    -webkit-transition: 0.5s ease;
+    -moz-transition: 0.5s ease;
+    -o-transition: 0.5s ease;
+    transition: 0.5s ease;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+.effect-2:hover {
+    -webkit-transform: scale(1.2, 1.25);
+    -ms-transform: scale(1.2, 1.25);
+    -o-transform: scale(1.2, 1.25);
+    -ms-transform: scale(1.2, 1.25);
+    transform: scale(1.2, 1.25);
+
+    -webkit-transition: 0.5s ease;
+    -moz-transition: 0.5s ease;
+    -o-transition: 0.5s ease;
+    transition: 0.5s ease;
+
+    background-color: #CABADC;
+}
+
+.effect-2:active{
+    -webkit-transform: scale(0.8, 0.75);
+    -ms-transform: scale(0.8, 0.75);
+    -o-transform: scale(0.8, 0.75);
+    -ms-transform: scale(0.8, 0.75);
+    transform: scale(0.8, 0.75);
+
+    -webkit-transition: 0.0s ease;
+    -moz-transition: 0.0s ease;
+    -o-transition: 0.0s ease;
+    transition: 0.0s ease;
+}
+
+.nav-clicked{
+    -webkit-transform: scale(1.2, 1.25);
+    -ms-transform: scale(1.2, 1.25);
+    -o-transform: scale(1.2, 1.25);
+    -ms-transform: scale(1.2, 1.25);
+    transform: scale(1.2, 1.25);
+
+    -webkit-transition: 0.5s ease;
+    -moz-transition: 0.5s ease;
+    -o-transition: 0.5s ease;
+    transition: 0.5s ease;
+
+    background-color: #CABADC;
+    cursor: default;
+    pointer-events: none;
+}
+
+.nav-clicked i{
+    color: rgba(149, 0, 184, 1);
+}
+
+#load-view{
+  height: calc(100vh - 139px);
+  height: -moz-calc(100vh - 139px);
+  height: -webkit-calc(100vh - 139px);
+  overflow-y:auto;   
+}
+
+#site-main-area::before {
+    content : "";
+    display: block;
+    position: absolute;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    opacity : 0.02;    
+}
