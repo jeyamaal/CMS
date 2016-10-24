@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Advertisement">
           <Key>
             <PropertyRef Name="post_id" />
@@ -47,22 +47,6 @@
           <Property Name="category_name" Type="varchar" MaxLength="200" />
           <Property Name="status" Type="varchar" MaxLength="200" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="InsertAdd">
-          <Key>
-            <PropertyRef Name="ADD_id" />
-          </Key>
-          <Property Name="ADD_id" Type="int" Nullable="false" />
-          <Property Name="title" Type="varchar(max)" />
-          <Property Name="category" Type="varchar(max)" />
-          <Property Name="description" Type="varchar(max)" />
-          <Property Name="wantToPostDate" Type="datetime" />
-          <Property Name="status" Type="varchar" MaxLength="50" />
-          <Property Name="postedDate" Type="datetime" />
-          <Property Name="updatedDate" Type="datetime" />
-          <Property Name="dueDate" Type="datetime" />
-        </EntityType>
         <EntityType Name="Post">
           <Key>
             <PropertyRef Name="post_id" />
@@ -73,10 +57,10 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' 
           <Property Name="post_date" Type="date" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="category_id" Type="int" />
+          <Property Name="picture" Type="varchar" MaxLength="1000" />
           <Property Name="post_description" Type="nvarchar(max)" />
           <Property Name="activity_log" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="title" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="image" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -88,7 +72,6 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' 
           <Property Name="password" Type="varchar" MaxLength="50" />
           <Property Name="email_id" Type="varchar" MaxLength="100" />
           <Property Name="picture" Type="varchar" MaxLength="1000" />
-          <Property Name="status" Type="varchar" MaxLength="15" />
         </EntityType>
         <Association Name="fk_a">
           <End Role="Post" Type="Self.Post" Multiplicity="1">
@@ -190,19 +173,6 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' 
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="InsertAdd" EntityType="Self.InsertAdd" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [InsertAdd].[ADD_id] AS [ADD_id], 
-    [InsertAdd].[title] AS [title], 
-    [InsertAdd].[category] AS [category], 
-    [InsertAdd].[description] AS [description], 
-    [InsertAdd].[wantToPostDate] AS [wantToPostDate], 
-    [InsertAdd].[status] AS [status], 
-    [InsertAdd].[postedDate] AS [postedDate], 
-    [InsertAdd].[updatedDate] AS [updatedDate], 
-    [InsertAdd].[dueDate] AS [dueDate]
-    FROM [dbo].[InsertAdd] AS [InsertAdd]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="fk_a" Association="Self.fk_a">
             <End Role="Post" EntitySet="Post" />
             <End Role="Article" EntitySet="Article" />
@@ -224,7 +194,8 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' 
             <End Role="Post" EntitySet="Post" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -284,6 +255,7 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' 
           <Property Name="post_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="category_id" Type="Int32" />
+          <Property Name="picture" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="post_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="activity_log" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
@@ -292,7 +264,6 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' 
           <NavigationProperty Name="ArticleHasAd" Relationship="Self.fk_ahd" FromRole="Post" ToRole="ArticleHasAd" />
           <NavigationProperty Name="Category" Relationship="Self.fk_p1" FromRole="Post" ToRole="Category" />
           <NavigationProperty Name="user" Relationship="Self.fk_p" FromRole="Post" ToRole="user" />
-          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -305,7 +276,6 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' 
           <Property Name="email_id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="picture" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Posts" Relationship="Self.fk_p" FromRole="user" ToRole="Post" />
-          <Property Name="status" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="fk_ad">
           <End Role="Post" Type="Self.Post" Multiplicity="1">
@@ -417,7 +387,7 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' 
             <End Role="Post" EntitySet="Posts" />
           </AssociationSet>
           <FunctionImport Name="usp_Category_delete">
-          <Parameter Name="catname" Mode="In" Type="String" />
+            <Parameter Name="catname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="usp_Category_insert">
             <Parameter Name="categoryID" Mode="In" Type="Int32" />
@@ -427,22 +397,7 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' 
             <Parameter Name="oldcatname" Mode="In" Type="String" />
             <Parameter Name="newCatName" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="InsertAdds" EntityType="CMSModel.InsertAdd" />
         </EntityContainer>
-        <EntityType Name="InsertAdd">
-          <Key>
-            <PropertyRef Name="ADD_id" />
-          </Key>
-          <Property Name="ADD_id" Type="Int32" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="category" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="wantToPostDate" Type="DateTime" Precision="3" />
-          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="postedDate" Type="DateTime" Precision="3" />
-          <Property Name="updatedDate" Type="DateTime" Precision="3" />
-          <Property Name="dueDate" Type="DateTime" Precision="3" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -492,11 +447,11 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' 
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="CMSModel.Post">
               <MappingFragment StoreEntitySet="Post">
-                <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="post_id" ColumnName="post_id" />
                 <ScalarProperty Name="post_date" ColumnName="post_date" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
                 <ScalarProperty Name="post_description" ColumnName="post_description" />
                 <ScalarProperty Name="activity_log" ColumnName="activity_log" />
                 <ScalarProperty Name="title" ColumnName="title" />
@@ -506,7 +461,6 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' 
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="CMSModel.user">
               <MappingFragment StoreEntitySet="user">
-                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="fullname" ColumnName="fullname" />
@@ -519,21 +473,6 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' 
           <FunctionImportMapping FunctionImportName="usp_Category_delete" FunctionName="CMSModel.Store.usp_Category_delete" />
           <FunctionImportMapping FunctionImportName="usp_Category_insert" FunctionName="CMSModel.Store.usp_Category_insert" />
           <FunctionImportMapping FunctionImportName="usp_Category_update" FunctionName="CMSModel.Store.usp_Category_update" />
-          <EntitySetMapping Name="InsertAdds">
-            <EntityTypeMapping TypeName="CMSModel.InsertAdd">
-              <MappingFragment StoreEntitySet="InsertAdd">
-                <ScalarProperty Name="dueDate" ColumnName="dueDate" />
-                <ScalarProperty Name="updatedDate" ColumnName="updatedDate" />
-                <ScalarProperty Name="postedDate" ColumnName="postedDate" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="wantToPostDate" ColumnName="wantToPostDate" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="category" ColumnName="category" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="ADD_id" ColumnName="ADD_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
