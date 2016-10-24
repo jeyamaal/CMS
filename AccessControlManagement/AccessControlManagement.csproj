@@ -242,6 +242,7 @@
     <Content Include="Views\Home\ChangePassword.cshtml" />
     <Content Include="Views\Advertisement\Index.cshtml" />
     <Content Include="Views\Advertisement\Create.cshtml" />
+    <Content Include="Views\Advertisement\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
