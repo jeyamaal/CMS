@@ -33,7 +33,6 @@ namespace AccessControlManagement.Models
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<user> users { get; set; }
-        public virtual DbSet<InsertAdd> InsertAdds { get; set; }
     
         public virtual int usp_Category_delete(string catname)
         {
