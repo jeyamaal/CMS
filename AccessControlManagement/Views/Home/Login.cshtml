@@ -125,16 +125,19 @@
 
                                     <p>If you have forgotten your password you can reset it here.</p>
                                     <div class="panel-body">
-                                        <fieldset>
-                                            <div class="form-group">
+                                      
+                                       <div class="col-sm-10 col-lg-offset-2">
                                                
-                                                @Html.TextBoxFor(a=>a.email_id, new { @required = "true", @type ="email", @class = "form-control input-lg",@placeholder = "E-mail Address", @autocomplete = "off", @id = "emailID" })
-                                                <br>
-                                                <button type="button" class="btn btn-primary"  onclick="OnRecoverPassword()"> Recover Password</button>  
-
-                                               </div>
-                                        </fieldset>
-                                    </div>
+                                            @Html.TextBoxFor(a=>a.email_id, new { @required = "true", @type ="email", @class = "form-control input-lg",@placeholder = "E-mail Address", @autocomplete = "off", @id = "emailID" })
+                                            <br>  
+                                        </div>
+                                           
+                                        
+                                       
+                                         
+                                          <button type="button" class="btn btn-primary" onclick="OnRecoverPassword()"> Recover Password</button>
+             
+                                      </div>
                                 </div>
                             </div>
                         </div>
