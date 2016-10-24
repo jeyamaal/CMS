@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Management System</title>
+    <link rel="icon" href="~/favicon.png" />
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+    <div id="nav-area" class="panel panel-default pull-left">
+        <div class="panel-body">
+            <div class="row">
+                <div id="home-link" class="panel panel-default pull-left nav-clicked nav-links" data-toggle="tooltip" data-placement="left" title="Home">
+                    <div class="panel-body">
+                        <i class="fa fa-home fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="post-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Write Post">
+                    <div class="panel-body">
+                        <i class="fa fa-file-text-o fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="settings-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Settings">
+                    <div class="panel-body">
+                        <i class="fa fa-cogs fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            @*<div class="row">
+                    <div id="exit-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Logout">
+                        <div class="panel-body">
+                            <i class="fa fa-minus-circle fa-2x"></i>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+
+    <div id="site-area" class="panel panel-default">
+        <div class="panel-body" style="padding-bottom: 0px;">
+            <div id="logo-area"></div>
+            <div class="row" style="margin-left: 20px;">
+                <div id="site-main-area" class="col-sm-11 panel panel-default">
+                    <div id="loading-place" class="panel-body">
+                        <div class="row">
+                            <div id="header" class="col-sm-12 panel panel-default" style="font-family:Baskerville Old Face; color:white; background-color:#0B0758; margin-bottom: 0px;">
+                                <div class="panel-body">
+                                    <label id="nav-place"></label>
+                                    <div id="nav-time">
+                                        <label style="font-family: sans-serif"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="load-view" class="col-sm-12">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
