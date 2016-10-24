@@ -225,45 +225,56 @@ namespace AccessControlManagement.Controllers
                     if (files != null)
                     {
 
-                        using (var img = Image.FromStream(file.InputStream))
+                        var img = Image.FromStream(file.InputStream);
+
+
+                        if (img.RawFormat.Equals(ImageFormat.Png) || img.RawFormat.Equals(ImageFormat.Jpeg))
                         {
 
-                            if (img.RawFormat.Equals(ImageFormat.Png) || img.RawFormat.Equals(ImageFormat.Jpeg))
-                            {
+                            string filestring = fileName.ToString();
+                            var path = Path.Combine(Server.MapPath("/Resources/jeyamaal_images"), fileName);
+                            file.SaveAs(path);
+                            string absoulte_path = path.ToString();
+                            db_path = "\\" + GetRightPartOfPath(absoulte_path, "Resources") + "\\" + filestring;
+                   
+                        }
 
-                                string filestring = fileName.ToString();
-                                var path = Path.Combine(Server.MapPath("/Resources/jeyamaal_images"), fileName);
-                                file.SaveAs(path);
-                                string absoulte_path = path.ToString();
-                                db_path = "\\" + GetRightPartOfPath(absoulte_path, "Resources") + "\\" + filestring;
-                            }
-
-                            else
-                            {
-                                return JavaScript("<script>alert(\"Invalidformat\")</script>");
-
-                            }
+                        else
+                        {
+                            TempData["Message1"] = "Profile Updated Successfully";
+                            return JavaScript("<script>alert(\"Invalidformat\")</script>");
 
                         }
 
 
-                     }
+
+
+                    }
 
                     u.picture = db_path;
                     us.picture = u.picture;
                     db.Entry(us).State = EntityState.Modified;
                     db.SaveChanges();
+                    ViewBag.Message = "Upload successful";
+                    return RedirectToAction("AfterLogin");
 
                 }
 
-                ViewBag.Message = "Upload successful";
-                return RedirectToAction("AfterLogin");
+
+                else
+                {
+
+                    TempData["Message"] = "UnSuccess";
+                    return RedirectToAction("AfterLogin");
+
+                }
+
             }
             catch (Exception ex)
             {
-                //ViewBag.Message = "Upload failed";
-                //return RedirectToAction("Index");
-                return JavaScript("<script>alert(\"Invalidformat\")</script>");
+                
+                TempData["Message"] = "UnSuccess";
+                return RedirectToAction("AfterLogin");
             }
 
 

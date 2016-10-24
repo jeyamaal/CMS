@@ -72,7 +72,7 @@ function OnLogin(content) {
     });
 }
 
-//
+//Validation For ChangePassword
 function OnChangePassword() {
 
     var old   = $("#oldPwd").val();
@@ -91,7 +91,7 @@ function OnChangePassword() {
 
             if (data == "WrongChangePassword") {
 
-                sweetAlert("Invalid Email", "Input the correct Email Address!", "error");
+                sweetAlert("Error", "Recheck Password", "error");
             }
             else {
                 window.location.replace("AfterLogin");
