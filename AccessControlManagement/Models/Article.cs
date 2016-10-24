@@ -20,6 +20,6 @@ namespace AccessControlManagement.Models
         public string title { get; set; }
         public string content { get; set; }
     
-        public virtual Post Post { get; set; }
+        public virtual user user { get; set; }
     }
 }

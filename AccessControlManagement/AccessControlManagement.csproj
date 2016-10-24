@@ -140,6 +140,9 @@
     <Compile Include="Models\Advertisement.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdvertisementDetail.cs">
+      <DependentUpon>CMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Article.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
@@ -164,10 +167,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CMSModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\EmailForm.cs" />
-    <Compile Include="Models\InsertAdd.cs">
+    <Compile Include="Models\Comment.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmailForm.cs" />
     <Compile Include="Models\Post.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
