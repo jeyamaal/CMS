@@ -12,6 +12,7 @@ using System.IO;
 using System.Web.UI;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace AccessControlManagement.Controllers
 {
@@ -102,7 +103,7 @@ namespace AccessControlManagement.Controllers
             }
         }
 
-     public ActionResult ChangePassword(user u)
+     public ActionResult ChangePassword(string oldPwd, string conPwd,string newPwd)
      {
        if (Session["LogedUserID"] != null)
        {
@@ -110,14 +111,17 @@ namespace AccessControlManagement.Controllers
           try{
                 if (ModelState.IsValid) // this is check validity
                  {
+                        Debug.WriteLine(oldPwd);
+                        Debug.WriteLine(conPwd);
+                        Debug.WriteLine(newPwd);
+
                         user us = new user();
                         int ii = int.Parse(Session["LogedUserID"].ToString());
                         us = db.users.Find(ii);
-                        if (u.password == us.password && u.ConfirmPassword == u.newPassword)
+                        if ( us.password==oldPwd && conPwd==newPwd)
                         {
-                            string s;
-                            s = u.newPassword.ToString();
-                            us.password = u.newPassword;
+
+                            us.password = newPwd;
                             db.Entry(us).State = EntityState.Modified;
                             db.SaveChanges();
                             Session.Abandon(); // it will clear the session at the end of request
@@ -128,17 +132,17 @@ namespace AccessControlManagement.Controllers
 
                 }catch (Exception ex)
                             {
-
+                                    return Json("WrongChangePassword");
                             }
                     
          }
          else
          {
-                return RedirectToAction("Login");
-         }
+                return Json("WrongChangePassword");
+            }
 
-            return View();
-    }
+            return Json("WrongChangePassword");
+        }
 
 
 

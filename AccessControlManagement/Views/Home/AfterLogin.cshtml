@@ -10,7 +10,10 @@
 
 }
 
+<head>
 
+    <script type="text/javascript" src="~/Scripts/validation.js"></script>
+</head>
 
 
 <h2>AfterLogin</h2>
@@ -136,27 +139,25 @@
                                 <div class="panel-body">
                                     <fieldset>
                                         <div class="form-group">
-                                            @using (Html.BeginForm("ChangePassword", "Home", FormMethod.Post))
-                                            {
+                                          
                                                 <fieldset>
                                                     <legend>Change password</legend>
                                                     <div class="col-sm-offset-3">
                                                      
-                                                        @Html.PasswordFor(a => a.password,new { @required = "true", @class = "form-control input-lg", @placeholder = "Password"})
+                                                        @Html.PasswordFor(a => a.password,new { @required = "true", @class = "form-control input-lg", @placeholder = "Password",id="oldPwd"})
 
                                                         
-                                                        @Html.PasswordFor(a => a.ConfirmPassword, new { @required = "true", @class = "form-control input-lg", @placeholder = "Password" })
+                                                        @Html.PasswordFor(a => a.ConfirmPassword, new { @required = "true", @class = "form-control input-lg", @placeholder = "Password", id="newPwd"})
                                                     
                                                        
-                                                         @Html.PasswordFor(a => a.newPassword,  new { @required = "true", @class = "form-control input-lg", @placeholder = "Password" })
+                                                         @Html.PasswordFor(a => a.newPassword,  new { @required = "true", @class = "form-control input-lg", @placeholder = "Password", id = "conPwd" })
 
-                                                        <input type="submit" value="ResetPassword" />
-
-                                                    </div>
+                                                        <button type="button" class="btn btn-primary" onclick="OnChangePassword()">Change password</button>
+</div>
                                                 </fieldset>
 
 
-                                            }
+                                            
                                         </div>
 
                                     </fieldset>
@@ -206,6 +207,7 @@
 
 
  @*Graph for no of posts of month*@
+
 <script type="text/javascript" src="~/Scripts/jquery.canvasjs.min.js"></script>
 <script type="text/javascript" src="~/Scripts/graphNoOfposts.js"></Script>
 

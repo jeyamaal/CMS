@@ -70,5 +70,35 @@ function OnLogin(content) {
         }
 
     });
+}
+
+//
+function OnChangePassword() {
+
+    var old   = $("#oldPwd").val();
+    var confirm   = $("#conPwd").val();
+    var newpass = $("#newPwd").val();
+
+    console.log(old);
+    console.log(confirm);
+    console.log(newpass);
+    
+    $.ajax({
+        type: "POST",
+        url: 'ChangePassword/',
+        data: { "oldPwd": old, "conPwd": confirm, "newPwd": newpass},
+        success: function (data) {
+
+            if (data == "WrongChangePassword") {
+
+                sweetAlert("Invalid Email", "Input the correct Email Address!", "error");
+            }
+            else {
+                window.location.replace("AfterLogin");
+            }
+
+        }
+
+    });
 
 }
