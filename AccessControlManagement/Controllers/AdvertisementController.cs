@@ -37,41 +37,38 @@ namespace AccessControlManagement.Controllers
         }
 
         // GET: Advertisement/Create
-        public ActionResult Create(InsertAdd s)
+        public ActionResult Create()
         {
-            try
-            {
-                s.status = "Pending";
-                db.InsertAdds.Add(s);
-                db.SaveChanges();
-                ModelState.Clear();
 
-                ViewBag.Message = "Successfully add your addvertisment";
 
-            }
 
-            catch (Exception e)
-            {
-
-            }
+            ViewBag.category_id = new SelectList(db.Categories, "category_id", "category_name");
             return View();
-
         }
 
         // POST: Advertisement/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ADD_id,title,category_id,description,wantToPostDate,status,postedDate,updatedDate,dueDate")] AdvertisementDetail advertisementDetail)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
 
+                Guid guid = Guid.NewGuid();
+                Random random = new Random();
+                int i = random.Next();
+
+                advertisementDetail.ADD_id = i;
+                advertisementDetail.status = "Pending";
+                db.AdvertisementDetails.Add(advertisementDetail);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            ViewBag.category_id = new SelectList(db.Categories, "category_id", "category_name", advertisementDetail.category_id);
+            return View(advertisementDetail);
         }
 
         // GET: Advertisement/Edit/5
