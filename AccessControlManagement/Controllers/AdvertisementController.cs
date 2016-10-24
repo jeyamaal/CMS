@@ -1,6 +1,7 @@
 ﻿using AccessControlManagement.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,18 +12,11 @@ namespace AccessControlManagement.Controllers
     {
         CMSEntities db = new CMSEntities();
         // GET: Advertisement
+        //User can view the history 
         public ActionResult Index()
         {
-            List<object> myModel = new List<object>();
-            myModel.Add(db.InsertAdds.ToList());
-
-
-            if (myModel == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(myModel);
+            var advertisementDetails = db.AdvertisementDetails.Include(b=>b.Category1);
+            return View(advertisementDetails.ToList());
         }
 
         // GET: Advertisement/Details/5
