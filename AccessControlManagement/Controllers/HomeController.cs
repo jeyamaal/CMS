@@ -58,7 +58,7 @@ namespace AccessControlManagement.Controllers
 
                         Session["LogedUserID"] = v.user_id.ToString();
                         Session["LogedUserFullname"] = v.username.ToString();
-                        return RedirectToAction("AfterLogin");
+                        return RedirectToAction("Index", "Post");
                     }
 
                     else
