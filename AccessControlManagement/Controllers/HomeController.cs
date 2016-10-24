@@ -56,8 +56,8 @@ namespace AccessControlManagement.Controllers
 
                 if (ModelState.IsValid)
                 {
-                   
-                        var v = db.users.Where(a => a.username.Equals(un) && a.password.Equals(pwd) && a.status.Equals("active")).FirstOrDefault();
+
+                    var v = db.users.Where(a => a.username.Equals(un) && a.password.Equals(pwd) && a.status.Equals("active")).FirstOrDefault();
 
                         if (v != null)
 

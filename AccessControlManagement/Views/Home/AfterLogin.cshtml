@@ -142,12 +142,13 @@
                                                     <legend>Change password</legend>
                                                     <div class="col-sm-offset-3">
                                                      
-                                                        @Html.PasswordFor(a => a.password)
+                                                        @Html.PasswordFor(a => a.password,new { @required = "true", @class = "form-control input-lg", @placeholder = "Password"})
 
                                                         
-                                                        @Html.PasswordFor(a => a.ConfirmPassword)
+                                                        @Html.PasswordFor(a => a.ConfirmPassword, new { @required = "true", @class = "form-control input-lg", @placeholder = "Password" })
                                                     
-                                                        @Html.PasswordFor(a => a.newPassword)
+                                                       
+                                                         @Html.PasswordFor(a => a.newPassword,  new { @required = "true", @class = "form-control input-lg", @placeholder = "Password" })
 
                                                         <input type="submit" value="ResetPassword" />
 
