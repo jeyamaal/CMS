@@ -72,25 +72,37 @@ namespace AccessControlManagement.Controllers
         }
 
         // GET: Advertisement/Edit/5
-        public ActionResult Edit(int id)
+        // User can update the advertisemnet details 
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AdvertisementDetail advertisementDetail = db.AdvertisementDetails.Find(id);
+            if (advertisementDetail == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.category_id = new SelectList(db.Categories, "category_id", "category_name", advertisementDetail.category_id);
+            return View(advertisementDetail);
         }
 
         // POST: Advertisement/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "ADD_id,title,category_id,description,wantToPostDate,status,postedDate,updatedDate,dueDate")] AdvertisementDetail advertisementDetail)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
+                db.Entry(advertisementDetail).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.category_id = new SelectList(db.Categories, "category_id", "category_name", advertisementDetail.category_id);
+            return View(advertisementDetail);
         }
 
         // GET: Advertisement/Delete/5
