@@ -44,16 +44,17 @@
 
 
             <div class="form-group">
-                @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+               
+                Title
+                        <div class="col-md-10">
                     @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.category_id, "category_id", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+             Category
+                          <div class="col-md-10">
                     @Html.DropDownList("category_id", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
                 </div>
@@ -61,11 +62,12 @@
 
 
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.wantToPostDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+            <div align="left">
+                Wanted to post
+
+                <div align="center">
                     @*@Html.EditorFor(model => model.wantToPostDate, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.wantToPostDate, "", new { @class = "text-danger" })*@
+            @Html.ValidationMessageFor(model => model.wantToPostDate, "", new { @class = "text-danger" })*@
 
                     @Html.TextBoxFor(model => model.wantToPostDate, new { type = "date" })
                 </div>

@@ -244,6 +244,7 @@
     <Content Include="Views\Advertisement\Create.cshtml" />
     <Content Include="Views\Advertisement\Details.cshtml" />
     <Content Include="Views\Advertisement\Edit.cshtml" />
+    <Content Include="Views\Advertisement\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
