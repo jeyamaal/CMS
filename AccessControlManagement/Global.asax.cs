@@ -15,7 +15,7 @@ namespace AccessControlManagement
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            CMS.BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
 }
