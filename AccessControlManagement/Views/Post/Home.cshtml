@@ -69,6 +69,16 @@
         text-align: justify;
     }
 
+    .c1 {
+        font-size: 1.2em;
+        color: #1abc9c;
+    }
+
+    .c2 {
+        font-size: 0.9em;
+        margin-left:15px;
+    }
+
     .form-style-5 .number {
         background: #1abc9c;
         color: #fff;
@@ -158,12 +168,13 @@
 
                         if (comment.post_id == item.post_id)
                         {
-                            <span class="number">C</span>@Html.DisplayFor(modelItem => comment.user.username)
+                            <font class="c1">@Html.DisplayFor(modelItem => comment.user.username)</font>
                             <br />
-                            @Html.DisplayFor(modelItem => comment.description)
+                            <div class="c2">@Html.DisplayFor(modelItem => comment.description)</div>
+                            <br />
                         }
-                        
-                        
+
+
                     }
                     <legend><span class="number">C</span></legend>                                     
                     @Html.TextBox("txtComment") <input type="submit" value="Comment" />
