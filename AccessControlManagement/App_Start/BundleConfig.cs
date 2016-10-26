@@ -32,6 +32,7 @@ namespace CMS
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/style.css",
+                      "~/Content/Category.css",
                       "~/Content/alertifyjs/themes/alertify.css",
                       "~/Content/alertifyjs/themes/alertify.min.css",
                       "~/Content/alertifyjs/themes/alertify.rtl.css",

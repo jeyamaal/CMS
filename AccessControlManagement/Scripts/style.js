@@ -4,7 +4,7 @@
 
         $(this).click(function () {
 
-            if (index != 4) {
+            if (index != 3) {
                 $("#home-link").css('color', '');
                 $("#home-link").css('background-color', '');
 
@@ -22,27 +22,43 @@
                     $("#header").fadeTo("1000", 0, function () { });
                     $("#load-view").fadeTo("1000", 0, function () {
 
-                        if (index == 0) {
-
-
-                        } else if (index == 1) {
-                                
-                        } else if (index == 2) {
-                            //Settings
+                        if (index == 0)
+                        {
                             $("#load-view").load("/Categories/Index", function () {
-                                CategorySaveChanges();
+                                //CategorySaveChanges();
                                 //$(".add-new-btn").removeAttr("id");
-                                //$(".add-new-btn").attr("data-target", "#add-new-usedby-model");
+                                //$(".add-new-btn").attr("data-target", "#add-modal-category");
 
                                 //$("#header").fadeTo("1000", 1, function () { });
                                 //$("#load-view").fadeTo("1000", 1, function () {
-                                //    $("#loading-place").removeClass("still-loading");
                                 //    $(".nav-links").css("pointer-events", "");
                                 //});
                             }).error(function (a) {
 
                             });
-                        } else {
+                        }
+                        else if (index == 1)
+                        {
+                                
+                        }
+                        else if (index == 2)
+                        {
+                            //Settings
+                            $("#load-view").load("/Categories/_Setting", {partial: true }, function () {
+                                CategorySaveChanges();
+                                $(".add-new-btn").removeAttr("id");
+                                $(".add-new-btn").attr("data-target", "#add-modal-category");
+
+                                $("#header").fadeTo("1000", 1, function () { });
+                                $("#load-view").fadeTo("1000", 1, function () {
+                                    $(".nav-links").css("pointer-events", "");
+                                });
+                            }).error(function (a) {
+
+                            });
+                        }
+                        else
+                        {
 
                         }
                     });

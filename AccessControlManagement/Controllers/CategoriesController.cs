@@ -17,51 +17,60 @@ namespace AccessControlManagement.Controllers
         // GET: Categories
         public ActionResult Index()
         {
+        //    List<object> myModel = new List<object>();
+        //    myModel.Add(db.Categories.ToList());
+        //    myModel.Add(db.Posts.ToList());
+        //    //myModel.Add(db.ArticleHasAds.ToList());
+
+           return View("Index");
+        }
+
+        // GET: Categories
+        public ActionResult _Setting()
+        {
             List<object> myModel = new List<object>();
             myModel.Add(db.Categories.ToList());
             myModel.Add(db.Posts.ToList());
-            myModel.Add(db.ArticleHasAds.ToList());
+            //myModel.Add(db.ArticleHasAds.ToList());
 
             return PartialView(myModel);
         }
 
-        // GET: Categories/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult AddNewCategory(string category_name)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var id = (from c in db.Categories
+                          select c.category_id).ToList();
+
+                var countID = id.Count();
+
+                if (countID <= 0)
+                {
+                    countID = countID + 1;
+                    int resultInsertCategory = db.usp_Category_insert(countID, category_name);
+
+                    if (resultInsertCategory == 1)
+                    {
+                        return Content("Success");
+                    }
+                    else
+                    {
+                        return Content("Not Inserted");
+                    }
+                }
+                else
+                {
+                    return Content("Number of count");
+                }
+                
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            catch
             {
-                return HttpNotFound();
+                return Content("Error");
             }
-            return View(category);
         }
-
-        // GET: Categories/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Categories/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "category_id,category_name,status")] Category category)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Categories.Add(category);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(category);
-        }
+        
         [HttpPost]
         public ActionResult Update(string oldCategoryName, string newCategoryName)
         {
@@ -104,62 +113,6 @@ namespace AccessControlManagement.Controllers
             {
                 return Content("Error to load the Procedure");
             }
-        }
-        // GET: Categories/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
-        }
-
-        // POST: Categories/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "category_id,category_name,status")] Category category)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(category);
-        }
-
-        // GET: Categories/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
-        }
-
-        // POST: Categories/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
