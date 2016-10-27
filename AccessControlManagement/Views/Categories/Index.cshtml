@@ -1,4 +1,9 @@
-﻿@{ 
-    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
-}
+﻿@if (Session["LogedUserFullname"] != null)
+{
+
+   Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+
+
+
 <h2>Index</h2>
+ }

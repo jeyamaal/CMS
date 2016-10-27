@@ -14,15 +14,29 @@ namespace AccessControlManagement.Controllers
     {
         private CMSEntities db = new CMSEntities();
 
+     
+
         // GET: Categories
         public ActionResult Index()
         {
-        //    List<object> myModel = new List<object>();
-        //    myModel.Add(db.Categories.ToList());
-        //    myModel.Add(db.Posts.ToList());
-        //    //myModel.Add(db.ArticleHasAds.ToList());
+            //    List<object> myModel = new List<object>();
+            //    myModel.Add(db.Categories.ToList());
+            //    myModel.Add(db.Posts.ToList());
+            //    //myModel.Add(db.ArticleHasAds.ToList());
 
-           return View("Index");
+            if (Session["LogedUserID"] != null)
+            {
+
+
+                return View("Index");
+
+            }
+
+            else
+            {
+
+                return RedirectToAction("Login","Home");
+            }
         }
 
         // GET: Categories
