@@ -93,6 +93,20 @@
         border-radius: 15px 15px 15px 0px;
     }
 
+    .form-style-5 .number1 {
+        background: #1abc9c;
+        color: #fff;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        font-size: 1em;
+        margin-right: 4px;
+        line-height: 30px;
+        text-align: center;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+        border-radius: 15px 15px 15px 0px;
+    }
+
     .form-style-5 input[type="submit"],
     .form-style-5 input[type="button"] {
         position: relative;
@@ -165,7 +179,6 @@
                 <div id=@item.post_id.ToString() class="collapse">
                     @foreach (var comment in commentList)
                     {
-
                         if (comment.post_id == item.post_id)
                         {
                             <font class="c1">@Html.DisplayFor(modelItem => comment.user.username)</font>
@@ -174,9 +187,8 @@
                             <br />
                         }
 
-
                     }
-                    <legend><span class="number">C</span></legend>                                     
+                    <legend><span class="number1">C</span>@TempData["User"]</legend>                                     
                     @Html.TextBox("txtComment") <input type="submit" value="Comment" />
                 </div>
             </div>

@@ -177,30 +177,42 @@ namespace AccessControlManagement.Controllers
             return View(post);            
         }
 
+        [HttpGet]
         public ActionResult Home()
         {
             if (Session["LogedUserID"] != null)
             {
-                user userId = new user();
+                //To display current username
+                user user = new user();
                 int loginId = int.Parse(Session["LogedUserID"].ToString());
-                //userId = database.users.Find(loginId);
-
-                //var id = loginId.ToString();
-                var loggedUserName = (from p in database.users where p.user_id == loginId  select p).ToList();
-
-               // var v = database.users.Find(userId);
-
+                user = database.users.Find(loginId);
+                TempData["User"] = user.username;
+                
+                //To display the posts
                 var postList = (from p in database.Posts where p.activity_log.Equals("Accepted") orderby p.post_id ascending select p).ToList();
+
+                //To display the comments for posts
                 var commentlist = (from c in database.Comments select c).ToList();
+
                 List<Object> myModel = new List<object>();
                 myModel.Add(postList);
                 myModel.Add(commentlist);
-                ViewBag.loggedUser = loggedUserName;
+
                 return View(myModel);
             }
 
             return View();
         }
+
+        //[HttpPost]
+        //public ActionResult Home(Comment commentPost, FormCollection form)
+        //{
+        //    user userId = new user();
+        //    Post post = new Post();
+
+        //    int loginId = int.Parse(Session["LogedUserID"].ToString());
+        //    userId = database.users.Find(loginId);
+        //}
 
         public ActionResult MyPost()
         {
