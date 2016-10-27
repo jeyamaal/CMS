@@ -16,6 +16,7 @@
         <AssociationConnector Association="CMSModel.fk_ahd" ManuallyRouted="false" />
         <AssociationConnector Association="CMSModel.fk_p1" ManuallyRouted="false" />
         <AssociationConnector Association="CMSModel.fk_p" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CMSModel.InsertAdd" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
