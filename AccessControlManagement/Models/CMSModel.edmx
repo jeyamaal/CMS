@@ -47,6 +47,22 @@
           <Property Name="category_name" Type="varchar" MaxLength="200" />
           <Property Name="status" Type="varchar" MaxLength="200" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.InsertAdd' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="InsertAdd">
+          <Key>
+            <PropertyRef Name="ADD_id" />
+          </Key>
+          <Property Name="ADD_id" Type="int" Nullable="false" />
+          <Property Name="title" Type="varchar(max)" />
+          <Property Name="category" Type="varchar(max)" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="wantToPostDate" Type="datetime" />
+          <Property Name="status" Type="varchar" MaxLength="50" />
+          <Property Name="postedDate" Type="datetime" />
+          <Property Name="updatedDate" Type="datetime" />
+          <Property Name="dueDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Post">
           <Key>
             <PropertyRef Name="post_id" />
@@ -72,7 +88,6 @@
           <Property Name="password" Type="varchar" MaxLength="50" />
           <Property Name="email_id" Type="varchar" MaxLength="100" />
           <Property Name="picture" Type="varchar" MaxLength="1000" />
-          <Property Name="role" Type="varchar" MaxLength="20" />
           <Property Name="status" Type="varchar" MaxLength="15" />
         </EntityType>
         <Association Name="fk_a">
@@ -175,6 +190,19 @@
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InsertAdd" EntityType="Self.InsertAdd" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [InsertAdd].[ADD_id] AS [ADD_id], 
+    [InsertAdd].[title] AS [title], 
+    [InsertAdd].[category] AS [category], 
+    [InsertAdd].[description] AS [description], 
+    [InsertAdd].[wantToPostDate] AS [wantToPostDate], 
+    [InsertAdd].[status] AS [status], 
+    [InsertAdd].[postedDate] AS [postedDate], 
+    [InsertAdd].[updatedDate] AS [updatedDate], 
+    [InsertAdd].[dueDate] AS [dueDate]
+    FROM [dbo].[InsertAdd] AS [InsertAdd]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="fk_a" Association="Self.fk_a">
             <End Role="Post" EntitySet="Post" />
             <End Role="Article" EntitySet="Article" />
@@ -277,8 +305,7 @@
           <Property Name="email_id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="picture" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Posts" Relationship="Self.fk_p" FromRole="user" ToRole="Post" />
-          <Property Name="status" MaxLength="15" FixedLength="false" Unicode="false" Type="String" />
-          <Property Name="role" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="fk_ad">
           <End Role="Post" Type="Self.Post" Multiplicity="1">
@@ -400,7 +427,22 @@
             <Parameter Name="oldcatname" Mode="In" Type="String" />
             <Parameter Name="newCatName" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="InsertAdds" EntityType="CMSModel.InsertAdd" />
         </EntityContainer>
+        <EntityType Name="InsertAdd">
+          <Key>
+            <PropertyRef Name="ADD_id" />
+          </Key>
+          <Property Name="ADD_id" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="category" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="wantToPostDate" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="postedDate" Type="DateTime" Precision="3" />
+          <Property Name="updatedDate" Type="DateTime" Precision="3" />
+          <Property Name="dueDate" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -447,10 +489,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="CMSModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="post_date" ColumnName="post_date" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="post_description" ColumnName="post_description" />
+                <ScalarProperty Name="activity_log" ColumnName="activity_log" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="CMSModel.user">
               <MappingFragment StoreEntitySet="user">
-                <ScalarProperty Name="role" ColumnName="role" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="username" ColumnName="username" />
@@ -464,17 +519,18 @@
           <FunctionImportMapping FunctionImportName="usp_Category_delete" FunctionName="CMSModel.Store.usp_Category_delete" />
           <FunctionImportMapping FunctionImportName="usp_Category_insert" FunctionName="CMSModel.Store.usp_Category_insert" />
           <FunctionImportMapping FunctionImportName="usp_Category_update" FunctionName="CMSModel.Store.usp_Category_update" />
-          <EntitySetMapping Name="Posts">
-            <EntityTypeMapping TypeName="IsTypeOf(CMSModel.Post)">
-              <MappingFragment StoreEntitySet="Post">
-                <ScalarProperty Name="image" ColumnName="image" />
+          <EntitySetMapping Name="InsertAdds">
+            <EntityTypeMapping TypeName="CMSModel.InsertAdd">
+              <MappingFragment StoreEntitySet="InsertAdd">
+                <ScalarProperty Name="dueDate" ColumnName="dueDate" />
+                <ScalarProperty Name="updatedDate" ColumnName="updatedDate" />
+                <ScalarProperty Name="postedDate" ColumnName="postedDate" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="wantToPostDate" ColumnName="wantToPostDate" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="category" ColumnName="category" />
                 <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="activity_log" ColumnName="activity_log" />
-                <ScalarProperty Name="post_description" ColumnName="post_description" />
-                <ScalarProperty Name="category_id" ColumnName="category_id" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="post_date" ColumnName="post_date" />
-                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="ADD_id" ColumnName="ADD_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
