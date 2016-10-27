@@ -280,12 +280,10 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\AfterLogin.cshtml" />
     <Content Include="Views\Register\Register.cshtml" />
-    <Content Include="Views\Home\ChangePassword.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Shared\_Admin_Layout.cshtml" />
     <Content Include="Views\Categories\_Setting.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
-    <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -30,7 +30,7 @@
             <li><a href="#">Reports</a></li>
             <li><a href="#">Change Template</a></li>
             @Html.ActionLink("Deactive Account", "DeactiveAccount", "Home",
-           new { onclick = "return confirm('Are you sure you wish to Deactive the Account');" })
+            new { onclick = "return confirm('Are you sure you wish to Deactive the Account');" })
             <li><a href="#" id="test-1">FeedBack</a></li>
 
         </ul>
@@ -147,13 +147,13 @@
                                                     <legend>Change password</legend>
                                                     <div class="col-sm-offset-3">
                                                      
-                                                        @Html.PasswordFor(a => a.password,new { @required = "true", @class = "form-control input-lg", @placeholder = "Password",id="oldPwd"})
+                                                        @Html.PasswordFor(a => a.password,new { @required = "true", @class = "form-control input-lg", @placeholder = "Current Password",id="oldPwd"})
 
                                                         
-                                                        @Html.PasswordFor(a => a.ConfirmPassword, new { @required = "true", @class = "form-control input-lg", @placeholder = "Password", id="newPwd"})
+                                                        @Html.PasswordFor(a => a.ConfirmPassword, new { @required = "true", @class = "form-control input-lg", @placeholder = "New Password", id="newPwd"})
                                                     
                                                        
-                                                         @Html.PasswordFor(a => a.newPassword,  new { @required = "true", @class = "form-control input-lg", @placeholder = "Password", id = "conPwd" })
+                                                         @Html.PasswordFor(a => a.newPassword,  new { @required = "true", @class = "form-control input-lg", @placeholder = "Confirm Password", id = "conPwd" })
 
                                                         <button type="button" class="btn btn-primary" onclick="OnChangePassword()">Change password</button>
 </div>
