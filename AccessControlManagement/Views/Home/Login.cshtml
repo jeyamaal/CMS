@@ -1,14 +1,18 @@
 ﻿@model AccessControlManagement.Models.user
 
 @{
-    ViewBag.Title = "Login";
-   
+     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <head>
-     @*@Styles.Render("~/Content/bootstrapcss")*@
+    @*@Styles.Render("~/Content/bootstrapcss")*@
     <link href="@Url.Content("~/Content/Login.css")" rel="stylesheet" type="text/css" />
- 
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="~/Scripts/validation.js"></script>
+
 </head>
 
 <body>
@@ -28,47 +32,57 @@
                         </div>
                         <hr>
                     </div>
-              
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            @using (Html.BeginForm("Login", "Home", FormMethod.Post))
-                            {
-                                //this  is for create form tag
-                                @Html.AntiForgeryToken()
 
-                                // this is for prevent CSRF attack
-                                @Html.ValidationSummary(true)
-
-                                if (@ViewBag.Message != null)
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                @using (Html.BeginForm("Login", "Home", FormMethod.Post))
                                 {
-                                    <div style="border: 1px solid red">
-                                        @ViewBag.Message
+                                    //this  is for create form tag
+                                    @Html.AntiForgeryToken()
+
+                                    // this is for prevent CSRF attack
+                                    @Html.ValidationSummary(true)
+
+                                    if (@ViewBag.Message != null)
+                                    {
+                                        <div style="border: 1px solid red">
+                                            @ViewBag.Message
+                                        </div>
+                                    }
+
+                                    <div class="col-sm-6 col-sm-offset-3">
+
+                                        <div class="form-group">
+
+                                            @Html.TextBoxFor(a => a.username, new { @required = "true", @class = "form-control", @placeholder = "User name", @tabindex = "1", @size = "35", @id = "username", @autocomplete = "off" })
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.PasswordFor(a => a.password, new { @class = "form-control ", @required = "true", @placeholder = "Password", @tabindex = "1", @id = "password" })
+                                        </div>
+
+
+                                        <div class="form-group text-center">
+                                            <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                            <label for="remember"> Remember Me</label>
+                                        </div>
+
                                     </div>
-                                }
 
-
-                                <div class="form-group">
-                                   
-                                    @Html.TextBoxFor(a => a.username, new { @required = "true", @class = "form-control", @placeholder = "User name", @tabindex = "1", @size = "35" })
-                                  
-                                </div>
-
-                                    <div class="form-group">
-                                        @Html.PasswordFor(a => a.password, new { @class = "form-control ", @required = "true", @placeholder = "Password", @tabindex = "1" })
-                                    </div>
-
-
-
-                                    <div class="form-group text-center">
-                                        <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-                                        <label for="remember"> Remember Me</label>
-                                    </div>
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">
-                                                <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                                <button type="button" id="login_submit" onclick="OnLogin(this)" tabindex="4" class="form-control btn btn-login" value="Log In">Log In </button>
+
+
                                             </div>
+
+                                            <div class="col-sm-6 col-sm-offset-5">
+                                                <img id="loading-image" src="~/Resources/jeyamaal_images/loding_login.gif" alt="Loading..." />
+                                            </div>
+
                                         </div>
                                     </div>
 
@@ -83,19 +97,20 @@
                                         </div>
                                     </div>
 
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
+
                 </div>
-                
             </div>
         </div>
     </div>
-   </div>
 
 
 
     <!--modal-->
+    <!--RecoverPassword-->
     <div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -111,19 +126,15 @@
 
                                     <p>If you have forgotten your password you can reset it here.</p>
                                     <div class="panel-body">
-                                        <fieldset>
-                                            <div class="form-group">
-                                                @using (Html.BeginForm("RecoverPassword", "Home", FormMethod.Post))
-                                                {
-                                                    @Html.TextBoxFor(a => a.email_id,new { @class= "form-control input-lg", @placeholder = "E-mail Address" })
 
-                                                  
+                                        <div class="col-sm-10 col-lg-offset-2">
 
-                                                    <input class="btn btn-lg btn-primary btn-block" value="Send My Password" type="submit">
-                                                }
-                                            </div>
+                                            @Html.TextBoxFor(a => a.email_id, new { @required = "true", @type = "email", @class = "form-control input-lg", @placeholder = "E-mail Address", @autocomplete = "off", @id = "emailID" })
+                                            <br>
+                                        </div>
 
-                                        </fieldset>
+                                        <button type="button" class="btn btn-primary" onclick="OnRecoverPassword()"> Recover Password</button>
+
                                     </div>
                                 </div>
                             </div>
@@ -138,11 +149,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 </body>
 
 
@@ -150,5 +156,19 @@
 @* This below line is for create javascript section *@
 
 @section Scripts{
-    @Scripts.Render("~/bundles/jqueryval")
+   @Scripts.Render("~/bundles/jqueryval")
+   @Scripts.Render("~/bundles/jquery")
+   @Scripts.Render("~/bundles/bootstrap")
+
+<script onload="javascript: document.getElementById('loading-image').style.display = 'none'" src="~/Scripts/jquery-1.10.2.min.js">    </script>
+
+<script>
+    $("#password").keyup(function (event) {
+        if (event.keyCode == 13) {
+            $("#login_submit").click();
+        }
+    });
+
+</script>
+
 }

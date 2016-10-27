@@ -10,13 +10,45 @@
 
 }
 
+<head>
 
+    <script type="text/javascript" src="~/Scripts/validation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+</head>
 
 
 <h2>AfterLogin</h2>
 
 @if (Session["LogedUserFullname"] != null)
 {
+    
+    <div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#" data-target="#profPicModal" data-toggle="modal">Change Profile Picture</a>
+            <li><a href="#" data-target="#ChangePasswordModal" data-toggle="modal" >Change Password</a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Change Template</a></li>
+            @Html.ActionLink("Deactive Account", "DeactiveAccount", "Home",
+           new { onclick = "return confirm('Are you sure you wish to Deactive the Account');" })
+            <li><a href="#" id="test-1">FeedBack</a></li>
+
+        </ul>
+    </div>
+
+
+ <div class="col-sm-offset-3">
+  
+     <button type="button" class="btn-group-lg" onclick="printpage()">Print</button>
+
+     <div id="chartContainer" style="height:300px;width: 100%; resize: both;overflow: auto;padding:10px;border:10px ridge yellowgreen;">
+     </div>
+   
+</div>
+
+
+    <div>  
+
     <text>
         Welcome @Session["LogedUserFullname"].ToString()
     </text>
@@ -24,7 +56,7 @@
     <br>
     <br>
     <text>
-        Your email is @Html.DisplayFor(model=>model.email_id)
+        Your email is @Html.DisplayFor(model=>model.email_id, new { @fontcolor ="blue"})
     </text>
     <br>
     <br>
@@ -32,4 +64,193 @@
     <text>
         Your username is @Html.DisplayFor(model => model.username)
     </text>
+
+  </div>
+
+}
+
+ <!--modal-->
+<!--Changa Profile picture-->
+<div id="profPicModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h1 class="text-center">Change Profile Picture</h1>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <p>Smile Please.</p>
+                                <div class="panel-body">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            @using (Html.BeginForm("ChangeProfilePicture", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                            {
+                                                <fieldset>
+                                                    <legend>Upload a file</legend>
+                                                    <div class="col-sm-offset-3">
+                                                       <input type="file" name="file" id="imgInp" />
+                                                    </div>
+                                                    <br>
+                                                    <img id="blah" src="~/Resources/jeyamaal_images/prof-pic.png" alt="your image" height="100" width="100" />
+                                                    <div class="editor-field">
+                                                        
+                                                        <input class="btn btn-lg btn-info" value="Change Profile Picture" type="submit">
+                                                       
+                                                    </div>
+                                                </fieldset>
+
+
+                                            }
+                                        </div>
+
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ <!--modal-->
+<!--Changa Password-->
+<div id="ChangePasswordModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h1 class="text-center">Change Password </h1>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <p>Smile Please.</p>
+                                <div class="panel-body">
+                                    <fieldset>
+                                        <div class="form-group">
+                                          
+                                                <fieldset>
+                                                    <legend>Change password</legend>
+                                                    <div class="col-sm-offset-3">
+                                                     
+                                                        @Html.PasswordFor(a => a.password,new { @required = "true", @class = "form-control input-lg", @placeholder = "Password",id="oldPwd"})
+
+                                                        
+                                                        @Html.PasswordFor(a => a.ConfirmPassword, new { @required = "true", @class = "form-control input-lg", @placeholder = "Password", id="newPwd"})
+                                                    
+                                                       
+                                                         @Html.PasswordFor(a => a.newPassword,  new { @required = "true", @class = "form-control input-lg", @placeholder = "Password", id = "conPwd" })
+
+                                                        <button type="button" class="btn btn-primary" onclick="OnChangePassword()">Change password</button>
+</div>
+                                                </fieldset>
+
+
+                                            
+                                        </div>
+
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*Validation for Image upload*@
+
+@if (TempData["Message"] != null)
+{
+    <script type="text/javascript">
+
+        sweetAlert("Error", "Please Choose an image file", "error");
+
+    </script>
+}
+
+
+
+
+
+
+@section Scripts{
+<script>
+
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function () {
+        readURL(this);
+    });
+
+ 
+</script>
+
+
+ @*Graph for no of posts of month*@
+
+<script type="text/javascript" src="~/Scripts/jquery.canvasjs.min.js"></script>
+<script type="text/javascript" src="~/Scripts/graphNoOfposts.js"></Script>
+<script> //Printing Html page
+    
+    function printpage() {
+
+      //var doc = new jsPDF()
+
+        var doc = new jsPDF();
+        var elementHandler = {
+            '#ignorePDF': function (element, renderer) {
+                return true;
+            }
+        };
+
+        var source = window.document.getElementsByTagName("chartContainer")[0];
+        doc.fromHTML(
+            source,
+            15,
+            15,
+            {
+                'width': 180, 'elementHandlers': elementHandler
+            });
+
+        doc.output("dataurlnewwindow");
+
+    }
+    </script> 
+
+
 }

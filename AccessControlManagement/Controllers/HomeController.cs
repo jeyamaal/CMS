@@ -8,6 +8,11 @@ using AccessControlManagement.Controllers;
 using System.Data.Entity;
 using System.Web.Security;
 using System.Net.Mail;
+using System.IO;
+using System.Web.UI;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace AccessControlManagement.Controllers
 {
@@ -35,43 +40,51 @@ namespace AccessControlManagement.Controllers
             return View();
         }
 */
-
+      
         public ActionResult Login()
         {
             return View();
         }
 
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(user u)
+       
+     
+          [HttpPost]
+      //  [ValidateAntiForgeryToken]
+        public ActionResult Login(string un,string pwd)
         {
-            // this action is for handle post (login)
-            if (ModelState.IsValid) // this is check validity
+            try
             {
-                using (CMSEntities cm= new CMSEntities())
+
+                if (ModelState.IsValid)
                 {
-                    var v = cm.users.Where(a => a.username.Equals(u.username) && a.password.Equals(u.password)).FirstOrDefault();
-                    if (v != null)
-                    {
 
+                    var v = db.users.Where(a => a.username.Equals(un) && a.password.Equals(pwd) && a.status.Equals("active")).FirstOrDefault();
 
-                        Session["LogedUserID"] = v.user_id.ToString();
-                        Session["LogedUserFullname"] = v.username.ToString();
-                        return RedirectToAction("AfterLogin");
-                    }
+                        if (v != null)
 
-                    else
-                    {
-                        TempData["Message"] = "Check user name or password";
-                        return View(u);
-                    }
+                        {
+                            Session["LogedUserID"] = v.user_id.ToString();
+                            Session["LogedUserFullname"] = v.username.ToString();
+                            return RedirectToAction("AfterLogin");
+                        }
 
+                        else if(v==null)
+                        {
+                            return Json("WrongCredits");
 
+                        }
+                    
                 }
+                return RedirectToAction("AfterLogin");
+
             }
-            return View(u);
-        }
+            catch (Exception ex) {
+                return Json("WrongCredits");
+            }
+
+       }
+
+
       
 
         public ActionResult AfterLogin()
@@ -81,10 +94,8 @@ namespace AccessControlManagement.Controllers
           if (Session["LogedUserID"] != null)
             {
                int  i =  int.Parse(Session["LogedUserID"].ToString());
-
                user u = db.users.Find(i);
-
-                return View(u);
+               return View(u);
             }
             else
             {
@@ -92,163 +103,233 @@ namespace AccessControlManagement.Controllers
             }
         }
 
+     public ActionResult ChangePassword(string oldPwd, string conPwd,string newPwd)
+     {
+       if (Session["LogedUserID"] != null)
+       {
 
+          try{
+                if (ModelState.IsValid) // this is check validity
+                 {
+                        Debug.WriteLine(oldPwd);
+                        Debug.WriteLine(conPwd);
+                        Debug.WriteLine(newPwd);
 
-       
-
-
-        public ActionResult ChangePassword(user u)
-        {
-            if (Session["LogedUserID"] != null)
-
-            {
-
-              if (ModelState.IsValid) // this is check validity
-                {
-
-                using (CMSEntities cm = new CMSEntities())
-                {
-                    user us = new user();
-
-                  
-                       
-                      try
+                        user us = new user();
+                        int ii = int.Parse(Session["LogedUserID"].ToString());
+                        us = db.users.Find(ii);
+                        if ( us.password==oldPwd && conPwd==newPwd)
                         {
-                            int ii = int.Parse(Session["LogedUserID"].ToString());
-                            us = db.users.Find(ii);
 
-                       
+                            us.password = newPwd;
+                            db.Entry(us).State = EntityState.Modified;
+                            db.SaveChanges();
+                            Session.Abandon(); // it will clear the session at the end of request
+                            return RedirectToAction("Login", "Home");
+                        
+                        }
+                  }
 
-
-                            //if (u.password==us.password && u.ConfirmPassword==u.newPassword)
-                            //{
-
-                            //    string s;
-
-                            //    s = u.newPassword.ToString();
-
-                            //    us.password = u.newPassword;
-
-
-                            //    db.Entry(us).State = EntityState.Modified;
-                            //    db.SaveChanges();
-                              
-                            //    // TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
-
-                            //    return View("ChangePassword");
-
-                            //}
-
-                            //else
-                            //{
-                            //    TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
-
-                            //}
-
-
-                         }
-
-                            catch (Exception ex)
+                }catch (Exception ex)
                             {
-
+                                    return Json("WrongChangePassword");
                             }
-
-
-                      }
-               }
+                    
+         }
+         else
+         {
+                return Json("WrongChangePassword");
             }
 
-            else
-            {
-                return RedirectToAction("Login");
-            }
-
-            return View();
-
+            return Json("WrongChangePassword");
         }
 
 
 
         public ActionResult logout()
         {
+             Session.Abandon(); // it will clear the session at the end of request
+             return RedirectToAction("Login", "Home");
+        }
 
-           
-            Session.Abandon(); // it will clear the session at the end of request
-            
-            return RedirectToAction("Login", "Home");
+
+        [HttpPost]
+        public ActionResult RecoverPassword(string email )
+        {
+          try{
+                var user = (from u1 in db.users
+                            where u1.email_id == email
+                            select u1).ToList(); // shangavi created
+
+                if (user != null) // shangavi changed v to user
+                {
+                    var emailId = db.users.Where(a => a.email_id.Equals(email)).FirstOrDefault();
+                    string pwd = emailId.password;
+
+                    if (ModelState.IsValid)
+                    {
+                        MailMessage mail = new MailMessage();
+                        mail.To.Add(email);
+                        TempData["notice"] = "Check your mail password is" + "  " +pwd;
+                        mail.From = new MailAddress("sender@outlook.com");
+                        mail.Subject = "Recover Password";
+                        string Body = "Your password is" + "  " +pwd;
+                        mail.Body = Body;
+                        mail.IsBodyHtml = true;
+                        SmtpClient smtp = new SmtpClient();
+                        smtp.Host = "smtp.gmail.com";
+                        smtp.Port = 587;
+                        smtp.UseDefaultCredentials = false;
+                        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        smtp.Credentials = new System.Net.NetworkCredential("ranjaraman5", "ranja123");// Enter seders User name and password
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                        
+                        return View("Login");
+                    }
+                 }
+
+                else
+                {
+                   return Json("WrongEmail");
+                }
+            }
+            catch (Exception ex) {
+                   return Json("WrongEmail");
+             }
+
+            return Json("WrongEmail");
 
         }
 
-        public ActionResult RecoverPassword(user u)
+        public ActionResult ChangeProfilePicture()
         {
+            return View();
+        }
 
-            if (ModelState.IsValid) // this is check validity
+        [HttpPost]
+        public ActionResult ChangeProfilePicture(HttpPostedFileBase file, user u)
+        {
+           try
             {
-                using (CMSEntities cm = new CMSEntities())
+                user us = new user();
+                string db_path = null;
+                int ii = int.Parse(Session["LogedUserID"].ToString());
+                us = db.users.Find(ii);
+
+                if (file.ContentLength > 0 && file.ContentType.Contains("image"))
                 {
-                    var v = cm.users.Where(a => a.email_id.Equals(u.email_id)).FirstOrDefault();
+                    var fileName = Path.GetFileName(file.FileName);
+                    var files = Path.GetExtension(".jpg");
 
-                    if (v != null)
+                    if (files != null)
                     {
 
-                        var email = cm.users.Where(a => a.email_id.Equals(u.email_id)).FirstOrDefault();
+                        var img = Image.FromStream(file.InputStream);
 
-                        string pwd = email.password;
 
-                        try
+                        if (img.RawFormat.Equals(ImageFormat.Png) || img.RawFormat.Equals(ImageFormat.Jpeg))
                         {
-                            if (ModelState.IsValid)
-                            {
-                                MailMessage mail = new MailMessage();
-                                mail.To.Add(u.email_id);
-                                TempData["notice"] = "Check your mail password is" + "  " + pwd.ToString();
-                                mail.From = new MailAddress("sender@outlook.com");
-                                mail.Subject = "Recover Password";
-                                string Body = "Your password is" + "  " + pwd.ToString();
-                                mail.Body = Body;
-                                mail.IsBodyHtml = true;
-                                SmtpClient smtp = new SmtpClient();
-                                smtp.Host = "smtp.gmail.com";
-                                smtp.Port = 587;
-                                smtp.UseDefaultCredentials = false;
-                                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                                smtp.Credentials = new System.Net.NetworkCredential("ranjaraman5", "ranja123");// Enter seders User name and password
-                                smtp.EnableSsl = true;
-                                smtp.Send(mail);
 
-                                TempData["notice1"] = "Sucessfully Send";
-
-                                return View("Login");
-
-
-
-                            }
-
-
+                            string filestring = fileName.ToString();
+                            var path = Path.Combine(Server.MapPath("/Resources/jeyamaal_images"), fileName);
+                            file.SaveAs(path);
+                            string absoulte_path = path.ToString();
+                            db_path = "\\" + GetRightPartOfPath(absoulte_path, "Resources") + "\\" + filestring;
+                   
                         }
-                        catch (Exception ex)
+
+                        else
                         {
+                            TempData["Message1"] = "Profile Updated Successfully";
+                            return JavaScript("<script>alert(\"Invalidformat\")</script>");
 
                         }
 
-                        TempData["notice"] = "Check your mail password is" + pwd;
-                        return View(u);
+
+
 
                     }
 
-                    else
-                    {
-                        TempData["Message"] = "Invalid Email Address";
-                        return View(u);
-                    }
-
+                    u.picture = db_path;
+                    us.picture = u.picture;
+                    db.Entry(us).State = EntityState.Modified;
+                    db.SaveChanges();
+                    ViewBag.Message = "Upload successful";
+                    return RedirectToAction("AfterLogin");
 
                 }
+
+
+                else
+                {
+
+                    TempData["Message"] = "UnSuccess";
+                    return RedirectToAction("AfterLogin");
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                
+                TempData["Message"] = "UnSuccess";
+                return RedirectToAction("AfterLogin");
             }
 
 
-
-            return View(u);
         }
+
+        private static string GetRightPartOfPath(string path, string startAfterPart)
+        {
+            // use the correct seperator for the environment
+            var pathParts = path.Split(Path.DirectorySeparatorChar);
+
+            // this assumes a case sensitive check. If you don't want this, you may want to loop through the pathParts looking
+            // for your "startAfterPath" with a StringComparison.OrdinalIgnoreCase check instead
+            int startAfter = Array.IndexOf(pathParts, startAfterPart);
+
+            if (startAfter == -1)
+            {
+                // path path not found
+                return null;
+            }
+
+            // try and work out if last part was a directory - if not, drop the last part as we don't want the filename
+            var lastPartWasDirectory = pathParts[pathParts.Length - 1].EndsWith(Path.DirectorySeparatorChar.ToString());
+            return string.Join(
+                Path.DirectorySeparatorChar.ToString(),
+                pathParts, startAfter,
+                pathParts.Length - startAfter - (lastPartWasDirectory ? 0 : 1));
+        }
+
+
+        public ActionResult DeactiveAccount()
+        {
+            try
+            {
+                user us = new user();
+                int ii = int.Parse(Session["LogedUserID"].ToString());
+                us = db.users.Find(ii);
+                us.status = "deactive";
+                db.Entry(us).State = EntityState.Modified;
+                db.SaveChanges();
+                Session.Abandon(); // it will clear the session at the end of request
+                return RedirectToAction("Login", "Home");
+            }
+
+            catch (Exception ex)
+            {
+               
+            }
+
+            return View();
+        }
+
+
+
+
+
+
     }
 }
