@@ -15,9 +15,5 @@ namespace AccessControlManagement.Models
     public partial class ArticleHasAd
     {
         public int post_id { get; set; }
-        public System.DateTime post_date { get; set; }
-        public int user_id { get; set; }
-    
-        public virtual Post Post { get; set; }
     }
 }

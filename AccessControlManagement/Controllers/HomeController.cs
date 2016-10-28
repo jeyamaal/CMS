@@ -49,8 +49,8 @@ namespace AccessControlManagement.Controllers
        
      
           [HttpPost]
-      //  [ValidateAntiForgeryToken]
-        public ActionResult Login(string un,string pwd)
+        //  [ValidateAntiForgeryToken]
+        public ActionResult Login(string un, string pwd)
         {
             try
             {
@@ -60,50 +60,76 @@ namespace AccessControlManagement.Controllers
 
                     var v = db.users.Where(a => a.username.Equals(un) && a.password.Equals(pwd) && a.status.Equals("active")).FirstOrDefault();
 
-                        if (v != null)
+                    string vv = v.role.ToString();
 
+                    if (v != null)
+
+                    {
+
+                        string vv2 = v.role.ToString();
+
+                        if (v.role.ToString() == "writer")
                         {
                             Session["LogedUserID"] = v.user_id.ToString();
                             Session["LogedUserFullname"] = v.username.ToString();
                             return RedirectToAction("AfterLogin");
+
                         }
 
-                        else if(v==null)
+
+                        else if (v.role.ToString() == "admin")
                         {
-                            return Json("WrongCredits");
+                            Session["LogedAdminID"] = v.user_id.ToString();
+                            return RedirectToAction("Index", "Categories");
 
                         }
-                    
+                    }
+
+                    else if (v == null)
+                    {
+                        return Json("WrongCredits");
+
+                    }
                 }
-                return RedirectToAction("AfterLogin");
+
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return Json("WrongCredits");
             }
 
-       }
+            return RedirectToAction("Index", "Categories");
+        }
 
 
-      
+
 
         public ActionResult AfterLogin()
         {
 
-           
-          if (Session["LogedUserID"] != null)
+
+            if (Session["LogedUserID"] != null)
             {
-               int  i =  int.Parse(Session["LogedUserID"].ToString());
-               user u = db.users.Find(i);
-               return View(u);
+                int i = int.Parse(Session["LogedUserID"].ToString());
+                user u = db.users.Find(i);
+                return View(u);
             }
+
+            else if (Session["LogedAdminID"] != null)
+            {
+             
+                return RedirectToAction("Index", "Categories");
+
+            }
+
             else
             {
                 return RedirectToAction("Login");
             }
         }
 
-     public ActionResult ChangePassword(string oldPwd, string conPwd,string newPwd)
+        public ActionResult ChangePassword(string oldPwd, string conPwd,string newPwd)
      {
        if (Session["LogedUserID"] != null)
        {

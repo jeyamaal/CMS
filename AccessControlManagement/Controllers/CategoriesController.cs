@@ -24,18 +24,19 @@ namespace AccessControlManagement.Controllers
             //    myModel.Add(db.Posts.ToList());
             //    //myModel.Add(db.ArticleHasAds.ToList());
 
-            if (Session["LogedUserID"] != null)
+            if (Session["LogedAdminID"] != null)
             {
+                int i = int.Parse(Session["LogedAdminID"].ToString());
+                user u = db.users.Find(i);
 
-
-                return View("Index");
+                return View(u);
 
             }
 
             else
             {
 
-                return RedirectToAction("Login","Home");
+                return RedirectToAction("Login", "Home");
             }
         }
 

@@ -1,0 +1,114 @@
+﻿@model AccessControlManagement.Models.Post
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_PostLayout.cshtml";
+}
+
+<style>
+    dl {
+        display: block;
+        margin-top: 1em;
+        margin-bottom: 2em;
+        margin-left: 5em;
+        margin-right: 0;
+    }
+
+    dt {
+        margin-top: 1em;
+    }
+</style>
+
+<div class="container">
+    <div class="col-md-8 col-sm-offset-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading" style="font-size:20px; color:#ffffff">Post Details</div>
+            <div class="panel-body">
+                <dl>
+                    <div class="row">
+                        <dt>
+                            <div class="col-md-4">
+                                @Html.DisplayNameFor(model => model.title)
+                            </div>
+                        </dt>
+                        <dd>
+                            <div class="col-md-5">
+                                @Html.DisplayFor(model => model.title)
+                            </div>
+                        </dd>
+                    </div>
+                    
+                    <div class="row">
+                        <dt>
+                        <div class="col-md-4">
+                            @Html.DisplayNameFor(model => model.Category.category_name)
+                        </div>
+                        </dt>
+                        <dd>
+                            <div class="col-md-5">
+                                @Html.DisplayFor(model => model.Category.category_name)
+                            </div>
+                        </dd>
+                    </div>
+                        
+                    <div class="row">
+                        <dt>
+                            <div class="col-md-4">
+                                @Html.DisplayNameFor(model => model.post_date)
+                            </div>
+                        </dt>
+                        <dd>
+                            <div class="col-md-5">
+                                @Html.DisplayFor(model => model.post_date)
+                            </div>
+                        </dd>
+                    </div>
+                        
+                    <div class="row">
+                        <dt>
+                            <div class="col-md-4">
+                                @Html.DisplayNameFor(model => model.post_description)
+                            </div>
+                        </dt>
+                        <dd>
+                            <div class="col-md-5">
+                                @Html.DisplayFor(model => model.post_description)
+                            </div>
+                        </dd>
+                    </div>
+                        
+                    <div class="row">
+                        <dt>
+                            <div class="col-md-4">
+                                @Html.DisplayNameFor(model => model.activity_log)
+                            </div>
+                        </dt>
+                        <dd>
+                            <div class="col-md-5">
+                                @Html.DisplayFor(model => model.activity_log)
+                            </div>
+                        </dd>
+                    </div>
+                        
+
+                        @*<dt>
+                <div class="col-md-4">
+                    @Html.DisplayNameFor(model => model.picture)
+                </div>
+            </dt>
+            <dd>
+                <div class="col-md-5">
+                    @Html.DisplayFor(model => model.picture)
+                </div>
+            </dd>*@
+</dl>   
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -17,6 +17,7 @@ namespace AccessControlManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Category()
         {
+            this.AdvertisementDetails = new HashSet<AdvertisementDetail>();
             this.Posts = new HashSet<Post>();
         }
     
@@ -24,6 +25,8 @@ namespace AccessControlManagement.Models
         public string category_name { get; set; }
         public string status { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AdvertisementDetail> AdvertisementDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Posts { get; set; }
     }
