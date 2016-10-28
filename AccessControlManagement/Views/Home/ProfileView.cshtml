@@ -41,11 +41,20 @@
 
         <button type="button" class="btn-group-lg" onclick="printpage()">Print</button>
 
-        <div id="chartContainer" style="height:300px;width: 100%; resize: both;overflow: auto;padding:10px;border:10px ridge yellowgreen;">
+        <div id="noOfPostschartContainer" style="height:300px;width: 100%; resize: both;overflow: auto;padding:10px;border:10px ridge yellowgreen;">
         </div>
 
     </div>
 
+
+    <div class="col-sm-offset-3">
+
+        <button type="button" class="btn-group-lg" onclick="printpage()">Print</button>
+
+        <div id="monthchartContainer" style="height:300px;width: 100%; resize: both;overflow: auto;padding:10px;border:10px ridge yellowgreen;">
+        </div>
+
+    </div>
 
     <div>
 
@@ -198,6 +207,9 @@
 
 
 @section Scripts{
+    
+    @*for ImageUpload*@
+    
     <script>
 
     function readURL(input) {
@@ -224,7 +236,13 @@
     @*Graph for no of posts of month*@
 
     <script type="text/javascript" src="~/Scripts/jquery.canvasjs.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/graphNoOfposts.js"></script>
+    <script type="text/javascript" src="~/Scripts/reports.js"></script>
+
+      @*Graph for no of Income per month*@
+
+   @*<script type="text/javascript" src="~/Scripts/monthlyIncome.js"></script>*@
+    
+    
     <script>
  //Printing Html page
 
