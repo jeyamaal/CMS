@@ -13,8 +13,9 @@ namespace AccessControlManagement.Controllers
     public class CategoriesController : Controller
     {
         private CMSEntities db = new CMSEntities();
+        private object from;
 
-     
+
 
         // GET: Categories
         public ActionResult Index()
@@ -104,6 +105,23 @@ namespace AccessControlManagement.Controllers
             catch
             {
                 return Content("Error to load the Procedure");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetCategoryName(int categoryID)
+        {
+            try
+            {
+                var categoryName = (from c in db.Categories
+                                    where c.category_id == categoryID
+                                    select c).ToList();
+
+                return Json(categoryName[0].category_name.ToString(), JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("Not Such Value Exists", JsonRequestBehavior.AllowGet);
             }
         }
 
