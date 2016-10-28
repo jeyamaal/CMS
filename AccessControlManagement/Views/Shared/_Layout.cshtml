@@ -19,7 +19,7 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                
-                 @*@if (Session["LogedUserID"] != null)
+                 @if (Session["LogedAdminID"] != null)
                  {
 
                         if (Model.picture != null)
@@ -42,7 +42,7 @@
                         <br>
                         @Html.ActionLink("Log Out", "logout", "Home")
 
-                    }*@
+                    }
 
      
 

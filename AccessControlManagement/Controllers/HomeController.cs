@@ -20,26 +20,44 @@ namespace AccessControlManagement.Controllers
     {
 
         private CMSEntities db = new CMSEntities();
-/**
-        public ActionResult Index()
-        {
-            return View();
-        }
+        /**
+                public ActionResult Index()
+                {
+                    return View();
+                }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+                public ActionResult About()
+                {
+                    ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
+                    return View();
+                }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+                public ActionResult Contact()
+                {
+                    ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
+                    return View();
+                }
 */
+
+        public ActionResult ProfileView()
+        {
+            if (Session["LogedAdminID"] != null)
+            {
+
+                int i = int.Parse(Session["LogedAdminID"].ToString());
+
+                user u = db.users.Find(i);
+                return View(u);
+            }
+            else
+            {
+                return View("Login");
+
+            }
+
+        }
       
         public ActionResult Login()
         {
@@ -77,6 +95,7 @@ namespace AccessControlManagement.Controllers
                             //return RedirectToAction("AfterLogin");
 
                             Session["LogedUserID"] = v.user_id.ToString();
+                          
                             return RedirectToAction("Index","Post");
 
                         }
@@ -85,6 +104,7 @@ namespace AccessControlManagement.Controllers
                         else if (v.role.ToString() == "admin")
                         {
                             Session["LogedAdminID"] = v.user_id.ToString();
+                            Session["LogedUserFullname"] = v.username.ToString();
                             return RedirectToAction("Index", "Categories");
 
                         }
@@ -137,7 +157,7 @@ namespace AccessControlManagement.Controllers
 
         public ActionResult ChangePassword(string oldPwd, string conPwd,string newPwd)
      {
-       if (Session["LogedUserID"] != null)
+       if (Session["LogedAdminID"] != null)
        {
 
           try{
@@ -148,7 +168,7 @@ namespace AccessControlManagement.Controllers
                         Debug.WriteLine(newPwd);
 
                         user us = new user();
-                        int ii = int.Parse(Session["LogedUserID"].ToString());
+                        int ii = int.Parse(Session["LogedAdminID"].ToString());
                         us = db.users.Find(ii);
                         if ( us.password==oldPwd && conPwd==newPwd)
                         {
@@ -246,7 +266,7 @@ namespace AccessControlManagement.Controllers
             {
                 user us = new user();
                 string db_path = null;
-                int ii = int.Parse(Session["LogedUserID"].ToString());
+                int ii = int.Parse(Session["LogedAdminID"].ToString());
                 us = db.users.Find(ii);
 
                 if (file.ContentLength > 0 && file.ContentType.Contains("image"))
@@ -288,7 +308,7 @@ namespace AccessControlManagement.Controllers
                     db.Entry(us).State = EntityState.Modified;
                     db.SaveChanges();
                     ViewBag.Message = "Upload successful";
-                    return RedirectToAction("AfterLogin");
+                    return RedirectToAction("ProfileView");
 
                 }
 
@@ -297,7 +317,7 @@ namespace AccessControlManagement.Controllers
                 {
 
                     TempData["Message"] = "UnSuccess";
-                    return RedirectToAction("AfterLogin");
+                    return RedirectToAction("ProfileView");
 
                 }
 
@@ -306,7 +326,7 @@ namespace AccessControlManagement.Controllers
             {
                 
                 TempData["Message"] = "UnSuccess";
-                return RedirectToAction("AfterLogin");
+                return RedirectToAction("ProfileView");
             }
 
 
@@ -341,7 +361,7 @@ namespace AccessControlManagement.Controllers
             try
             {
                 user us = new user();
-                int ii = int.Parse(Session["LogedUserID"].ToString());
+                int ii = int.Parse(Session["LogedAdminID"].ToString());
                 us = db.users.Find(ii);
                 us.status = "deactive";
                 db.Entry(us).State = EntityState.Modified;
