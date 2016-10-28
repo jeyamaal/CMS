@@ -51,6 +51,36 @@ namespace AccessControlManagement.Controllers
             return PartialView(myModel);
         }
 
+        public ActionResult _Post() {
+            List<object> postList = new List<object>();
+
+            var groupedUsers = from p in db.Posts
+                               group p by new
+                               {
+                                   p.user_id
+                               } into p1
+                               select new
+                               {
+                                   userid = p1.Key.user_id,
+                                   NoOfPosts = p1.Select(x => x.post_id).Count()
+                               };
+
+            var users = (from u in db.users
+                         join gu in groupedUsers on u.user_id equals gu.userid
+                         select new
+                         {
+                             firstName = u.fullname,
+                             userName = u.username,
+                             email = u.email_id,
+                             //role = u.role,
+                             postCount = gu.NoOfPosts
+                         }).ToList();
+
+            postList.Add(db.users.ToList());
+
+            return PartialView(postList);
+        }
+
         public ActionResult AddNewCategory(string category_name)
         {
             try
