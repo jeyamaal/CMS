@@ -1,11 +1,11 @@
 ﻿@model System.Collections.Generic.IEnumerable<AccessControlManagement.Models.Post>
 
 
-@{
-   
+@if (Session["LogedUserID"] != null)
+{
+
     int postNumber = 1;
     Layout = "~/Views/Shared/_PostLayout.cshtml";
-}
 
 <style type="text/css">
 
@@ -142,7 +142,7 @@ $(document).ready(function(){
 
 
 
-@if (TempData["Success"] != null)
+if (TempData["Success"] != null)
 {
     <div class="alert alert-success alert-dismissible fade in" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -160,10 +160,10 @@ $(document).ready(function(){
 
         @using (Html.BeginForm("Index", "Post", FormMethod.Get))
         {
-            
+
                 <label class="p1">Title</label> @Html.TextBox("search") <input type="submit" value="Search"/>
                 <br />
-            
+
         }
 
         <table class="table table-hover">
@@ -231,4 +231,4 @@ $(document).ready(function(){
 
         </table>
     </div>
-
+}

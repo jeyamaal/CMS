@@ -70,9 +70,14 @@ namespace AccessControlManagement.Controllers
 
                         if (v.role.ToString() == "writer")
                         {
+                            //Jeyamaal
+
+                            //Session["LogedUserID"] = v.user_id.ToString();
+                            //Session["LogedUserFullname"] = v.username.ToString();
+                            //return RedirectToAction("AfterLogin");
+
                             Session["LogedUserID"] = v.user_id.ToString();
-                            Session["LogedUserFullname"] = v.username.ToString();
-                            return RedirectToAction("AfterLogin");
+                            return RedirectToAction("Index","Post");
 
                         }
 
@@ -111,9 +116,10 @@ namespace AccessControlManagement.Controllers
 
             if (Session["LogedUserID"] != null)
             {
-                int i = int.Parse(Session["LogedUserID"].ToString());
-                user u = db.users.Find(i);
-                return View(u);
+                //int i = int.Parse(Session["LogedUserID"].ToString());
+                //user u = db.users.Find(i);
+                //return View(u);
+                return RedirectToAction("Index", "Post");
             }
 
             else if (Session["LogedAdminID"] != null)
