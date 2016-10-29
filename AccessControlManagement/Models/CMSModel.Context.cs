@@ -27,14 +27,14 @@ namespace AccessControlManagement.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Post> Posts { get; set; }
-        public virtual DbSet<user> users { get; set; }
         public virtual DbSet<Advertisement> Advertisements { get; set; }
         public virtual DbSet<AdvertisementDetail> AdvertisementDetails { get; set; }
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<ArticleHasAd> ArticleHasAds { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<user> users { get; set; }
     
         public virtual int usp_Category_delete(string catname)
         {
