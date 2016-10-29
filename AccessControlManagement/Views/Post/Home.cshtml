@@ -152,8 +152,9 @@
     }
 </style>
 
-<form>
-    @foreach (var item in listPost)
+@using (Html.BeginForm("Home", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{ 
+    foreach (var item in listPost)
     {
         var po = 1;
         <div class="form-style-5">
@@ -172,8 +173,6 @@
                 </p>
             </fieldset>
 
-            @*<button type="button" onclick="myFunction()">Try it</button>
-                <div id="comment"></div>*@
             <a data-toggle="collapse" data-target=#@item.post_id.ToString()><i class="fa fa-comment"></i></a>
             <div class="form-style-6">
                 <div id=@item.post_id.ToString() class="collapse">
@@ -194,9 +193,9 @@
             </div>
             <br />
         </div>
-    }
+        }
 
-</form>
+}
 
 @*<script>
     function myFunction() {
