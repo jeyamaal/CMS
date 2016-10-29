@@ -105,26 +105,36 @@ namespace AccessControlManagement.Controllers
             return View(advertisementDetail);
         }
 
+
         // GET: Advertisement/Delete/5
-        public ActionResult Delete(int id)
+
+            // User can delete the advertisement
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AdvertisementDetail advertisementDetail = db.AdvertisementDetails.Find(id);
+            if (advertisementDetail == null)
+            {
+                return HttpNotFound();
+            }
+            return View(advertisementDetail);
         }
 
         // POST: Advertisement/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            AdvertisementDetail advertisementDetail = db.AdvertisementDetails.Find(id);
+            db.AdvertisementDetails.Remove(advertisementDetail);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
+
+
+
     }
 }
