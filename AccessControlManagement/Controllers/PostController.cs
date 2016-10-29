@@ -204,15 +204,39 @@ namespace AccessControlManagement.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public ActionResult Home(Comment commentPost, FormCollection form)
-        //{
-        //    user userId = new user();
-        //    Post post = new Post();
+        [HttpPost]
+        public ActionResult Home(Comment commentPost, FormCollection form)
+        {
+            if (Session["LogedUserID"] != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    using (CMSEntities cm = new CMSEntities())
+                    {
+                        user user = new user();
+                        Comment comment = new Comment();
 
-        //    int loginId = int.Parse(Session["LogedUserID"].ToString());
-        //    userId = database.users.Find(loginId);
-        //}
+                        int loginId = int.Parse(Session["LogedUserID"].ToString());
+                        user = database.users.Find(loginId);
+
+                        string description = form["txtComment"].ToString();
+
+                        comment.user_id = user.user_id;
+                        comment.post_id = commentPost.post_id;
+                        comment.description = description;
+                        comment.comment_date = DateTime.Now;
+
+                        database.Comments.Add(comment);
+                        database.SaveChanges();
+
+                        //TempData["Success"] = "Post has been created successfully!";
+
+                        return RedirectToAction("Home");
+                    }
+                }
+            }
+            return View("Create");        
+        }
 
         public ActionResult MyPost()
         {
