@@ -28,15 +28,6 @@
             // Example content CSS (should be your site CSS)
             content_css: "css/example.css",
         });
-
-
-        $('#wantToPostDate').datepicker(
-         {
-             minDate: 0,
-             beforeShow: function () {
-                 $(this).datepicker('option', 'maxDate', $('#to').val());
-             }
-         });
     </script>
 </head>
 <h2>Create</h2>
@@ -46,76 +37,66 @@
     {
         @Html.AntiForgeryToken()
 
-      
-            <h4>Add new Advertisement</h4>
+        <div class="form-horizontal">
+            <h4>AdvertisementDetail</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <table>
-        <tr>
-            <td>
 
-
+            <div class="form-group">
+               
                 Title
-            </td>
-            <td>
-
-                @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
-
-            </td>
-        </tr>
-        <tr>
-            <td>
-
-                Category
-            </td>
-            <td>
-
-                @Html.DropDownList("category_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
-
-            </td>
-        </tr>
-
-
-        <tr>
-            <td>
-                Wanted to post
-            </td>
-            <td>
-
-                @*@Html.EditorFor(model => model.wantToPostDate, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.wantToPostDate, "", new { @class = "text-danger" })*@
-
-                @Html.TextBoxFor(model => model.wantToPostDate, new { type = "date" })
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Content
-            </td>
-        </tr>
-        <tr>
-            <td>
-
-                @Html.TextAreaFor(model => model.description)
-            </td>
-        </tr>
-
-
-
-    </table>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                        <div class="col-md-10">
+                    @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                </div>
             </div>
+
+            <div class="form-group">
+             Category
+                          <div class="col-md-10">
+                    @Html.DropDownList("category_id", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div align="left">
+                Wanted to post
+
+                <div align="center">
+                    @*@Html.EditorFor(model => model.wantToPostDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.wantToPostDate, "", new { @class = "text-danger" })*@
+
+                    @Html.TextBoxFor(model => model.wantToPostDate, new { type = "date" })
+                </div>
+            </div>
+
+            <div>
+
+                Content
+                <div>
+
+                    @Html.TextAreaFor(model => model.description)
+                </div>
+
+            </div>
+
+
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+
+
+
+
         </div>
-
-
-
-      
 
 
     }
