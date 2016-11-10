@@ -6,29 +6,29 @@
 //You can call only one window.onload() function and add other functions inside window.onload()
 window.onload = function () {
 
-      var chart = new CanvasJS.Chart("noOfPostschartContainer",
+    var chart = new CanvasJS.Chart("noOfPosts",
+    {
+        title: {
+            text: "Monthly Posts"
+        },
+        data: [
       {
-          title: {
-              text: "Monthly Posts"
-          },
-          data: [
-        {
-            type: "area",
-            dataPoints: [//array
+          type: "area",
+          dataPoints: [//array
 
-            { x: new Date(2012, 00, 1), y: 6 },
-            { x: new Date(2012, 01, 1), y: 3 },
-            { x: new Date(2012, 02, 1), y: 3 },
-            { x: new Date(2012, 03, 1), y: 2 }
-           
-            ]
-        }
+          { x: new Date(2012, 00, 1), y: 6 },
+          { x: new Date(2012, 01, 1), y: 3 },
+          { x: new Date(2012, 02, 1), y: 3 },
+          { x: new Date(2012, 03, 1), y: 2 }
+
           ]
-      });
+      }
+        ]
+    });
 
-      chart.render();
+    chart.render();
 
-    var chart = new CanvasJS.Chart("monthchartContainer",
+    var chart = new CanvasJS.Chart("monthlyIncome",
     {
         theme: "theme2",
         title: {
@@ -70,7 +70,28 @@ window.onload = function () {
         ]
     });
 
-      chart.render();
-  }
+    chart.render();
 
 
+    var chart = new CanvasJS.Chart("noOfAdevertiesment",
+        {
+            animationEnabled: true,
+            title: {
+                text: "No of Adevertisement"
+            },
+            data: [
+            {
+                type: "column", //change type to bar, line, area, pie, etc
+                dataPoints: [
+                    { label: "Jan", y: 18 },
+                    { label: "Feb", y: 29 },
+                    { label: "Mar", y: 40 },
+                    { label: "Apr", y: 34 },
+                    { label: "May", y: 24 }
+                ]
+            }
+            ]
+        });
+
+    chart.render();
+}

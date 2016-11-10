@@ -379,9 +379,50 @@ namespace AccessControlManagement.Controllers
         }
 
 
+        public ActionResult NoOfPostsGraph()
+        {
+            if (Session["LogedAdminID"] != null)
+            {
+                user us;
+                int ii = int.Parse(Session["LogedAdminID"].ToString());
+                us = db.users.Find(ii);
+
+                return View(us);
+            }
+
+            return View();
+        }
 
 
 
+        public ActionResult AccountStatusGraph()
+        {
+            if (Session["LogedAdminID"] != null)
+            {
+                user us;
+                int ii = int.Parse(Session["LogedAdminID"].ToString());
+                us = db.users.Find(ii);
+
+                return View(us);
+            }
+
+            return View();
+        }
+
+
+        public ActionResult AdvertisementStatusGraph()
+        {
+            if (Session["LogedAdminID"] != null)
+            {
+                user us;
+                int ii = int.Parse(Session["LogedAdminID"].ToString());
+                us = db.users.Find(ii);
+
+                return View(us);
+            }
+
+            return View();
+        }
 
     }
 }
