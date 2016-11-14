@@ -2,10 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Diagnostics;
+
+
+
 
 namespace AccessControlManagement.Controllers
 {
@@ -35,7 +43,28 @@ namespace AccessControlManagement.Controllers
             }
             return View(advertisementDetail);
         }
+        private static string GetRightPartOfPath(string path, string startAfterPart)
+        {
+            // use the correct seperator for the environment
+            var pathParts = path.Split(Path.DirectorySeparatorChar);
 
+            // this assumes a case sensitive check. If you don't want this, you may want to loop through the pathParts looking
+            // for your "startAfterPath" with a StringComparison.OrdinalIgnoreCase check instead
+            int startAfter = Array.IndexOf(pathParts, startAfterPart);
+
+            if (startAfter == -1)
+            {
+                // path path not found
+                return null;
+            }
+
+            // try and work out if last part was a directory - if not, drop the last part as we don't want the filename
+            var lastPartWasDirectory = pathParts[pathParts.Length - 1].EndsWith(Path.DirectorySeparatorChar.ToString());
+            return string.Join(
+                Path.DirectorySeparatorChar.ToString(),
+                pathParts, startAfter,
+                pathParts.Length - startAfter - (lastPartWasDirectory ? 0 : 1));
+        }
         // GET: Advertisement/Create
         public ActionResult Create()
         {
@@ -49,19 +78,71 @@ namespace AccessControlManagement.Controllers
         // POST: Advertisement/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+       
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ADD_id,title,category_id,description,wantToPostDate,status,postedDate,updatedDate,dueDate")] AdvertisementDetail advertisementDetail)
+        [HttpPost]
+        public ActionResult Create(HttpPostedFileBase file, AdvertisementDetail advertisementDetail)
         {
-            if (ModelState.IsValid)
-            {
 
+            string db_path = null;
+
+            if (ModelState.IsValid && file.ContentLength > 0 && file.ContentType.Contains("image"))
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var files = Path.GetExtension(".jpg");
+
+                if (files != null)
+                {
+
+                    var img = Image.FromStream(file.InputStream);
+
+
+                    if (img.RawFormat.Equals(ImageFormat.Png) || img.RawFormat.Equals(ImageFormat.Jpeg))
+                    {
+
+                        string filestring = fileName.ToString();
+                        string dir = "~/Resources/Advertisement_Image";
+                        var path = Path.Combine(Server.MapPath(dir), fileName);
+                        try
+                        {
+                            if (!Directory.Exists(dir))
+                            {
+                                Directory.CreateDirectory(dir);
+                            }
+                            else {
+
+                            }
+                            file.SaveAs(path);
+                            string absoulte_path = path.ToString();
+                            db_path = "\\" + GetRightPartOfPath(absoulte_path, "Resources") + "\\" + filestring;
+
+                        }
+                        catch
+                        {
+                            Debug.WriteLine("Error");
+                        }
+
+
+                    }
+
+                    else
+                    {
+                        //TempData["Message1"] = "Profile Updated Successfully";
+                        return JavaScript("<script>alert(\"Invalidformat\")</script>");
+
+                    }
+
+
+
+
+                }
                 Guid guid = Guid.NewGuid();
                 Random random = new Random();
                 int i = random.Next();
-
+              
                 advertisementDetail.ADD_id = i;
                 advertisementDetail.status = "Pending";
+                advertisementDetail.adImage= db_path;
                 db.AdvertisementDetails.Add(advertisementDetail);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -21,7 +21,12 @@ namespace AccessControlManagement
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/tinymce.3.4.5",
+                      "~/Scripts/tinymce.3.4.5/jquery.tinymce.js",
+                      "~/Scripts/tinymce.3.4.5/tiny_mce.js",
+                      "~/Scripts/tinymce.3.4.5/tiny_mce_popup.js",
+                      "~/Scripts/tinymce.3.4.5/tiny_mce_src.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

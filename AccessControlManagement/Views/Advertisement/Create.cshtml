@@ -3,9 +3,124 @@
 @{
     ViewBag.Title = "Create";
 }
+
+<style type="text/css">
+    .form-style-5 {
+        max-width: 500px;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        margin: 10px auto;
+        padding: 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+
+        .form-style-5 fieldset {
+            border: none;
+        }
+
+        .form-style-5 legend {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .form-style-5 label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-style-5 input[type="text"],
+        .form-style-5 input[type="date"],
+        .form-style-5 input[type="datetime"],
+        .form-style-5 input[type="email"],
+        .form-style-5 input[type="number"],
+        .form-style-5 input[type="search"],
+        .form-style-5 input[type="time"],
+        .form-style-5 input[type="url"],
+        .form-style-5 textarea,
+        .form-style-5 select {
+            font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+            background: rgba(255,255,255,.1);
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 0;
+            outline: 0;
+            padding: 7px;
+            width: 100%;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            background-color: #e8eeef;
+            color: #8a97a0;
+            -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            margin-bottom: 30px;
+        }
+
+            .form-style-5 input[type="text"]:focus,
+            .form-style-5 input[type="date"]:focus,
+            .form-style-5 input[type="datetime"]:focus,
+            .form-style-5 input[type="email"]:focus,
+            .form-style-5 input[type="number"]:focus,
+            .form-style-5 input[type="search"]:focus,
+            .form-style-5 input[type="time"]:focus,
+            .form-style-5 input[type="url"]:focus,
+            .form-style-5 textarea:focus,
+            .form-style-5 select:focus {
+                background: #d2d9dd;
+            }
+
+        .form-style-5 select {
+            -webkit-appearance: menulist-button;
+            height: 35px;
+        }
+
+        .form-style-5 .number {
+            background: #1abc9c;
+            color: #fff;
+            height: 30px;
+            width: 30px;
+            display: inline-block;
+            font-size: 1em;
+            margin-right: 4px;
+            line-height: 30px;
+            text-align: center;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+            border-radius: 15px 15px 15px 0px;
+        }
+
+        .form-style-5 input[type="submit"],
+        .form-style-5 input[type="button"] {
+            position: relative;
+            display: block;
+            padding: 3px 3px 3px 3px;
+            color: #FFF;
+            background: #1abc9c;
+            font-size: 18px;
+            text-align: center;
+            font-style: normal;
+            width: 30%;
+            border: 1px solid #16a085;
+            border-width: 1px 1px 3px;
+            margin-bottom: 10px;
+            margin-left: 30px;
+        }
+
+            .form-style-5 input[type="submit"]:hover,
+            .form-style-5 input[type="button"]:hover {
+                background: #109177;
+            }
+
+    input[type="text"] {
+        width: 200px;
+    }
+</style>
 <head>
     <meta name="viewport" content="width=device-width" />
-
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     <!-- TinyMCE Script Reference -->
     <script src="~/scripts/tinymce/tinymce.min.js"></script>
     <!-- Script to wire up your TinyMCE editor -->
@@ -29,83 +144,133 @@
             content_css: "css/example.css",
         });
     </script>
+
+    @*Validation for Image upload*@
+
+    @if (TempData["Message"] != null)
+    {
+        <script type="text/javascript">
+
+        sweetAlert("Error", "Please Choose an image file", "error");
+
+        </script>
+    }
+
+
+
+
+
+
+    @section Scripts{
+
+        @*for ImageUpload*@
+
+        <script>
+
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function () {
+        readURL(this);
+    });
+
+
+        </script>
+
 </head>
 <h2>Create</h2>
-<body>
+<div class="form-style-5">
+    <fieldset>
+        <legend><span class="number">A</span> Create Adveritisement</legend>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+        @using (Html.BeginForm("Create", "Advertisement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            <h4>AdvertisementDetail</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-horizontal">
+                @*<h4>AdvertisementDetail</h4>
+                <hr />*@
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                
 
+                <div class="form-group">
 
-            <div class="form-group">
-               
-                Title
-                        <div class="col-md-10">
-                    @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                    @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2"})
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-             Category
-                          <div class="col-md-10">
-                    @Html.DropDownList("category_id", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.Label("Catergory", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("category_id", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
 
 
-            <div align="left">
-                Wanted to post
+                <div class="form-group">
+                    @Html.Label("Wanted to Post", htmlAttributes: new { @class = "control-label col-md-2" })
 
-                <div align="center">
-                    @*@Html.EditorFor(model => model.wantToPostDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.wantToPostDate, "", new { @class = "text-danger" })*@
+                    <div class="col-md-10">
+                        @*@Html.EditorFor(model => model.wantToPostDate, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.wantToPostDate, "", new { @class = "text-danger" })*@
 
-                    @Html.TextBoxFor(model => model.wantToPostDate, new { type = "date" })
+                        @Html.TextBoxFor(model => model.wantToPostDate, new { type = "date" })
+                    </div>
                 </div>
-            </div>
 
-            <div>
-
-                Content
                 <div>
 
-                    @Html.TextAreaFor(model => model.description)
+                    @Html.Label("Content", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div>
+                       
+                       
+                        @Html.TextAreaFor(model => model.description)
+                    </div>
+
                 </div>
+
+                <div class="col-sm-offset-3">
+                    <input type="file" name="file" id="imgInp" />
+                </div>
+                <br>
+                @*<img id="blah" src="~/Resources/Advertisement_Image/prof-pic.png" alt="your image" height="100" width="100" />*@
+
+
+
+
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+
+
+
 
             </div>
 
 
-
-
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
-
-
-
-
-        </div>
-
-
-    }
-</body>
-
+        }
+    </fieldset>
+</div>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }
