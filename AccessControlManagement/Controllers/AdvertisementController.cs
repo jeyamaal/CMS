@@ -105,10 +105,7 @@ namespace AccessControlManagement.Controllers
             return View(advertisementDetail);
         }
 
-
-        // GET: Advertisement/Delete/5
-
-            // User can delete the advertisement
+        //User can delete the advertisement details.
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -134,7 +131,13 @@ namespace AccessControlManagement.Controllers
             return RedirectToAction("Index");
         }
 
-
-
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
