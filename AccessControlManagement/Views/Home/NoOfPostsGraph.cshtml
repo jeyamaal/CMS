@@ -1,0 +1,23 @@
+﻿@using WebMatrix.Data;
+@model AccessControlManagement.Models.user
+
+@{
+
+    ViewBag.Title = "Profile View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@if (Session["LogedUserFullname"] != null)
+{
+
+    var db = Database.Open("CMSGraphs");
+    var data = db.Query("select post_date,COUNT(user_id) as myuser from  Post group by post_date,user_id");
+    var myChart = new Chart(width: 600, height: 400, theme: ChartTheme.Green)
+    .AddTitle("No of Posts")
+    .AddSeries("Default",
+    xValue: data, xField: "post_date",
+    yValues: data, yFields: "myuser");
+    myChart.Write();
+}
+
+    

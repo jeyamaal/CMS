@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace AccessControlManagement
+namespace CMS
 {
     public class BundleConfig
     {
@@ -9,7 +9,8 @@ namespace AccessControlManagement
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/category.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -21,16 +22,23 @@ namespace AccessControlManagement
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/style.js",
                       "~/Scripts/respond.js",
-                      "~/Scripts/tinymce.3.4.5",
-                      "~/Scripts/tinymce.3.4.5/jquery.tinymce.js",
-                      "~/Scripts/tinymce.3.4.5/tiny_mce.js",
-                      "~/Scripts/tinymce.3.4.5/tiny_mce_popup.js",
-                      "~/Scripts/tinymce.3.4.5/tiny_mce_src.js"));
+                      "~/Scripts/alertify.js",
+                      "~/Scripts/alertify.min.js",
+                      "~/Scripts/category.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/style.css",
+                      "~/Content/Category.css",
+                      "~/Content/alertifyjs/themes/alertify.css",
+                      "~/Content/alertifyjs/themes/alertify.min.css",
+                      "~/Content/alertifyjs/themes/alertify.rtl.css",
+                      "~/Content/alertifyjs/themes/alertify.rtl.min.css",
+                      "~/Content/font-awesome.css",
+                      "~/Content/font-awesome.min.css"));
         }
     }
 }
