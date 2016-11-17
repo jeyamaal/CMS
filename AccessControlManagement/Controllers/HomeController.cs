@@ -18,10 +18,10 @@ namespace AccessControlManagement.Controllers
 {
     public class HomeController : Controller
     {
-
+        
         private CMSEntities db = new CMSEntities();
-/**
-        public ActionResult Index()
+        
+                public ActionResult Index()
         {
             return View();
         }
@@ -39,7 +39,25 @@ namespace AccessControlManagement.Controllers
 
             return View();
         }
-*/
+
+
+        public ActionResult ProfileView()
+        {
+            if (Session["LogedAdminID"] != null)
+            {
+
+                int i = int.Parse(Session["LogedAdminID"].ToString());
+
+                user u = db.users.Find(i);
+                return View(u);
+            }
+            else
+            {
+                return View("Login");
+
+            }
+
+        }
       
         public ActionResult Login()
         {
@@ -49,8 +67,8 @@ namespace AccessControlManagement.Controllers
        
      
           [HttpPost]
-      //  [ValidateAntiForgeryToken]
-        public ActionResult Login(string un,string pwd)
+        //  [ValidateAntiForgeryToken]
+        public ActionResult Login(string un, string pwd)
         {
             try
             {
@@ -60,52 +78,86 @@ namespace AccessControlManagement.Controllers
 
                     var v = db.users.Where(a => a.username.Equals(un) && a.password.Equals(pwd) && a.status.Equals("active")).FirstOrDefault();
 
-                        if (v != null)
+                    string vv = v.role.ToString();
 
+                    if (v != null)
+
+                    {
+
+                        string vv2 = v.role.ToString();
+
+                        if (v.role.ToString() == "writer")
                         {
+                            //Jeyamaal
+
+                            //Session["LogedUserID"] = v.user_id.ToString();
+                            //Session["LogedUserFullname"] = v.username.ToString();
+                            //return RedirectToAction("AfterLogin");
+
                             Session["LogedUserID"] = v.user_id.ToString();
-                            Session["LogedUserFullname"] = v.username.ToString();
-                            return RedirectToAction("AfterLogin");
+                          
+                            return RedirectToAction("Index","Post");
+
                         }
 
-                        else if(v==null)
+
+                        else if (v.role.ToString() == "admin")
                         {
-                            return Json("WrongCredits");
+                            Session["LogedAdminID"] = v.user_id.ToString();
+                            Session["LogedUserFullname"] = v.username.ToString();
+                            return RedirectToAction("Index", "Categories");
 
                         }
-                    
+                    }
+
+                    else if (v == null)
+                    {
+                        return Json("WrongCredits");
+
+                    }
                 }
-                return RedirectToAction("AfterLogin");
+
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return Json("WrongCredits");
             }
 
-       }
+            return RedirectToAction("Index", "Categories");
+        }
 
 
-      
+
 
         public ActionResult AfterLogin()
         {
 
-           
-          if (Session["LogedUserID"] != null)
+
+            if (Session["LogedUserID"] != null)
             {
-               int  i =  int.Parse(Session["LogedUserID"].ToString());
-               user u = db.users.Find(i);
-               return View(u);
+                //int i = int.Parse(Session["LogedUserID"].ToString());
+                //user u = db.users.Find(i);
+                //return View(u);
+                return RedirectToAction("Index", "Post");
             }
+
+            else if (Session["LogedAdminID"] != null)
+            {
+             
+                return RedirectToAction("Index", "Categories");
+
+            }
+
             else
             {
                 return RedirectToAction("Login");
             }
         }
 
-     public ActionResult ChangePassword(string oldPwd, string conPwd,string newPwd)
+        public ActionResult ChangePassword(string oldPwd, string conPwd,string newPwd)
      {
-       if (Session["LogedUserID"] != null)
+       if (Session["LogedAdminID"] != null)
        {
 
           try{
@@ -116,7 +168,7 @@ namespace AccessControlManagement.Controllers
                         Debug.WriteLine(newPwd);
 
                         user us = new user();
-                        int ii = int.Parse(Session["LogedUserID"].ToString());
+                        int ii = int.Parse(Session["LogedAdminID"].ToString());
                         us = db.users.Find(ii);
                         if ( us.password==oldPwd && conPwd==newPwd)
                         {
@@ -214,7 +266,7 @@ namespace AccessControlManagement.Controllers
             {
                 user us = new user();
                 string db_path = null;
-                int ii = int.Parse(Session["LogedUserID"].ToString());
+                int ii = int.Parse(Session["LogedAdminID"].ToString());
                 us = db.users.Find(ii);
 
                 if (file.ContentLength > 0 && file.ContentType.Contains("image"))
@@ -256,7 +308,7 @@ namespace AccessControlManagement.Controllers
                     db.Entry(us).State = EntityState.Modified;
                     db.SaveChanges();
                     ViewBag.Message = "Upload successful";
-                    return RedirectToAction("AfterLogin");
+                    return RedirectToAction("ProfileView");
 
                 }
 
@@ -265,7 +317,7 @@ namespace AccessControlManagement.Controllers
                 {
 
                     TempData["Message"] = "UnSuccess";
-                    return RedirectToAction("AfterLogin");
+                    return RedirectToAction("ProfileView");
 
                 }
 
@@ -274,7 +326,7 @@ namespace AccessControlManagement.Controllers
             {
                 
                 TempData["Message"] = "UnSuccess";
-                return RedirectToAction("AfterLogin");
+                return RedirectToAction("ProfileView");
             }
 
 
@@ -309,7 +361,7 @@ namespace AccessControlManagement.Controllers
             try
             {
                 user us = new user();
-                int ii = int.Parse(Session["LogedUserID"].ToString());
+                int ii = int.Parse(Session["LogedAdminID"].ToString());
                 us = db.users.Find(ii);
                 us.status = "deactive";
                 db.Entry(us).State = EntityState.Modified;

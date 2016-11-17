@@ -1,22 +1,17 @@
 ﻿<!DOCTYPE html>
+
+
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Content Management System</title>
     <link rel="icon" href="~/favicon.png" />
 
-
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
-    @*Jeyamaal's Script file*@
-    <script src="~/Scripts/sweetalert.min.js"></script>
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="~/Scripts/sweetalert.css">
-
 </head>
-<body>  
+<body>
 
     <div id="nav-area" class="panel panel-default pull-left">
         <div class="panel-body">
@@ -41,15 +36,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div id="profile-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Profile" onclick="window.location.href='@Url.Action("ProfileView", "Home")'">
-                    <div class="panel-body">
-                        <i class="fa fa-user fa-2x" aria-hidden="true"></i>
-                    </div>
-                </div>
-            </div>
-
             @*<div class="row">
                     <div id="exit-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Logout">
                         <div class="panel-body">
@@ -89,6 +75,6 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    
+    @RenderSection("scripts", required: false)
 </body>
 </html>

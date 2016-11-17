@@ -13,10 +13,7 @@ namespace AccessControlManagement.Controllers
     public class CategoriesController : Controller
     {
         private CMSEntities db = new CMSEntities();
-        private object from;
-
-
-
+      
         // GET: Categories
         public ActionResult Index()
         {
@@ -25,34 +22,9 @@ namespace AccessControlManagement.Controllers
             //    myModel.Add(db.Posts.ToList());
             //    //myModel.Add(db.ArticleHasAds.ToList());
 
-            if (Session["LogedUserID"] != null)
+            if (Session["LogedAdminID"] != null)
             {
-
-
-                return View("Index");
-
-            }
-
-            else
-            {
-
-                return RedirectToAction("Login","Home");
-            }
-        }
-
-        // GET: Categories
-        public ActionResult _Setting()
-        {
-            List<object> myModel = new List<object>();
-            myModel.Add(db.Categories.ToList());
-            myModel.Add(db.Posts.ToList());
-            //myModel.Add(db.ArticleHasAds.ToList());
-
-            return PartialView(myModel);
-        }
-
-        public ActionResult _Post() {
-            List<object> postList = new List<object>();
+                List<object> postList = new List<object>();
 
             var groupedUsers = from p in db.Posts
                                group p by new
@@ -67,19 +39,51 @@ namespace AccessControlManagement.Controllers
 
             var users = (from u in db.users
                          join gu in groupedUsers on u.user_id equals gu.userid
-                         select new
+                         select new CategoryUsers
                          {
                              firstName = u.fullname,
                              userName = u.username,
                              email = u.email_id,
                              //role = u.role,
                              postCount = gu.NoOfPosts
-                         }).ToList();
+                         });
+                          
 
-            postList.Add(db.users.ToList());
+            //return PartialView(postList);
+                int i = int.Parse(Session["LogedAdminID"].ToString());
+                user u1 = db.users.Find(i);
+                
+                ViewBag.usersView = u1.user_id;
+                postList.Add(users);
+                //postList.Add(u1);
 
-            return PartialView(postList);
+
+                return View(postList);
+
+            }
+
+            else
+            {
+
+                return RedirectToAction("Login", "Home");
+            }
         }
+
+        // GET: Categories
+        public ActionResult _Setting()
+        {
+            List<object> myModel = new List<object>();
+            myModel.Add(db.Categories.ToList());
+            myModel.Add(db.Posts.ToList());
+            //myModel.Add(db.ArticleHasAds.ToList());
+
+            return PartialView(myModel);
+        }
+
+        //public ActionResult _Post()
+        //{
+            
+        //}
 
         public ActionResult AddNewCategory(string category_name)
         {

@@ -15,13 +15,12 @@
 <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">WebSiteName</a>
+                <a class="navbar-brand" href="#">Be Blogger</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
                
-                 @*<div style="width:auto; background-color:aqua">*@
-                    @if (Session["LogedUserID"] != null)
-                    {
+                 @if (Session["LogedAdminID"] != null)
+                 {
 
                         if (Model.picture != null)
                         {
@@ -34,6 +33,9 @@
                             <img src=# height="55" width="55">
                         }
 
+
+                       
+
                             <br>
                         
                         @Html.DisplayFor(model => model.username)
@@ -41,13 +43,11 @@
                         @Html.ActionLink("Log Out", "logout", "Home")
 
                     }
-                    else
-                    {
-                        @*@Html.ActionLink("Register", "Register", "Register")
-                <span> | </span>
-                @Html.ActionLink("Log In", "Login", "Home")*@
-                    }
-                @*</div>*@
+
+     
+
+                
+                
             </ul>
         </div>
     </nav>

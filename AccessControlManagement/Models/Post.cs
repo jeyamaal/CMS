@@ -14,6 +14,12 @@ namespace AccessControlManagement.Models
     
     public partial class Post
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Post()
+        {
+            this.Comments = new HashSet<Comment>();
+        }
+    
         public int post_id { get; set; }
         public System.DateTime post_date { get; set; }
         public int user_id { get; set; }
@@ -24,9 +30,9 @@ namespace AccessControlManagement.Models
         public byte[] image { get; set; }
     
         public virtual Advertisement Advertisement { get; set; }
-        public virtual Article Article { get; set; }
-        public virtual ArticleHasAd ArticleHasAd { get; set; }
         public virtual Category Category { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual user user { get; set; }
     }
 }

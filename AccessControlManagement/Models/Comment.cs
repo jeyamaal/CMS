@@ -12,16 +12,15 @@ namespace AccessControlManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class InsertAdd
+    public partial class Comment
     {
-        public int ADD_id { get; set; }
-        public string title { get; set; }
-        public string category { get; set; }
+        public int comment_id { get; set; }
+        public Nullable<int> user_id { get; set; }
+        public Nullable<int> post_id { get; set; }
         public string description { get; set; }
-        public Nullable<System.DateTime> wantToPostDate { get; set; }
-        public string status { get; set; }
-        public Nullable<System.DateTime> postedDate { get; set; }
-        public Nullable<System.DateTime> updatedDate { get; set; }
-        public Nullable<System.DateTime> dueDate { get; set; }
+        public Nullable<System.DateTime> comment_date { get; set; }
+    
+        public virtual Post Post { get; set; }
+        public virtual user user { get; set; }
     }
 }

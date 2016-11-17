@@ -39,7 +39,11 @@
                         }
                         else if (index == 1)
                         {
+                            //$("#load-view").load("/Categories/_Post", {partial:true}, function () {
                                 
+                            //}).error(function (a) {
+
+                            //});
                         }
                         else if (index == 2)
                         {
