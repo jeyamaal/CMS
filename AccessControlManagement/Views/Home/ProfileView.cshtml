@@ -7,6 +7,7 @@
 
     ViewBag.Title = "Profile View";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Admin_Layout.cshtml";
 
 }
 
@@ -43,8 +44,8 @@
 
 <h2>AfterLogin</h2>
 
-@if (Session["LogedUserFullname"] != null)
-{
+@*@if (Session["LogedUserFullname"] != null)
+{*@
 
     <div class="col-md-3">
         <ul class="nav nav-pills nav-stacked">
@@ -108,7 +109,7 @@
 
     </div>
 
-}
+    @*}*@
 
 <!--modal-->
 <!--Changa Profile picture-->

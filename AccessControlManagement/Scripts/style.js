@@ -24,6 +24,15 @@
 
                         if (index == 0)
                         {
+                            $("#load-view").load("/Home/ProfileView", {partial: true }, function () {
+                           
+                            }).error(function (a) {
+
+                            });
+                            
+                        }
+                        else if (index == 1)
+                        {
                             $("#load-view").load("/Categories/Index", function () {
                                 //CategorySaveChanges();
                                 //$(".add-new-btn").removeAttr("id");
@@ -36,9 +45,6 @@
                             }).error(function (a) {
 
                             });
-                        }
-                        else if (index == 1)
-                        {
                                 
                         }
                         else if (index == 2)
@@ -57,6 +63,15 @@
 
                             });
                         }
+                        else if (index == 3) {
+                            //Settings
+                            $("#load-view").load("/Home/ProfileView", { partial: true }, function () {
+                           
+                            }).error(function (a) {
+
+                            });
+                        }
+
                         else
                         {
 

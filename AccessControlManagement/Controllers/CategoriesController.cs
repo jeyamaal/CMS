@@ -29,7 +29,7 @@ namespace AccessControlManagement.Controllers
                 int i = int.Parse(Session["LogedAdminID"].ToString());
                 user u = db.users.Find(i);
 
-                return View(u);
+                return PartialView(u);
 
             }
 

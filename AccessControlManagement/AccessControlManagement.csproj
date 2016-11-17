@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -207,6 +208,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Login.css" />
+    <Content Include="Content\LoginStyle.css" />
     <Content Include="Content\Register.css" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
@@ -229,6 +231,8 @@
     <Content Include="Resources\jeyamaal_images\g3.jpg" />
     <Content Include="Resources\jeyamaal_images\g4.jpg" />
     <Content Include="Resources\jeyamaal_images\loding_login.gif" />
+    <Content Include="Resources\jeyamaal_images\login-bg-blur.jpg" />
+    <Content Include="Resources\jeyamaal_images\login-bg.jpg" />
     <Content Include="Resources\jeyamaal_images\prof-pic.png" />
     <Content Include="Scripts\alertify.js" />
     <Content Include="Scripts\alertify.min.js" />

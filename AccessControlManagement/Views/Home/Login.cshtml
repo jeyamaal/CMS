@@ -7,6 +7,7 @@
 <head>
     @*@Styles.Render("~/Content/bootstrapcss")*@
     <link href="@Url.Content("~/Content/Login.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/LoginStyle.css")" rel="stylesheet" type="text/css" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -17,25 +18,20 @@
 
 <body>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="panel panel-login">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <a href="#" class="active" id="login-form-link">Login</a>
-                            </div>
-                            <div class="col-xs-6">
-                                <a href="/Register/Register" id="register-form-link">Register</a>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
 
-                    <div class="panel-body">
+
+    <div class="container-fluid align-middle">
+        
+            <div class="col-md-6 col-md-offset-3" >
+                <div id="divlogin">
+                    @*<div class="panel-heading">
+                     
+                        
+                    </div>*@
+
+                    @*<div class="panel-body">*@
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-12" >
                                 @using (Html.BeginForm("Login", "Home", FormMethod.Post))
                                 {
                                     //this  is for create form tag
@@ -91,7 +87,10 @@
                                             <div class="col-lg-12">
                                                 <div class="text-center">
                                                     <a href="#" data-target="#pwdModal" data-toggle="modal">Forgot my password</a>
+                                                    <br/>
+                                                    <br />
                                                     @*<a href="/RecoverPassword/RecoverPassword" tabindex="5" class="forgot-password" onclick="location.href = '/RecoverPassword/RecoverPassword'">Forgot Password?</a>*@
+                                                    Don't have an account ? <a href="/Register/Register" id="register-form-link">Register</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -100,11 +99,11 @@
                                 }
                             </div>
                         </div>
-                    </div>
+                    @*</div>*@
 
                 </div>
             </div>
-        </div>
+        
     </div>
 
 
