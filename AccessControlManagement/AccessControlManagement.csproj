@@ -155,6 +155,7 @@
     <Compile Include="Models\Advertisement.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdvertisementCategory.cs" />
     <Compile Include="Models\AdvertisementDetail.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>

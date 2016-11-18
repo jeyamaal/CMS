@@ -1,92 +1,208 @@
-﻿@if (ViewBag.usersView !=null)
-{
-
-    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
-    List<AccessControlManagement.Models.CategoryUsers> listUsers = Model.ToList()[0] as List<AccessControlManagement.Models.CategoryUsers>;
-    //List<AccessControlManagement.Models.user> listID = Model.ToList()[1] as List<AccessControlManagement.Models.user>;
-
-
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Be Blogger</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-
-            @{
-
-                try
-                {
-
-                    //if (listID.Select(x => x.picture) != null)
-                    {
-                            @*<img src=@Url.Content(listUsers.Select(y => y.picture)) height="55" width="55">*@
-
-                    }
-                    //else
-                    {
-                            @*<img src=# height="55" width="55">*@
-                        }
-                        <br>
-
-                        @*@Html.DisplayFor(model => listUsers.Select(x => x.username))*@
-                        <br>
-                        @Html.ActionLink("Log Out", "logout", "Home")
-                        <div class="container">
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#all-user-tab">View All User</a></li>
-                                <li><a data-toggle="tab" href="#created-post-tab">User Created Post</a></li>
-                            </ul>
-
-                            <div class="tab-content">
-                                <div id="all-user-tab" class="tab-pane fade in active">
-                                    <div class="row" style="margin-top:10px" id="setting-table-post">
-                                        <table class="table table-hover" style="border:2px solid black; margin-top:50px">
-                                            <tr style="border:2px solid black; background-color:#DADBDE">
-                                                <th style="border-right:2px solid black; text-align:center">Full Name</th>
-                                                <th style="border-right:2px solid black; text-align:center">User Name</th>
-                                                @*<th style="border-right:2px solid black; text-align:center">Role</th>*@
-                                                <th style="border-right:2px solid black; text-align:center">Email</th>
-                                                <th style="border-right:2px solid black; text-align:center">No. of Posts</th>
-                                            </tr>
-                                            <tr>
-                                                @foreach (var item2 in listUsers)
-                                                {
-                                                    <td>@item2.firstName</td>
-                                                    <td>@item2.userName</td>
-                                                    <td>@item2.email</td>
-                                                    <td>@item2.postCount.ToString()</td>
-                                                }
-                                            </tr>
-                                        </table>
-                                    </div>
-
-                                </div>
-                                <div id="created-post-tab" class="tab-pane fade">
-
-                                </div>
-                            </div>
-                        </div>
-                    
-
-                }
-                catch
-                {
-
-                    @*@Html.DisplayFor(model => listUsers.Select(x => x.username))*@
-                    <br/>
-                    
-                    @Html.ActionLink("Log Out", "logout", "Home")
-                }
-            }
-
-
-
-
-        </ul>
-    </div>
-</nav>
+﻿@model IEnumerable<object>
+@{
+    List<AccessControlManagement.Models.user> userss = Model.ToList()[0] as List<AccessControlManagement.Models.user>;
+    List<AccessControlManagement.Models.CategoryUsers> listUsers = Model.ToList()[1] as List<AccessControlManagement.Models.CategoryUsers>;
+    List<AccessControlManagement.Models.AdvertisementCategory> listAdvertiser = Model.ToList()[2] as List<AccessControlManagement.Models.AdvertisementCategory>;
 }
+@{ 
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#all-user-tab">View All User</a></li>
+        <li><a data-toggle="tab" href="#created-post-tab">Articles</a></li>
+        <li><a data-toggle="tab" href="#created-advertisements-tab">Advertisements</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="all-user-tab" class="tab-pane fade in active">
+            <div class="row" style="margin-top:10px" id="setting-table-post">
+                <table class="table table-hover" style="border:2px solid black; margin-top:50px">
+                    <tr style="border:2px solid black; background-color:#DADBDE">
+                        <th style="border-right:2px solid black; text-align:center">Full Name</th>
+                        <th style="border-right:2px solid black; text-align:center">User Name</th>
+                        <th style="border-right:2px solid black; text-align:center">Role</th>
+                        <th style="border-right:2px solid black; text-align:center">Email</th>
+                        <th style="border-right:2px solid black; text-align:center">No. of Posts</th>
+                    </tr>
+
+                    @foreach (var item in listUsers)
+                    {
+                        <tr>
+                            <td style="border-right:2px solid black; text-align:center">@item.firstName</td>
+                            <td style="border-right:2px solid black; text-align:center">@item.userName</td>
+                            <td style="border-right:2px solid black; text-align:center">@item.myrole</td>
+                            <td style="border-right:2px solid black; text-align:center">@item.email</td>
+                            <td style="border-right:2px solid black; text-align:center">@item.postCount</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+        </div>
+        <div id="created-post-tab" class="tab-pane fade">
+            <h3>Post Details</h3>
+            <div class="col-md-offset-1">
+                <label>User Name: </label>
+                <div class="col-xs-4">
+                    @Html.DropDownList("UsersNameList", null, "Select", htmlAttributes: new { @class = "form-control", id = "usernamelist", onchange = "DropDownValueUser()" })
+                </div>
+            </div>
+
+            <div class="col-md-offset-1">
+                <div class="row" style="margin-top:10px">
+                    <table class="table table-hover" style="border:2px solid black; margin-top:50px" id="setting-table-created-post">
+                        <thead>
+                            <tr style="border:2px solid black; background-color:#DADBDE">
+                                <th style="border-right:2px solid black; text-align:center">Category</th>
+                                <th style="border-right:2px solid black; text-align:center">Date</th>
+                                <th style="border-right:2px solid black; text-align:center">Post Title</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in listAdvertiser)
+                            {
+                                <tr></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="created-advertisements-tab" class="tab-pane fade">
+            <div class="row" style="margin-top:10px">
+                <table class="table table-hover" style="border:2px solid black; margin-top:50px" id="setting-table-created-ads">
+                    <thead>
+                        <tr style="border:2px solid black; background-color:#DADBDE">
+                            <th style="border-right:2px solid black; text-align:center">Category</th>
+                            <th style="border-right:2px solid black; text-align:center">Date</th>
+                            <th style="border-right:2px solid black; text-align:center">Title</th>
+                            <th style="border-right:2px solid black; text-align:center">Status</th>
+                            <th style="border-right:2px solid black; text-align:center">Expired Date</th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item3 in listAdvertiser)
+                        {
+                            <tr>
+                                @if (item3.categoryName == "")
+                                {
+                                    <td style="border-right:2px solid black; text-align:center"><label>-Category Not choosed-</label></td>
+                                }
+                                else
+                                {
+                                    <td style="border-right:2px solid black; text-align:center">@item3.categoryName</td>
+                                }
+                                @if (item3.postedDate == "")
+                                {
+                                    <td style="border-right:2px solid black; text-align:center"><label> -Date is not definded- </label></td>
+                                }
+                                else
+                                {
+                                    <td style="border-right:2px solid black; text-align:center">@item3.postedDate</td>
+                                }
+                                <td style="border-right:2px solid black; text-align:center">@item3.title</td>
+                                <td style="border-right:2px solid black; text-align:center">@item3.status</td>
+                                @if (item3.expirayDate == "")
+                                {
+                                    <td style="border-right:2px solid black; text-align:center"><label>-Date is not defined-</label></td>
+                                }
+                                else
+                                {
+                                    <td style="border-right:2px solid black; text-align:center">@item3.expirayDate</td>
+                                }
+                                <td style="border-right:2px solid black; text-align:center">
+                                    <button id="edit-status-advertisement" type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-moda-status-advertisment"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+
+                                    <div class="modal fade" id="edit-moda-status-advertisment" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header" style="background-color: #16AFFB; color:white">
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    <h4 class="modal-title">Advertisements</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3" for="group-name">Name of Category:</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" id="txt-@item3.adID" name="edit-category-name" class="form-control single-line" value="@item3.categoryName" disabled />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" style="margin-top:10px">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3" for="group-name">Posted Date:</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" id="txt-edit-posteddate-@item3.adID" class="form-control single-line" value="@item3.postedDate" disabled />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" style="margin-top:10px">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3" for="group-name">Title:</label>
+                                                            <div class="col-md-9">
+                                                                <input type="text" id="txt-edit-title-@item3.adID" class="form-control single-line" value="@item3.title" disabled />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" style="margin-top:10px">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3" for="group-name">Status:</label>
+                                                            <div class="col-md-9">
+                                                                <select id="add_type" name="type">
+                                                                    <option value="Rejected">Rejected</option>
+                                                                    <option value="Accepted">Accepted</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row" style="margin-top:10px">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3" for="group-name">Expire Date:</label>
+                                                            <div class="col-md-2">
+                                                                <input type="text" id="txt-edit-title-@item3.adID" class="form-control" value="@item3.expirayDate" />
+                                                                <button type="button" class="btn btn-success user-edit-request-advertisement" value="Update" id="btn-edit-cat-request-@item3.adID" onclick="CategorySaveChanges()">Request</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary category-edit-advertisement" value="Update" id="btn-edit-cat-@item3.adID" onclick="CategorySaveChanges()">Update</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+
+
+
 
 
 

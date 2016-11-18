@@ -17,16 +17,13 @@ namespace AccessControlManagement.Controllers
         // GET: Categories
         public ActionResult Index()
         {
-            //    List<object> myModel = new List<object>();
-            //    myModel.Add(db.Categories.ToList());
-            //    myModel.Add(db.Posts.ToList());
-            //    //myModel.Add(db.ArticleHasAds.ToList());
-
             if (Session["LogedAdminID"] != null)
             {
                 List<object> postList = new List<object>();
 
-            var groupedUsers = from p in db.Posts
+                ViewBag.UsersNameList = new SelectList(db.users.Where(t => t.status.Equals("active")), "username", "username").Distinct();
+
+                var groupedUsers = from p in db.Posts
                                group p by new
                                {
                                    p.user_id
@@ -37,34 +34,45 @@ namespace AccessControlManagement.Controllers
                                    NoOfPosts = p1.Select(x => x.post_id).Count()
                                };
 
-            var users = (from u in db.users
-                         join gu in groupedUsers on u.user_id equals gu.userid
-                         select new CategoryUsers
-                         {
-                             firstName = u.fullname,
-                             userName = u.username,
-                             email = u.email_id,
-                             //role = u.role,
-                             postCount = gu.NoOfPosts
-                         });
-                          
+                var users = (from u in db.users
+                             join gu in groupedUsers on u.user_id equals gu.userid
+                             select new CategoryUsers
+                             {
+                                 firstName = u.fullname,
+                                 userName = u.username,
+                                 email = u.email_id,
+                                 myrole = u.role.ToString(),
+                                 postCount = gu.NoOfPosts
+                             });
 
-            //return PartialView(postList);
+
+                var advertisments = (from ad in db.AdvertisementDetails
+                                     join c in db.Categories on ad.category_id equals c.category_id
+                                     select new AdvertisementCategory
+                                     {
+                                         adID = ad.ADD_id,
+                                         categoryName = c.category_name,
+                                         postedDate = ad.postedDate.ToString(),
+                                         title = ad.title,
+                                         status = ad.status,
+                                         expirayDate = ad.dueDate.ToString()
+                                     });
+             
                 int i = int.Parse(Session["LogedAdminID"].ToString());
-                user u1 = db.users.Find(i);
-                
-                ViewBag.usersView = u1.user_id;
-                postList.Add(users);
-                //postList.Add(u1);
+                //user u1 = db.users.Find(i);
 
-
+                var usermm = (from c in db.users
+                              where c.user_id == i
+                              select c).ToList();
+                postList.Add(usermm);
+                postList.Add(users.ToList());
+                postList.Add(advertisments.ToList());
+        
                 return View(postList);
-
             }
 
             else
             {
-
                 return RedirectToAction("Login", "Home");
             }
         }
@@ -75,7 +83,6 @@ namespace AccessControlManagement.Controllers
             List<object> myModel = new List<object>();
             myModel.Add(db.Categories.ToList());
             myModel.Add(db.Posts.ToList());
-            //myModel.Add(db.ArticleHasAds.ToList());
 
             return PartialView(myModel);
         }
