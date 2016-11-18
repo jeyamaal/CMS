@@ -1,6 +1,4 @@
-﻿@model AccessControlManagement.Models.user
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -18,59 +16,7 @@
     <link rel="stylesheet" type="text/css" href="~/Scripts/sweetalert.css">
 
 </head>
-<body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Be Blogger</a>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-
-             @{ 
-
-                 try
-                 {
-                     if (Session["LogedAdminID"] != null)
-                     {
-
-                         if (Model.picture != null)
-                         {
-                        <img src=@Url.Content(Model.picture) height="55" width="55">
-
-                         }
-
-                         else
-                         {
-                        <img src=# height="55" width="55">
-                         }
-
-
-
-
-                    <br>
-
-                    @Html.DisplayFor(model => model.username)
-                    <br>
-                    @Html.ActionLink("Log Out", "logout", "Home")
-
-                     }
-
-                 }
-                 catch (Exception ex)
-                 {
-                  
-                    @Html.DisplayFor(model => model.username)
-                    <br>
-                    @Html.ActionLink("Log Out", "logout", "Home")
-                 }
-            }
-
-   
-
-
-            </ul>
-        </div>
-    </nav>
+<body>  
 
     <div id="nav-area" class="panel panel-default pull-left">
         <div class="panel-body">

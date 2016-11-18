@@ -13,9 +13,7 @@ namespace AccessControlManagement.Controllers
     public class CategoriesController : Controller
     {
         private CMSEntities db = new CMSEntities();
-
-     
-
+      
         // GET: Categories
         public ActionResult Index()
         {
@@ -26,10 +24,41 @@ namespace AccessControlManagement.Controllers
 
             if (Session["LogedAdminID"] != null)
             {
-                int i = int.Parse(Session["LogedAdminID"].ToString());
-                user u = db.users.Find(i);
+                List<object> postList = new List<object>();
 
-                return PartialView(u);
+            var groupedUsers = from p in db.Posts
+                               group p by new
+                               {
+                                   p.user_id
+                               } into p1
+                               select new
+                               {
+                                   userid = p1.Key.user_id,
+                                   NoOfPosts = p1.Select(x => x.post_id).Count()
+                               };
+
+            var users = (from u in db.users
+                         join gu in groupedUsers on u.user_id equals gu.userid
+                         select new CategoryUsers
+                         {
+                             firstName = u.fullname,
+                             userName = u.username,
+                             email = u.email_id,
+                             //role = u.role,
+                             postCount = gu.NoOfPosts
+                         });
+                          
+
+            //return PartialView(postList);
+                int i = int.Parse(Session["LogedAdminID"].ToString());
+                user u1 = db.users.Find(i);
+                
+                ViewBag.usersView = u1.user_id;
+                postList.Add(users);
+                //postList.Add(u1);
+
+
+                return View(postList);
 
             }
 
@@ -50,6 +79,11 @@ namespace AccessControlManagement.Controllers
 
             return PartialView(myModel);
         }
+
+        //public ActionResult _Post()
+        //{
+            
+        //}
 
         public ActionResult AddNewCategory(string category_name)
         {
@@ -105,6 +139,23 @@ namespace AccessControlManagement.Controllers
             catch
             {
                 return Content("Error to load the Procedure");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetCategoryName(int categoryID)
+        {
+            try
+            {
+                var categoryName = (from c in db.Categories
+                                    where c.category_id == categoryID
+                                    select c).ToList();
+
+                return Json(categoryName[0].category_name.ToString(), JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json("Not Such Value Exists", JsonRequestBehavior.AllowGet);
             }
         }
 
