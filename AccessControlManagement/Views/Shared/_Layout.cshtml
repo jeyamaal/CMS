@@ -1,4 +1,4 @@
-﻿@model AccessControlManagement.Models.user
+﻿
 
 <!DOCTYPE html>
 <html>
@@ -12,7 +12,7 @@
 
 </head>
 <body>
-    @if (Session["LogedAdminID"] != null)
+    @*@if (Session["LogedAdminID"] != null)
     {
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -21,9 +21,10 @@
                 </div>
                 <ul class="nav navbar-nav navbar-right">
 
-                  
+                  @try
+                  {
 
-                        @if (Model.picture != null)
+                        if (Model.picture != null)
                         {
                             <img src=@Url.Content(Model.picture) height="55" width="55">
 
@@ -42,12 +43,18 @@
                         @Html.DisplayFor(model => model.username)
                         <br>
                         @Html.ActionLink("Log Out", "logout", "Home")
+                  }
+                  catch (Exception e)
+                  {
+
+                      
+                  }
 
 
                        </ul>
             </div>
         </nav>
-     }
+     }*@
 
         <div class="container body-content">
             @RenderBody()

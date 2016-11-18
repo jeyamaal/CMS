@@ -1,8 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@model IEnumerable<object>
+@{
+
+    List<AccessControlManagement.Models.user> userss = Model.ToList()[0] as List<AccessControlManagement.Models.user>;
+    List<AccessControlManagement.Models.Post> listPost = Model.ToList()[1] as List<AccessControlManagement.Models.Post>;
+    
+
+}
+
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    
+
     <title>Content Management System</title>
     <link rel="icon" href="~/favicon.png" />
 
@@ -16,7 +27,46 @@
     <link rel="stylesheet" type="text/css" href="~/Scripts/sweetalert.css">
 
 </head>
-<body>  
+<body>
+    @try
+    {
+        if (Session["LogedAdminID"] != null)
+        {
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Be Blogger</a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+
+                        @foreach (var item2 in userss)
+                        {
+                            if (item2.picture != null)
+                            {
+                                <img src=@Url.Content(item2.picture) height="55" width="55">
+                            }
+                            else
+                            {
+                                <img src=# height="55" width="55">
+                            }
+                            <br>
+
+                            @Html.DisplayFor(Model => item2.username)
+                            <br>
+                            @Html.ActionLink("Log Out", "logout", "Home")
+                        }
+                    </ul>
+
+                </div>
+            </nav>
+        }
+    }
+    catch (Exception e)
+    {
+
+
+    }
+
 
     <div id="nav-area" class="panel panel-default pull-left">
         <div class="panel-body">
@@ -89,6 +139,9 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    
+
 </body>
+
+
+
 </html>
