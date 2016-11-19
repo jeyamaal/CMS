@@ -188,14 +188,15 @@
     <Compile Include="Models\Comment.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EmailForm.cs" />
+    <Compile Include="Models\Feedback.cs">
+      <DependentUpon>CMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Post.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\user.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CategoryUsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -321,6 +322,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="PostImages\" />
+    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

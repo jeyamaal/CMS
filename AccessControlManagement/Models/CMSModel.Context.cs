@@ -33,8 +33,22 @@ namespace AccessControlManagement.Models
         public virtual DbSet<ArticleHasAd> ArticleHasAds { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<user> users { get; set; }
+    
+        public virtual int usp_Advertisement_statusUpdate(Nullable<int> aDID, string aDStatus)
+        {
+            var aDIDParameter = aDID.HasValue ?
+                new ObjectParameter("aDID", aDID) :
+                new ObjectParameter("aDID", typeof(int));
+    
+            var aDStatusParameter = aDStatus != null ?
+                new ObjectParameter("ADStatus", aDStatus) :
+                new ObjectParameter("ADStatus", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Advertisement_statusUpdate", aDIDParameter, aDStatusParameter);
+        }
     
         public virtual int usp_Category_delete(string catname)
         {

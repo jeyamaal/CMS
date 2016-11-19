@@ -51,6 +51,18 @@ namespace AccessControlManagement.Controllers
                 user u = db.users.Find(i);
                 return View(u);
             }
+
+
+            else if (Session["LogedUserID"] != null)
+            {
+
+                int i = int.Parse(Session["LogedUserID"].ToString());
+
+                user u = db.users.Find(i);
+                return View(u);
+            }
+
+
             else
             {
                 return View("Login");
@@ -91,7 +103,7 @@ namespace AccessControlManagement.Controllers
                             //Jeyamaal
 
                             //Session["LogedUserID"] = v.user_id.ToString();
-                            //Session["LogedUserFullname"] = v.username.ToString();
+                             Session["LogedUserFullname"] = v.username.ToString();
                             //return RedirectToAction("AfterLogin");
 
                             Session["LogedUserID"] = v.user_id.ToString();
@@ -161,7 +173,7 @@ namespace AccessControlManagement.Controllers
             }
         }
 
-        public ActionResult ChangePassword(string oldPwd, string conPwd,string newPwd)
+    public ActionResult ChangePassword(string oldPwd, string conPwd,string newPwd)
      {
        if (Session["LogedAdminID"] != null)
        {
@@ -429,6 +441,47 @@ namespace AccessControlManagement.Controllers
 
             return View();
         }
+
+
+
+     
+
+
+
+        [HttpPost]
+ 
+        public ActionResult SendFeedBack(user u)
+        {
+            Feedback fd = new Feedback();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    fd.firstname = u.fullname.ToString(); ;
+                    fd.email = u.email_id.ToString();
+                    fd.description = u.feedbacks.ToString();
+                    fd.feed_date = DateTime.Now;
+                    db.Feedbacks.Add(fd);
+                    db.SaveChanges();
+                    ModelState.Clear();
+                    fd = null;
+
+                    TempData["SucessFeedbackMessage"] = "Success";
+                    return RedirectToAction("ProfileView");
+
+                   }
+                }
+
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                TempData["ErrorFeedbackMessage"] = "UnSuccess";
+                return RedirectToAction("ProfileView");
+            }
+
+            return RedirectToAction("ProfileView");
+        }
+
 
     }
 }

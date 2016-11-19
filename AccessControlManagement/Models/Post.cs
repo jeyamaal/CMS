@@ -27,7 +27,7 @@ namespace AccessControlManagement.Models
         public string post_description { get; set; }
         public string activity_log { get; set; }
         public string title { get; set; }
-        public byte[] image { get; set; }
+        public string image { get; set; }
     
         public virtual Advertisement Advertisement { get; set; }
         public virtual Category Category { get; set; }
