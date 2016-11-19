@@ -11,9 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using System.Diagnostics;
-
-
-
+using System.Web.Hosting;
 
 namespace AccessControlManagement.Controllers
 {
@@ -101,8 +99,9 @@ namespace AccessControlManagement.Controllers
                     {
 
                         string filestring = fileName.ToString();
-                        string dir = "~/Resources/Advertisement_Image";
-                        var path = Path.Combine(Server.MapPath(dir), fileName);
+                        string dir = HostingEnvironment.ApplicationPhysicalPath + @"Resources\Advetrisement_Image";
+                        //var path = Path.Combine(Server.MapPath(dir), fileName);
+                        var path = Path.Combine(dir, fileName);
                         try
                         {
                             if (!Directory.Exists(dir))
