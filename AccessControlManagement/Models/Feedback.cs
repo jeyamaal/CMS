@@ -18,5 +18,6 @@ namespace AccessControlManagement.Models
         public string firstname { get; set; }
         public string email { get; set; }
         public string description { get; set; }
+        public Nullable<System.DateTime> feed_date { get; set; }
     }
 }

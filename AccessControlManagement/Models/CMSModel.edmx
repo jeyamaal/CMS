@@ -29,7 +29,7 @@
           <Property Name="updatedDate" Type="datetime" />
           <Property Name="dueDate" Type="datetime" />
           <Property Name="category_id" Type="int" />
-          <Property Name="adImage" Type="varchar" MaxLength="400" />
+          <Property Name="adImage" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -65,8 +65,6 @@
           <Property Name="description" Type="nvarchar(max)" />
           <Property Name="comment_date" Type="date" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.Feedback' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Feedback">
           <Key>
             <PropertyRef Name="id" />
@@ -74,7 +72,8 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.Feedback' d
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="firstname" Type="varchar" MaxLength="50" />
           <Property Name="email" Type="varchar" MaxLength="50" />
-          <Property Name="description" Type="varchar" MaxLength="200" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="feed_date" Type="datetime" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
@@ -102,7 +101,7 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.Feedback' d
           <Property Name="role" Type="varchar" MaxLength="20" />
           <Property Name="status" Type="varchar" MaxLength="15" />
         </EntityType>
-        <Association Name="FK__Advertise__categ__398D8EEE">
+        <Association Name="FK__Advertise__categ__29572725">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="AdvertisementDetails" Type="Self.AdvertisementDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -210,17 +209,10 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.Feedback' d
           <EntitySet Name="ArticleHasAd" EntityType="Self.ArticleHasAd" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Feedback" EntityType="Self.Feedback" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Feedback].[id] AS [id], 
-    [Feedback].[firstname] AS [firstname], 
-    [Feedback].[email] AS [email], 
-    [Feedback].[description] AS [description]
-    FROM [dbo].[Feedback] AS [Feedback]</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK__Advertise__categ__398D8EEE" Association="Self.FK__Advertise__categ__398D8EEE">
+          <AssociationSet Name="FK__Advertise__categ__29572725" Association="Self.FK__Advertise__categ__29572725">
             <End Role="Category" EntitySet="Category" />
             <End Role="AdvertisementDetails" EntitySet="AdvertisementDetails" />
           </AssociationSet>
@@ -279,8 +271,8 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.Feedback' d
           <Property Name="updatedDate" Type="DateTime" Precision="3" />
           <Property Name="dueDate" Type="DateTime" Precision="3" />
           <Property Name="category_id" Type="Int32" />
-          <Property Name="adImage" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Category1" Relationship="Self.FK__Advertise__categ__398D8EEE" FromRole="AdvertisementDetails" ToRole="Category" />
+          <Property Name="adImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Category1" Relationship="Self.FK__Advertise__categ__29572725" FromRole="AdvertisementDetails" ToRole="Category" />
         </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -306,7 +298,7 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.Feedback' d
           <Property Name="category_id" Type="Int32" Nullable="false" />
           <Property Name="category_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="status" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AdvertisementDetails" Relationship="Self.FK__Advertise__categ__398D8EEE" FromRole="Category" ToRole="AdvertisementDetails" />
+          <NavigationProperty Name="AdvertisementDetails" Relationship="Self.FK__Advertise__categ__29572725" FromRole="Category" ToRole="AdvertisementDetails" />
           <NavigationProperty Name="Posts" Relationship="Self.fk_p1" FromRole="Category" ToRole="Post" />
         </EntityType>
         <EntityType Name="Comment">
@@ -320,6 +312,16 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.Feedback' d
           <Property Name="comment_date" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Post" Relationship="Self.FK_Comment_Post" FromRole="Comment" ToRole="Post" />
           <NavigationProperty Name="user" Relationship="Self.fk_userid_comment" FromRole="Comment" ToRole="user" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="feed_date" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
@@ -354,15 +356,6 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.Feedback' d
           <NavigationProperty Name="Comments" Relationship="Self.fk_userid_comment" FromRole="user" ToRole="Comment" />
           <NavigationProperty Name="Posts" Relationship="Self.fk_p" FromRole="user" ToRole="Post" />
         </EntityType>
-        <EntityType Name="Feedback">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
         <Association Name="fk_ad">
           <End Role="Post" Type="Self.Post" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -377,7 +370,7 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.Feedback' d
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Advertise__categ__398D8EEE">
+        <Association Name="FK__Advertise__categ__29572725">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="AdvertisementDetails" Type="Self.AdvertisementDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -460,14 +453,14 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.Feedback' d
           <EntitySet Name="ArticleHasAds" EntityType="Self.ArticleHasAd" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
           <EntitySet Name="Posts" EntityType="Self.Post" />
           <EntitySet Name="users" EntityType="Self.user" />
-          <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
           <AssociationSet Name="fk_ad" Association="Self.fk_ad">
             <End Role="Post" EntitySet="Posts" />
             <End Role="Advertisement" EntitySet="Advertisements" />
           </AssociationSet>
-          <AssociationSet Name="FK__Advertise__categ__398D8EEE" Association="Self.FK__Advertise__categ__398D8EEE">
+          <AssociationSet Name="FK__Advertise__categ__29572725" Association="Self.FK__Advertise__categ__29572725">
             <End Role="Category" EntitySet="Categories" />
             <End Role="AdvertisementDetails" EntitySet="AdvertisementDetails" />
           </AssociationSet>
@@ -575,6 +568,17 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.Feedback' d
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="CMSModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="feed_date" ColumnName="feed_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="CMSModel.Post">
               <MappingFragment StoreEntitySet="Post">
@@ -600,16 +604,6 @@ warning 6002: The table/view 'db648486133f874567b0f6a681008afb22.dbo.Feedback' d
                 <ScalarProperty Name="picture" ColumnName="picture" />
                 <ScalarProperty Name="role" ColumnName="role" />
                 <ScalarProperty Name="status" ColumnName="status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Feedbacks">
-            <EntityTypeMapping TypeName="CMSModel.Feedback">
-              <MappingFragment StoreEntitySet="Feedback">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="firstname" ColumnName="firstname" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="description" ColumnName="description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
