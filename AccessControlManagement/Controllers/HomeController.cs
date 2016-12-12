@@ -63,6 +63,16 @@ namespace AccessControlManagement.Controllers
             }
 
 
+            else if (Session["LogedAdevertiserID"] != null)
+            {
+
+                int i = int.Parse(Session["LogedAdevertiserID"].ToString());
+
+                user u = db.users.Find(i);
+                return View(u);
+            }
+
+
             else
             {
                 return View("Login");
@@ -121,8 +131,14 @@ namespace AccessControlManagement.Controllers
 
                         }
 
+                        else if (v.role.ToString() == "advertiser")
+                        {
+                            Session["LogedAdevertiserID"] = v.user_id.ToString();
+                            Session["LogedUserFullname"] = v.username.ToString();
+                            return RedirectToAction("Index", "Advertisement");
 
-                      
+                        }
+
 
 
 
@@ -164,6 +180,14 @@ namespace AccessControlManagement.Controllers
             {
              
                 return RedirectToAction("Index", "Categories");
+
+            }
+
+
+            else if (Session["LogedAdevertiserID"] != null)
+            {
+
+                return RedirectToAction("Index", "Advertisement");
 
             }
 
@@ -325,7 +349,7 @@ namespace AccessControlManagement.Controllers
                     us.picture = u.picture;
                     db.Entry(us).State = EntityState.Modified;
                     db.SaveChanges();
-                    ViewBag.Message = "Upload successful";
+                    TempData["SucessImageUpload"] = "Success_Image";
                     return RedirectToAction("ProfileView");
 
                 }

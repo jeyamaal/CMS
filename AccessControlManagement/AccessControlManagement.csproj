@@ -147,11 +147,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdvertisementController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\ViewAdvertisement.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -161,6 +163,7 @@
     <Compile Include="Models\AdvertisementDetail.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdvertisemetsAccess.cs" />
     <Compile Include="Models\Article.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
@@ -319,6 +322,13 @@
     <Content Include="Views\Home\AccountStatusGraph.cshtml" />
     <Content Include="Views\Home\AdvertisementStatusGraph.cshtml" />
     <Content Include="Views\Categories\_Post.cshtml" />
+    <Content Include="Views\ViewAdvertisement\Index.cshtml" />
+    <Content Include="Views\Advertisement\Create.cshtml" />
+    <Content Include="Views\Advertisement\Delete.cshtml" />
+    <Content Include="Views\Advertisement\Details.cshtml" />
+    <Content Include="Views\Advertisement\Edit.cshtml" />
+    <Content Include="Views\Advertisement\Index.cshtml" />
+    <Content Include="Views\Shared\_Advertisement_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

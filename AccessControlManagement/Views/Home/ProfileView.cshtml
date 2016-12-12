@@ -290,6 +290,14 @@
 
 
 @*Validation for Image upload*@
+@if (TempData["SucessImageUpload"] != null)
+{
+    <script type="text/javascript">
+
+        swal("Profile  Updated", "Profile Picture has been Updated!", "success")
+
+    </script>
+}
 
 @if (TempData["Message"] != null)
 {
