@@ -146,6 +146,15 @@
     background-color: #FDF7FD;
 }
 
+.still-loading::before{
+    content: "";
+    width: 100%;
+    height: 700px;
+    position: absolute;
+    z-index: 13;
+    background: url('../Resources/5.gif') no-repeat center center
+}
+
 #site-other-relevent{
     display: none;    
 }

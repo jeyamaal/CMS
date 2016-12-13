@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AccessControlManagement.Models;
+using System.Diagnostics;
 
 namespace AccessControlManagement.Controllers
 {
@@ -21,7 +22,7 @@ namespace AccessControlManagement.Controllers
             {
                 List<object> postList = new List<object>();
 
-                ViewBag.UsersNameList = new SelectList(db.users.Where(t => t.status.Equals("active")), "username", "username").Distinct();
+                ViewBag.UsersNameList = new SelectList(db.users.Where(t => (t.status.Equals("active")) && (t.role.Equals("writer"))), "username", "username").Distinct();
 
                 var groupedUsers = from p in db.Posts
                                group p by new
@@ -77,6 +78,26 @@ namespace AccessControlManagement.Controllers
             }
         }
 
+        //public ActionResult ChangeAdStatus(int adID, string statusAD)
+        //{
+        //    //try
+        //    //{
+        //    //    int resultStatusUpdate = db.usp_Advertisement_statusUpdate(adID, statusAD);
+        //    //    Debug.WriteLine("Advetisement update" + resultStatusUpdate);
+        //    //    if (resultStatusUpdate == 1)
+        //    //    {
+        //    //        return Json("Status is successfully Changed!", JsonRequestBehavior.AllowGet);
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        return Json("Status is not Changed!", JsonRequestBehavior.AllowGet);
+        //    //    }
+        //    //}
+        //    //catch
+        //    //{
+        //    //    return Json("Failed To Update!!", JsonRequestBehavior.AllowGet);
+        //    //}
+        //}
         // GET: Categories
         public ActionResult _Setting()
         {
@@ -89,9 +110,37 @@ namespace AccessControlManagement.Controllers
 
         //public ActionResult _Post()
         //{
-            
+
         //}
 
+        public ActionResult GetDropDownValueUser(string user_name)
+        {
+            try
+            {
+                var postDetails = (from u in db.users
+                                   join p in db.Posts on u.user_id equals p.user_id 
+                                   where u.username == user_name
+                                   select new
+                                   {
+                                       p.Category.category_name,
+                                       p.post_date,
+                                       p.title
+                                   });
+
+                if ((postDetails.ToList()) != null)
+                {
+                    return Json(postDetails.ToList(), JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("No post has been written by " + user_name, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch
+            {
+                return Json("Error while retrieving post Details", JsonRequestBehavior.AllowGet);
+            }
+        }
         public ActionResult AddNewCategory(string category_name)
         {
             try

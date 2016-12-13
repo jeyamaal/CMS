@@ -75,7 +75,7 @@
           <Property Name="post_description" Type="nvarchar(max)" />
           <Property Name="activity_log" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="title" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="image" Type="varbinary(max)" />
+          <Property Name="image" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -90,7 +90,7 @@
           <Property Name="role" Type="varchar" MaxLength="20" />
           <Property Name="status" Type="varchar" MaxLength="15" />
         </EntityType>
-        <Association Name="FK__Advertise__categ__398D8EEE">
+        <Association Name="FK__Advertise__categ__29572725">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="AdvertisementDetails" Type="Self.AdvertisementDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -200,7 +200,7 @@
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Advertise__categ__398D8EEE" Association="Self.FK__Advertise__categ__398D8EEE">
+          <AssociationSet Name="FK__Advertise__categ__29572725" Association="Self.FK__Advertise__categ__29572725">
             <End Role="Category" EntitySet="Category" />
             <End Role="AdvertisementDetails" EntitySet="AdvertisementDetails" />
           </AssociationSet>
@@ -259,7 +259,7 @@
           <Property Name="updatedDate" Type="DateTime" Precision="3" />
           <Property Name="dueDate" Type="DateTime" Precision="3" />
           <Property Name="category_id" Type="Int32" />
-          <NavigationProperty Name="Category1" Relationship="Self.FK__Advertise__categ__398D8EEE" FromRole="AdvertisementDetails" ToRole="Category" />
+          <NavigationProperty Name="Category1" Relationship="Self.FK__Advertise__categ__29572725" FromRole="AdvertisementDetails" ToRole="Category" />
         </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -285,7 +285,7 @@
           <Property Name="category_id" Type="Int32" Nullable="false" />
           <Property Name="category_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="status" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AdvertisementDetails" Relationship="Self.FK__Advertise__categ__398D8EEE" FromRole="Category" ToRole="AdvertisementDetails" />
+          <NavigationProperty Name="AdvertisementDetails" Relationship="Self.FK__Advertise__categ__29572725" FromRole="Category" ToRole="AdvertisementDetails" />
           <NavigationProperty Name="Posts" Relationship="Self.fk_p1" FromRole="Category" ToRole="Post" />
         </EntityType>
         <EntityType Name="Comment">
@@ -311,7 +311,7 @@
           <Property Name="post_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="activity_log" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="image" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Advertisement" Relationship="Self.fk_ad" FromRole="Post" ToRole="Advertisement" />
           <NavigationProperty Name="Category" Relationship="Self.fk_p1" FromRole="Post" ToRole="Category" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comment_Post" FromRole="Post" ToRole="Comment" />
@@ -347,7 +347,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Advertise__categ__398D8EEE">
+        <Association Name="FK__Advertise__categ__29572725">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="AdvertisementDetails" Type="Self.AdvertisementDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -436,7 +436,7 @@
             <End Role="Post" EntitySet="Posts" />
             <End Role="Advertisement" EntitySet="Advertisements" />
           </AssociationSet>
-          <AssociationSet Name="FK__Advertise__categ__398D8EEE" Association="Self.FK__Advertise__categ__398D8EEE">
+          <AssociationSet Name="FK__Advertise__categ__29572725" Association="Self.FK__Advertise__categ__29572725">
             <End Role="Category" EntitySet="Categories" />
             <End Role="AdvertisementDetails" EntitySet="AdvertisementDetails" />
           </AssociationSet>

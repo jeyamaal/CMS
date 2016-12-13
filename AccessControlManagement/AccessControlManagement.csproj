@@ -230,6 +230,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images.ico" />
     <Content Include="Models\CMSModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CMSModel.edmx</DependentUpon>
@@ -240,6 +241,7 @@
       <DependentUpon>CMSModel.edmx</DependentUpon>
       <LastGenOutput>CMSModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Resources\5.gif" />
     <Content Include="Resources\jeyamaal_images\g1.jpg" />
     <Content Include="Resources\jeyamaal_images\g2.jpg" />
     <Content Include="Resources\jeyamaal_images\g3.jpg" />
@@ -255,6 +257,11 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\bootstrap\mixins.less" />
+    <Content Include="Content\bootstrap\variables.less" />
+    <Content Include="Content\sweetalert\sweet-alert-animations.less" />
+    <Content Include="Content\sweetalert\sweet-alert-combine.less" />
+    <Content Include="Content\sweetalert\sweet-alert.less" />
     <EntityDeploy Include="Models\CMSModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CMSModel.Designer.cs</LastGenOutput>
@@ -262,11 +269,6 @@
     <Content Include="Models\CMSModel.edmx.diagram">
       <DependentUpon>CMSModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\bootstrap\mixins.less" />
-    <Content Include="Content\bootstrap\variables.less" />
-    <Content Include="Content\sweetalert\sweet-alert-animations.less" />
-    <Content Include="Content\sweetalert\sweet-alert-combine.less" />
-    <Content Include="Content\sweetalert\sweet-alert.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\category.js" />
     <Content Include="Scripts\graphNoOfposts.js" />

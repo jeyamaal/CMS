@@ -45,16 +45,19 @@
         </div>
         <div id="created-post-tab" class="tab-pane fade">
             <h3>Post Details</h3>
-            <div class="col-md-offset-1">
-                <label>User Name: </label>
-                <div class="col-xs-4">
+            <div class="col-sm-offset-1">
+                <div>
+                    <label>User Name: </label>
+                </div>
+                
+                <div>
                     @Html.DropDownList("UsersNameList", null, "Select", htmlAttributes: new { @class = "form-control", id = "usernamelist", onchange = "DropDownValueUser()" })
                 </div>
             </div>
 
             <div class="col-md-offset-1">
                 <div class="row" style="margin-top:10px">
-                    <table class="table table-hover" style="border:2px solid black; margin-top:50px" id="setting-table-created-post">
+                    <table class="table table-hover" style="border:2px solid black; margin-top:50px" id="setting-table-created-post" hidden>
                         <thead>
                             <tr style="border:2px solid black; background-color:#DADBDE">
                                 <th style="border-right:2px solid black; text-align:center">Category</th>
@@ -118,9 +121,9 @@
                                     <td style="border-right:2px solid black; text-align:center">@item3.expirayDate</td>
                                 }
                                 <td style="border-right:2px solid black; text-align:center">
-                                    <button id="edit-status-advertisement" type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-moda-status-advertisment"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                    <button id="edit-status-advertisement" type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-moda-status-advertisment-@item3.adID"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 
-                                    <div class="modal fade" id="edit-moda-status-advertisment" role="dialog">
+                                    <div class="modal fade" id="edit-moda-status-advertisment-@item3.adID" role="dialog">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header" style="background-color: #16AFFB; color:white">
@@ -159,8 +162,8 @@
                                                         <div class="form-group">
                                                             <label class="control-label col-md-3" for="group-name">Status:</label>
                                                             <div class="col-md-9">
-                                                                <select id="add_type" name="type">
-                                                                    <option value="Rejected">Rejected</option>
+                                                                <select id="status_type" name="type">
+                                                                    <option value="Rejected" selected>Rejected</option>
                                                                     <option value="Accepted">Accepted</option>
                                                                 </select>
                                                             </div>
@@ -171,7 +174,7 @@
                                                         <div class="form-group">
                                                             <label class="control-label col-md-3" for="group-name">Expire Date:</label>
                                                             <div class="col-md-2">
-                                                                <input type="text" id="txt-edit-title-@item3.adID" class="form-control" value="@item3.expirayDate" />
+                                                                <input type="text" id="txt-edit-title-@item3.adID" class="form-control" value="@item3.expirayDate" disabled/>
                                                                 <button type="button" class="btn btn-success user-edit-request-advertisement" value="Update" id="btn-edit-cat-request-@item3.adID" onclick="CategorySaveChanges()">Request</button>
                                                             </div>
                                                         </div>

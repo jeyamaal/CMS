@@ -1,5 +1,4 @@
-﻿function CategorySaveChanges()
-{
+﻿function CategorySaveChanges() {
     $("#btn-add-cat").click(function () {
         console.log("Came into ADD button");
 
@@ -20,8 +19,7 @@
                 $('.modal-backdrop').remove();
                 alertify.success("Successfully Inserted Category");
             }
-            else if (result == "Not Inserted")
-            {
+            else if (result == "Not Inserted") {
                 console.log("Not Inserted");
                 $("#add-modal-category").hide();
                 $('body').removeClass('modal-open');
@@ -35,8 +33,7 @@
                 $('.modal-backdrop').remove();
                 alertify.error("Database is empty");
             }
-            else
-            {
+            else {
                 console.log("came to error");
                 $("#add-modal-category").hide();
                 $('body').removeClass('modal-open');
@@ -53,10 +50,10 @@
         console.log("Came into button click");
         var cid = $(this).attr('id').split('-')[3];
         console.log(cid);
-        var category_name = $("#txt-edit-category-name-"+cid).val();
-        var new_category_name = $("#txt-edit-new-category-name-"+cid).val();
+        var category_name = $("#txt-edit-category-name-" + cid).val();
+        var new_category_name = $("#txt-edit-new-category-name-" + cid).val();
 
-        console.log(category_name+" name of the cat , "+new_category_name + " new cat name");
+        console.log(category_name + " name of the cat , " + new_category_name + " new cat name");
 
         $.post("/Categories/Update", {
             oldCategoryName: category_name,
@@ -92,7 +89,7 @@
 
     $(".category-delete").on('click', function () {
         var cid = $(this).attr('id').split('-')[3];
-        console.log(cid);        
+        console.log(cid);
 
         $.ajax({
             url: "/Categories/GetCategoryName",
@@ -107,7 +104,7 @@
                     $("#load-view").load("/Categories/_Setting/", { partial: true }, function () {
                         CategorySaveChanges();
                     });
-                    $("#delete-modal-category-"+cid).hide();
+                    $("#delete-modal-category-" + cid).hide();
                     $('body').removeClass('modal-open');
                     $('.modal-backdrop').remove();
                     alertify.error(result);
@@ -140,14 +137,258 @@
                             }
                         }).error(function (e) {
                             console.log(e);
-                        });                
+                        });
                 }
             },
             error: function (e) {
             }
         });
-        
+
     });
 
+    $(".category-edit-advertisement").on('click', function () {
+        console.log("Inside Update");
+        var aid1 = $(this).attr('id').split('-')[3];
+        //var e = document.getElementById("status_type");
+        //var type = e.options[e.selectedIndex].text;
 
+        var type = $('#status_type').val();
+        console.log(type);
+        if (type == "Rejected") {
+            $.ajax({
+                url: "/Categories/ChangeAdStatus",
+                data: {
+                    adID: aid1,
+                    statusAD: "Reject"
+                },
+                type: "POST",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    if (result == "Status is successfully Changed!") {
+                        $("#load-view").load("/Categories/Index/", { partial: true }, function () {
+                            CategorySaveChanges();
+                        });
+                        $("#edit-moda-status-advertisment-" + aid1).hide();
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                        swal("Updated!", "Your response have been sent.", "success");
+                    }
+                    else if (result == "Status is not Changed!") {
+                        $("#load-view").load("/Categories/Index/", { partial: true }, function () {
+                            CategorySaveChanges();
+                        });
+                        $("#edit-moda-status-advertisment-" + aid1).hide();
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                        swal("Not Updated!", "Issues while sending the response.", "warning");
+                    }
+                    else
+                    {
+                        $("#load-view").load("/Categories/Index/",{ partial: true }, function () {
+                            CategorySaveChanges();
+                        });
+                        $("#edit-moda-status-advertisment-" + aid1).hide();
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                        swal("Not Updated!", "Network issues. Please re-try again", "error");
+                    }
+                },
+                error: function (e) {
+                }
+            });
+        }
+        else if (type == "Accepted") {
+            $.ajax({
+                url: "/Categories/ChangeAdStatus",
+                data: {
+                    adID: aid1,
+                    statusAD: "Accept"
+                },
+                type: "POST",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    if (result == "Status is successfully Changed!") {
+                        $("#load-view").load("/Categories/Index/", function () {
+                            CategorySaveChanges();
+                        });
+                        $("#edit-moda-status-advertisment-" + aid1).hide();
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                        swal("Updated!", "Your response have been sent.", "success");
+                    }
+                    else if (result == "Status is not Changed!") {
+                        $("#load-view").load("/Categories/Index/", function () {
+                            CategorySaveChanges();
+                        });
+                        $("#edit-moda-status-advertisment-" + aid1).hide();
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                        swal("Not Updated!", "Issues while sending the response.", "warning");
+                    }
+                    else {
+                        $("#load-view").load("/Categories/Index/", function () {
+                            CategorySaveChanges();
+                        });
+                        $("#edit-moda-status-advertisment-" + aid1).hide();
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
+                        swal("Not Updated!", "Network issues. Please re-try again", "error");
+                    }
+                },
+                error: function (e) {
+                }
+            });
+        }
+    });
+
+    //$(".user-edit-request-advertisement").on('click', function () {
+    //    var aid = $(this).attr('id').split('-')[4];
+    //    console.log("User id : " + aid);
+
+        
+
+    //    swal({
+    //        title: "Extendtion the Period for Advertisment",
+    //        text: "Do you want to extend the period for this Advertisment?",
+    //        type: "info",
+    //        showCancelButton: true,
+    //        confirmButtonColor: "#DD6B55",
+    //        confirmButtonText: "Send Request",
+    //        closeOnConfirm: false
+    //    },
+    //    function () {
+
+            
+
+    //        var expirayDate = $("#txt-edit-title-" + aid).val();
+    //        var currentdate = new Date();
+    //        var cuurrentMonth = getMonthNumber(currentdate.getMonth());
+    //        var currentYear = currentdate.getFullYear();
+    //        var currentDay = currentdate.getDate();                   
+
+    //        var stringFullDate = currentYear + "-" + cuurrentMonth + "-" + currentDay;
+
+    //        var expiryDateDate = Date.parse(expirayDate);
+    //        var currentDateDate = Date.parse(stringFullDate);
+
+    //        if (expiryDateDate <= currentDateDate) {
+    //            console.log("Yess");
+    //        }
+    //        else
+    //        {
+    //            console.log("noooooooooo")
+    //        }
+    //        swal("Deleted!", "Your imaginary file has been deleted.", "success");
+    //    });
+    //});
+}
+
+
+function getMonthNumber(no) {
+    switch (no) {
+        case 0: return "01";
+            break;
+        case 1: return "02";
+            break;
+        case 2: return "03";
+            break;
+        case 3: return "04";
+            break;
+        case 4: return "05";
+            break;
+        case 5: return "06";
+            break;
+        case 6: return "07";
+            break;
+        case 7: return "08";
+            break;
+        case 8: return "09";
+            break;
+        case 9: return "10";
+            break;
+        case 10: return "11";
+            break;
+        case 11: return "12";
+            break;
+        default: return (no + 1);
+    }
+
+
+}
+
+
+function DropDownValueUser() {
+
+    var e = document.getElementById("usernamelist");
+    var selectedUser = e.options[e.selectedIndex].value;
+    console.log(selectedUser);
+
+    $.post("/Categories/GetDropDownValueUser", {
+        user_name: selectedUser
+    }, function (result) {
+        console.log(result);
+
+        $("#load-view").load("/Categories/Index/", function () {
+            CategorySaveChanges();
+
+            if (result != null)
+            {
+                drawTable(result, "");
+            }
+            else if (result == "No post has been written by " + selectedUser)
+            {
+                drawTable(null, "No post written to show");
+            }
+            else
+            {
+                drawTable(null, "No post has been written to show");
+            }
+        });
+        //$("#load-view").load("/Categories/Index", function () {
+            //console.log()
+            //CategorySaveChanges();
+            //if (result != "null") {
+            //    drawTable(result);
+            //}
+            //else if (result == "Error") {
+            //    console.log(result);
+            //}
+            //else {
+            //    console.log(result);
+            //}
+        //});
+
+    }).error(function (e) {
+        console.log("error" + e)
+    });  
+}
+
+function drawTable(data, message) {
+    if (data != null)
+    {
+        for (var i = 0; i < data.length; i++) {
+            drawRow(data[i]);
+        }
+    }
+    else
+    {
+        $('#setting-table-created-post thead tr').hide();
+        $("<label>"+message+"</label>").show();
+    }
+}
+
+function drawRow(rowData) {
+
+    $('#setting-table-created-post thead tr').show();
+    var row = $("<tr />");
+    //this will append tr element to table.
+    $("#setting-table-created-post").append(row);
+    row.append($("<td>" + rowData.Category.category_name + "</td>"));
+    row.append($("<td>" + rowData.post_date + "</td>"));
+    row.append($("<td>" + rowData.title + "</td>"));
+    row.append($("<td><button id='delete-btn-category-@item.category_id' type='button' class='btn btn-success' data-toggle='modal' data-target='#delete-modal-category-@item.category_id'><i class='fa fa-eye' aria-hidden='true'></i></button>" +
+                     "<button id='delete-btn-category-@item.category_id' type='button' class='btn btn-success' data-toggle='modal' data-target='#delete-modal-category-@item.category_id'><i class='fa fa-eye' aria-hidden='true'></i></button>" +
+                "</td>"));
 }

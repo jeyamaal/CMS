@@ -21,18 +21,17 @@
                 (function (index) {
                     $("#header").fadeTo("1000", 0, function () { });
                     $("#load-view").fadeTo("1000", 0, function () {
+                        $("#loading-place").addClass("still-loading");
 
                         if (index == 0)
                         {
-                            $("#load-view").load("/Categories/Index", function () {
+                            $("#header").fadeTo("1000", 1, function () { });
+                            $("#load-view").load("/Categories/Index/0", function () {
+                                $("#loading-place").removeClass("still-loading");
+                                $(".nav-links").css("pointer-events", "");
                                 //CategorySaveChanges();
                                 //$(".add-new-btn").removeAttr("id");
-                                //$(".add-new-btn").attr("data-target", "#add-modal-category");
-
-                                //$("#header").fadeTo("1000", 1, function () { });
-                                //$("#load-view").fadeTo("1000", 1, function () {
-                                //    $(".nav-links").css("pointer-events", "");
-                                //});
+                                //$(".add-new-btn").attr("data-target", "#add-modal-category");                               
                             }).error(function (a) {
 
                             });
@@ -48,22 +47,34 @@
                         else if (index == 2)
                         {
                             //Settings
-                            $("#load-view").load("/Categories/_Setting", {partial: true }, function () {
+                            $("#load-view").load("/Categories/_Setting", function () {
                                 CategorySaveChanges();
-                                $(".add-new-btn").removeAttr("id");
-                                $(".add-new-btn").attr("data-target", "#add-modal-category");
-
+                                //$(".add-new-btn").removeAttr("id");
+                               // $(".add-new-btn").attr("data-target", "#add-modal-category");
                                 $("#header").fadeTo("1000", 1, function () { });
                                 $("#load-view").fadeTo("1000", 1, function () {
+                                    $("#loading-place").removeClass("still-loading");
                                     $(".nav-links").css("pointer-events", "");
                                 });
                             }).error(function (a) {
 
                             });
                         }
-                        else
+                        else if(index == 3)
                         {
+                            // Profile
+                            $("#load-view").load("/Home/ProfileView", function () {
+                                //CategorySaveChanges();
+                                //$(".add-new-btn").removeAttr("id");
+                                // $(".add-new-btn").attr("data-target", "#add-modal-category");
+                                $("#header").fadeTo("1000", 1, function () { });
+                                $("#load-view").fadeTo("1000", 1, function () {
+                                    $("#loading-place").removeClass("still-loading");
+                                    $(".nav-links").css("pointer-events", "");
+                                });
+                            }).error(function (a) {
 
+                            });
                         }
                     });
 
