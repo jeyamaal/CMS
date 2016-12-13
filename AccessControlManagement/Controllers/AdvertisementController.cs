@@ -22,8 +22,67 @@ namespace AccessControlManagement.Controllers
         //User can view the history 
         public ActionResult Index()
         {
-            var advertisementDetails = db.AdvertisementDetails.Include(b=>b.Category1);
-            return View(advertisementDetails.ToList());
+
+          
+
+                if (Session["LogedAdevertiserID"] != null)
+                {
+
+                try
+                {
+
+                    List<object> advtList = new List<object>();
+
+                    int i = int.Parse(Session["LogedAdevertiserID"].ToString());
+
+                    // var advertisementDetails = db.AdvertisementDetails.Include(b => b.Category1);
+
+                    var advertisementDetails = (from c in db.AdvertisementDetails
+
+                                                select new AdvertisemetsAccess {
+                                                    ADD_id=c.ADD_id,
+                                                    title = c.title,
+                                                    category=c.category,
+                                                    description=c.description,
+                                                    wantToPostDate=c.wantToPostDate,
+                                                    postedDate = c.postedDate,
+                                                    updatedDate=c.updatedDate,
+                                                    dueDate=c.dueDate,
+                                                    Category1=c.Category1
+                                                });
+
+                    
+
+
+                    var myadvt = advertisementDetails.ToList();
+                    var usermm = (from c in db.users
+                                  where c.user_id == i
+                                  select c).ToList();
+
+                    advtList.Add(usermm);
+                    advtList.Add(myadvt);
+
+                    return View(advtList);
+
+
+                }
+                catch (Exception e)
+                {
+
+                    return View(e);
+                }
+
+            }
+
+                else
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+
+            
+
+           
+            
         }
 
         // GET: Advertisement/Details/5

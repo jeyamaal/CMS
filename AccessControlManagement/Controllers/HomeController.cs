@@ -18,28 +18,28 @@ namespace AccessControlManagement.Controllers
 {
     public class HomeController : Controller
     {
-
+        
         private CMSEntities db = new CMSEntities();
-        /**
+        
                 public ActionResult Index()
-                {
-                    return View();
-                }
+        {
+            return View();
+        }
 
-                public ActionResult About()
-                {
-                    ViewBag.Message = "Your application description page.";
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
 
-                    return View();
-                }
+            return View();
+        }
 
-                public ActionResult Contact()
-                {
-                    ViewBag.Message = "Your contact page.";
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
 
-                    return View();
-                }
-*/
+            return View();
+        }
+
 
         public ActionResult ProfileView()
         {
@@ -51,6 +51,28 @@ namespace AccessControlManagement.Controllers
                 user u = db.users.Find(i);
                 return View(u);
             }
+
+
+            else if (Session["LogedUserID"] != null)
+            {
+
+                int i = int.Parse(Session["LogedUserID"].ToString());
+
+                user u = db.users.Find(i);
+                return View(u);
+            }
+
+
+            else if (Session["LogedAdevertiserID"] != null)
+            {
+
+                int i = int.Parse(Session["LogedAdevertiserID"].ToString());
+
+                user u = db.users.Find(i);
+                return View(u);
+            }
+
+
             else
             {
                 return View("Login");
@@ -91,7 +113,7 @@ namespace AccessControlManagement.Controllers
                             //Jeyamaal
 
                             //Session["LogedUserID"] = v.user_id.ToString();
-                            //Session["LogedUserFullname"] = v.username.ToString();
+                             Session["LogedUserFullname"] = v.username.ToString();
                             //return RedirectToAction("AfterLogin");
 
                             Session["LogedUserID"] = v.user_id.ToString();
@@ -108,6 +130,18 @@ namespace AccessControlManagement.Controllers
                             return RedirectToAction("Index", "Categories");
 
                         }
+
+                        else if (v.role.ToString() == "advertiser")
+                        {
+                            Session["LogedAdevertiserID"] = v.user_id.ToString();
+                            Session["LogedUserFullname"] = v.username.ToString();
+                            return RedirectToAction("Index", "Advertisement");
+
+                        }
+
+
+
+
                     }
 
                     else if (v == null)
@@ -149,13 +183,21 @@ namespace AccessControlManagement.Controllers
 
             }
 
+
+            else if (Session["LogedAdevertiserID"] != null)
+            {
+
+                return RedirectToAction("Index", "Advertisement");
+
+            }
+
             else
             {
                 return RedirectToAction("Login");
             }
         }
 
-        public ActionResult ChangePassword(string oldPwd, string conPwd,string newPwd)
+    public ActionResult ChangePassword(string oldPwd, string conPwd,string newPwd)
      {
        if (Session["LogedAdminID"] != null)
        {
@@ -307,7 +349,7 @@ namespace AccessControlManagement.Controllers
                     us.picture = u.picture;
                     db.Entry(us).State = EntityState.Modified;
                     db.SaveChanges();
-                    ViewBag.Message = "Upload successful";
+                    TempData["SucessImageUpload"] = "Success_Image";
                     return RedirectToAction("ProfileView");
 
                 }
@@ -423,6 +465,47 @@ namespace AccessControlManagement.Controllers
 
             return View();
         }
+
+
+
+     
+
+
+
+        [HttpPost]
+ 
+        public ActionResult SendFeedBack(user u)
+        {
+            Feedback fd = new Feedback();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    fd.firstname = u.fullname.ToString(); ;
+                    fd.email = u.email_id.ToString();
+                    fd.description = u.feedbacks.ToString();
+                    fd.feed_date = DateTime.Now;
+                    db.Feedbacks.Add(fd);
+                    db.SaveChanges();
+                    ModelState.Clear();
+                    fd = null;
+
+                    TempData["SucessFeedbackMessage"] = "Success";
+                    return RedirectToAction("ProfileView");
+
+                   }
+                }
+
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                TempData["ErrorFeedbackMessage"] = "UnSuccess";
+                return RedirectToAction("ProfileView");
+            }
+
+            return RedirectToAction("ProfileView");
+        }
+
 
     }
 }

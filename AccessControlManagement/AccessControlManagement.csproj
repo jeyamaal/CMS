@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -121,10 +122,25 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WebMatrix.Data">
+      <HintPath>C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v2.0\Packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -137,8 +153,6 @@
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
-    <Compile Include="Controllers\SweetController.cs" />
-    <Compile Include="Controllers\TinyMCESampleJQueryController.cs" />
     <Compile Include="Controllers\ViewAdvertisement.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -149,6 +163,7 @@
     <Compile Include="Models\AdvertisementDetail.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdvertisemetsAccess.cs" />
     <Compile Include="Models\Article.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
@@ -176,62 +191,18 @@
     <Compile Include="Models\Comment.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EmailForm.cs" />
     <Compile Include="Models\Feedback.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Post.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TinyMCEModelJQuery.cs" />
     <Compile Include="Models\user.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets\bjqs.css" />
-    <Content Include="assets\demo.css" />
-    <Content Include="assets\js\bjqs-1.3.js" />
-    <Content Include="assets\js\bjqs-1.3.min.js" />
-    <Content Include="assets\js\libs\jquery.secret-source.min.js" />
-    <Content Include="bin\AccessControlManagement.dll" />
-    <Content Include="bin\AccessControlManagement.pdb" />
-    <Content Include="bin\Antlr3.Runtime.dll" />
-    <Content Include="bin\Antlr3.Runtime.pdb" />
-    <Content Include="bin\EntityFramework.dll" />
-    <Content Include="bin\EntityFramework.SqlServer.dll" />
-    <Content Include="bin\EntityFramework.SqlServer.xml" />
-    <Content Include="bin\EntityFramework.xml" />
-    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
-    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
-    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
-    <Content Include="bin\Newtonsoft.Json.dll" />
-    <Content Include="bin\Newtonsoft.Json.xml" />
-    <Content Include="bin\roslyn\csc.exe" />
-    <Content Include="bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll" />
-    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll" />
-    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.dll" />
-    <Content Include="bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll" />
-    <Content Include="bin\roslyn\System.Collections.Immutable.dll" />
-    <Content Include="bin\roslyn\System.Reflection.Metadata.dll" />
-    <Content Include="bin\roslyn\vbc.exe" />
-    <Content Include="bin\roslyn\VBCSCompiler.exe" />
-    <Content Include="bin\System.Web.Helpers.dll" />
-    <Content Include="bin\System.Web.Helpers.xml" />
-    <Content Include="bin\System.Web.Mvc.dll" />
-    <Content Include="bin\System.Web.Mvc.xml" />
-    <Content Include="bin\System.Web.Optimization.dll" />
-    <Content Include="bin\System.Web.Optimization.xml" />
-    <Content Include="bin\System.Web.Razor.dll" />
-    <Content Include="bin\System.Web.Razor.xml" />
-    <Content Include="bin\System.Web.WebPages.Deployment.dll" />
-    <Content Include="bin\System.Web.WebPages.Deployment.xml" />
-    <Content Include="bin\System.Web.WebPages.dll" />
-    <Content Include="bin\System.Web.WebPages.Razor.dll" />
-    <Content Include="bin\System.Web.WebPages.Razor.xml" />
-    <Content Include="bin\System.Web.WebPages.xml" />
-    <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\alertifyjs\alertify.css" />
     <Content Include="Content\alertifyjs\alertify.min.css" />
     <Content Include="Content\alertifyjs\alertify.rtl.css" />
@@ -254,13 +225,11 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Login.css" />
+    <Content Include="Content\LoginStyle.css" />
     <Content Include="Content\Register.css" />
     <Content Include="Content\style.css" />
-    <Content Include="Content\sweetalert\bootstrap-sweetalert.png" />
-    <Content Include="Content\sweetalert\docs.css" />
-    <Content Include="Content\sweetalert\sweet-alert.css" />
-    <Content Include="Content\sweetalert\thumbs-up.jpg" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -279,20 +248,18 @@
     <Content Include="Resources\jeyamaal_images\g3.jpg" />
     <Content Include="Resources\jeyamaal_images\g4.jpg" />
     <Content Include="Resources\jeyamaal_images\loding_login.gif" />
+    <Content Include="Resources\jeyamaal_images\login-bg-blur.jpg" />
+    <Content Include="Resources\jeyamaal_images\login-bg.jpg" />
     <Content Include="Resources\jeyamaal_images\prof-pic.png" />
     <Content Include="Scripts\alertify.js" />
     <Content Include="Scripts\alertify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\bootstrap\mixins.less" />
-    <Content Include="Content\bootstrap\variables.less" />
-    <Content Include="Content\sweetalert\sweet-alert-animations.less" />
-    <Content Include="Content\sweetalert\sweet-alert-combine.less" />
-    <Content Include="Content\sweetalert\sweet-alert.less" />
-    <Content Include="bin\AccessControlManagement.dll.config" />
-    <Content Include="bin\roslyn\Microsoft.CSharp.Core.targets" />
-    <Content Include="bin\roslyn\Microsoft.VisualBasic.Core.targets" />
-    <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <EntityDeploy Include="Models\CMSModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CMSModel.Designer.cs</LastGenOutput>
@@ -302,6 +269,7 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\category.js" />
+    <Content Include="Scripts\reports.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -312,174 +280,12 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Register_checkbox.js" />
-    <Content Include="Scripts\reports.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\style.js" />
     <Content Include="Scripts\sweetalert-dev.js" />
     <Content Include="Scripts\sweetalert.css" />
     <Content Include="Scripts\sweetalert.min.js" />
-    <Content Include="Scripts\tinymce.3.4.5\jquery.tinymce.js" />
-    <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
-    <Content Include="Scripts\tinymce\license.txt" />
-    <Content Include="Scripts\tinymce\plugins\advlist\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\advlist\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\anchor\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\anchor\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\autolink\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\autolink\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\autoresize\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\autoresize\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\autosave\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\autosave\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\bbcode\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\bbcode\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\charmap\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\charmap\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\codesample\css\prism.css" />
-    <Content Include="Scripts\tinymce\plugins\codesample\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\codesample\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\code\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\code\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\colorpicker\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\colorpicker\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\css\dialog.css" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\img\buttons.png" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\img\icons.gif" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\img\items.gif" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\img\menu_arrow.gif" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\img\menu_check.gif" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\img\progress.gif" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\img\tabs.gif" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\tiny_mce_popup.js" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\utils\editable_selects.js" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\utils\form_utils.js" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\utils\mctabs.js" />
-    <Content Include="Scripts\tinymce\plugins\compat3x\utils\validate.js" />
-    <Content Include="Scripts\tinymce\plugins\contextmenu\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\contextmenu\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\directionality\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\directionality\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-cool.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-cry.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-embarassed.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-frown.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-innocent.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-kiss.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-laughing.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-money-mouth.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-sealed.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-smile.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-surprised.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-tongue-out.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-undecided.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-wink.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-yell.gif" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\emoticons\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\example\dialog.html" />
-    <Content Include="Scripts\tinymce\plugins\example\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\example\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\example_dependency\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\example_dependency\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\fullpage\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\fullpage\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\fullscreen\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\fullscreen\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\hr\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\hr\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\imagetools\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\imagetools\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\image\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\image\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\importcss\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\importcss\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\insertdatetime\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\insertdatetime\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\layer\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\layer\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\legacyoutput\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\legacyoutput\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\link\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\link\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\lists\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\lists\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\media\moxieplayer.swf" />
-    <Content Include="Scripts\tinymce\plugins\media\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\media\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\nonbreaking\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\nonbreaking\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\noneditable\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\noneditable\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\pagebreak\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\pagebreak\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\paste\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\paste\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\preview\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\preview\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\print\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\print\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\save\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\save\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\searchreplace\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\searchreplace\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\spellchecker\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\spellchecker\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\tabfocus\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\tabfocus\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\table\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\table\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\template\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\template\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\textcolor\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\textcolor\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\textpattern\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\textpattern\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\css\visualblocks.css" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\address.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\article.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\aside.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\blockquote.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\div.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\dl.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\figure.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\h1.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\h2.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\h3.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\h4.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\h5.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\h6.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\hgroup.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\ol.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\p.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\pre.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\section.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\img\ul.gif" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\visualblocks\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\visualchars\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\visualchars\plugin.min.js" />
-    <Content Include="Scripts\tinymce\plugins\wordcount\plugin.js" />
-    <Content Include="Scripts\tinymce\plugins\wordcount\plugin.min.js" />
-    <Content Include="Scripts\tinymce\skins\lightgray\content.inline.min.css" />
-    <Content Include="Scripts\tinymce\skins\lightgray\content.min.css" />
-    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.svg" />
-    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.svg" />
-    <Content Include="Scripts\tinymce\skins\lightgray\img\anchor.gif" />
-    <Content Include="Scripts\tinymce\skins\lightgray\img\loader.gif" />
-    <Content Include="Scripts\tinymce\skins\lightgray\img\object.gif" />
-    <Content Include="Scripts\tinymce\skins\lightgray\img\trans.gif" />
-    <Content Include="Scripts\tinymce\skins\lightgray\skin.ie7.min.css" />
-    <Content Include="Scripts\tinymce\skins\lightgray\skin.min.css" />
-    <Content Include="Scripts\tinymce\themes\inlite\theme.js" />
-    <Content Include="Scripts\tinymce\themes\inlite\theme.min.js" />
-    <Content Include="Scripts\tinymce\themes\modern\theme.js" />
-    <Content Include="Scripts\tinymce\themes\modern\theme.min.js" />
-    <Content Include="Scripts\tinymce\tinymce.js" />
-    <Content Include="Scripts\tinymce\tinymce.min.js" />
     <Content Include="Scripts\validation.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Styles\sweetalert.css" />
@@ -502,38 +308,32 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\AfterLogin.cshtml" />
     <Content Include="Views\Register\Register.cshtml" />
-    <Content Include="Views\Home\ChangePassword.cshtml" />
-    <Content Include="Views\Advertisement\Index.cshtml" />
-    <Content Include="Views\Advertisement\Create.cshtml" />
-    <Content Include="Views\Advertisement\Details.cshtml" />
-    <Content Include="Views\Advertisement\Edit.cshtml" />
-    <Content Include="Views\Advertisement\Delete.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\tinymce_jquery_full.cshtml" />
-    <Content Include="Views\TinyMCESampleJQuery\Index.cshtml" />
-    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.woff" />
-    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.ttf" />
-    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.json" />
-    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.eot" />
-    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
-    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
-    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.json" />
-    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
-    <Content Include="Scripts\tinymce\skins\lightgray\fonts\readme.md" />
-    <Content Include="Scripts\tinymce\langs\readme.md" />
     <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Shared\_Admin_Layout.cshtml" />
     <Content Include="Views\Categories\_Setting.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Post\Create.cshtml" />
     <Content Include="Views\Post\Details.cshtml" />
     <Content Include="Views\Post\Home.cshtml" />
     <Content Include="Views\Post\Index.cshtml" />
-    <Content Include="Views\Shared\_Admin_layout.cshtml" />
     <Content Include="Views\Shared\_PostLayout.cshtml" />
-    <Content Include="Views\Sweet\Alert.cshtml" />
+    <Content Include="Views\Home\ProfileView.cshtml" />
+    <Content Include="Views\Home\NoOfPostsGraph.cshtml" />
+    <Content Include="Views\Home\AccountStatusGraph.cshtml" />
+    <Content Include="Views\Home\AdvertisementStatusGraph.cshtml" />
+    <Content Include="Views\Categories\_Post.cshtml" />
     <Content Include="Views\ViewAdvertisement\Index.cshtml" />
+    <Content Include="Views\Advertisement\Create.cshtml" />
+    <Content Include="Views\Advertisement\Delete.cshtml" />
+    <Content Include="Views\Advertisement\Details.cshtml" />
+    <Content Include="Views\Advertisement\Edit.cshtml" />
+    <Content Include="Views\Advertisement\Index.cshtml" />
+    <Content Include="Views\Shared\_Advertisement_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Resources\Advetrisement_Image\" />
+    <Folder Include="PostImages\" />
+    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

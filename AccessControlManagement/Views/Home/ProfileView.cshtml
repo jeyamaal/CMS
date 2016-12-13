@@ -7,6 +7,7 @@
 
     ViewBag.Title = "Profile View";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Admin_Layout.cshtml";
 
 }
 
@@ -43,8 +44,8 @@
 
 <h2>AfterLogin</h2>
 
-@if (Session["LogedUserFullname"] != null)
-{
+@*@if (Session["LogedUserFullname"] != null)
+{*@
 
     <div class="col-md-3">
         <ul class="nav nav-pills nav-stacked">
@@ -55,7 +56,7 @@
             <li><a href="#">Change Template</a></li>
             @Html.ActionLink("Deactive Account", "DeactiveAccount", "Home",
             new { onclick = "return confirm('Are you sure you wish to Deactive the Account');" })
-            <li><a href="#" id="test-1">FeedBack</a></li>
+            <li><a href="#" data-target="#FeedBackModal" data-toggle="modal">FeedBack</a></li>
 
         </ul>
     </div>
@@ -108,7 +109,7 @@
 
     </div>
 
-}
+    @*}*@
 
 <!--modal-->
 <!--Changa Profile picture-->
@@ -221,8 +222,82 @@
 </div>
 
 
+<!--modal-->
+<!--FeedBack-->
+<div id="FeedBackModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h1 class="text-center">FeedBack </h1>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <p>Contact Us Today!.</p>
+                                <div class="panel-body">
+                                    <fieldset>
+                                        <div class="form-group">
+
+                                            <fieldset>
+                                                <legend>Feed Back</legend>
+                                                <div class="col-sm-offset-3">
+
+                                                    @using (Html.BeginForm("SendFeedBack", "Home", FormMethod.Post))
+                                                    {
+
+                                                        @*<input id="firstname" name="first_name" placeholder="First Name" class="form-control" value="@Model.fullname" type="text" readonly="readonly">*@
+
+                                                        @Html.TextBoxFor(a=>a.fullname, new { @required = "true", @class = "form-control input-lg", @placeholder = "User name", @tabindex = "3", @readonly = "readonly" })
+
+                                                        @Html.TextBoxFor(a => a.email_id, new { @required = "true", @class = "form-control input-lg", @placeholder = "Email", @tabindex = "3", @readonly = "readonly" })
+
+                                                        @Html.TextBoxFor(a => a.feedbacks, new { @required = "true", @class = "form-control input-lg", @placeholder = "FeedBack", @tabindex = "3" })
+
+                                           
+
+                                                        <input class="btn btn-lg btn-info" value="Send" type="submit">
+
+
+                                                    }
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
 
 @*Validation for Image upload*@
+@if (TempData["SucessImageUpload"] != null)
+{
+    <script type="text/javascript">
+
+        swal("Profile  Updated", "Profile Picture has been Updated!", "success")
+
+    </script>
+}
 
 @if (TempData["Message"] != null)
 {
@@ -234,6 +309,28 @@
 }
 
 
+@*Validation for Sucess Feedback*@
+
+@if  (TempData["SucessFeedbackMessage"] != null)
+{
+    <script type="text/javascript">
+
+        swal("Sent!", "Thank you for your valuabale feedback!", "success")
+
+    </script>
+}
+
+
+@*Validation for Error Feedback*@
+
+@if (TempData["ErrorFeedbackMessage"] != null)
+{
+    <script type="text/javascript">
+
+        sweetAlert("Error", "Failed to Send Feedback", "error");
+
+    </script>
+}
 
 
 
