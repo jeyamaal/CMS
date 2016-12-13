@@ -1,0 +1,262 @@
+﻿<script src="dist/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="dist/sweetalert.css">
+
+@model AccessControlManagement.Models.Post
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_PostLayout.cshtml";
+}
+
+<style type="text/css">
+    .form-style-5 {
+        max-width: 500px;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        margin: 10px auto;
+        padding: 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+
+        .form-style-5 fieldset {
+            border: none;
+        }
+
+        .form-style-5 legend {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .form-style-5 label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-style-5 input[type="text"],
+        .form-style-5 input[type="date"],
+        .form-style-5 input[type="datetime"],
+        .form-style-5 input[type="email"],
+        .form-style-5 input[type="number"],
+        .form-style-5 input[type="search"],
+        .form-style-5 input[type="time"],
+        .form-style-5 input[type="url"],
+        .form-style-5 textarea,
+        .form-style-5 select {
+            font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+            background: rgba(255,255,255,.1);
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 0;
+            outline: 0;
+            padding: 7px;
+            width: 100%;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            background-color: #e8eeef;
+            color: #8a97a0;
+            -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            margin-bottom: 30px;
+        }
+
+            .form-style-5 input[type="text"]:focus,
+            .form-style-5 input[type="date"]:focus,
+            .form-style-5 input[type="datetime"]:focus,
+            .form-style-5 input[type="email"]:focus,
+            .form-style-5 input[type="number"]:focus,
+            .form-style-5 input[type="search"]:focus,
+            .form-style-5 input[type="time"]:focus,
+            .form-style-5 input[type="url"]:focus,
+            .form-style-5 textarea:focus,
+            .form-style-5 select:focus {
+                background: #d2d9dd;
+            }
+
+        .form-style-5 select {
+            -webkit-appearance: menulist-button;
+            height: 35px;
+        }
+
+        .form-style-5 .number {
+            background: #1abc9c;
+            color: #fff;
+            height: 30px;
+            width: 30px;
+            display: inline-block;
+            font-size: 1em;
+            margin-right: 4px;
+            line-height: 30px;
+            text-align: center;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+            border-radius: 15px 15px 15px 0px;
+        }
+
+        .form-style-5 input[type="submit"],
+        .form-style-5 input[type="button"] {
+            position: relative;
+            padding: 3px 3px 3px 3px;
+            color: #FFF;
+            background: #1abc9c;
+            font-size: 18px;
+            text-align: center;
+            font-style: normal;
+            width: 30%;
+            border: 1px solid #16a085;
+            border-width: 1px 1px 3px;
+            margin-bottom: 10px;
+            margin-left: 70px;
+            top: 10px;
+        }
+
+            .form-style-5 input[type="submit"]:hover,
+            .form-style-5 input[type="button"]:hover {
+                background: #109177;
+            }
+
+    input[type="text"] {
+        width: 200px;
+    }
+
+    .form-style-5 h5 {
+        color: #1abc9c;
+    }
+
+    .form-style-5 a {
+            top: 20px;
+        }
+
+    .form-style-5 i {
+            color: #1abc9c;
+            margin-left:300px;
+        }
+</style>
+
+<div class="form-style-5">
+    <fieldset>
+        <legend><span class="number">P</span> Delete Post <a href="@Url.Action("Index", "Post")"><i class="fa fa-arrow-circle-left"></i> </a></legend>
+
+        <h5><b>Are you sure you want to delete this?</b></h5>
+
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    Title
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.title)
+                    <p></p>
+                </dd>
+
+                <dt>
+                    Catergory
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Category.category_name)
+                    <p></p>
+                </dd>
+
+                <dt>
+                    Publish Date
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.post_date)
+                    <p></p>
+                </dd>
+
+                <dt>
+                    Content
+                </dt>
+
+                <dd style="text-align: justify">
+                    @Html.DisplayFor(model => model.post_description)
+                    <p></p>
+                </dd>
+
+                <dt>
+                    Status
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.activity_log)
+                    <p></p>
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.image)
+                    <p></p>
+                </dt>
+
+                <dd>
+                    <img src="@Url.Content(Model.image)" alt="Image" height="100" width="100" />
+                    <p></p>
+                </dd>             
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" id="test-3" onclick = "return confirm('Are you sure you wish to delete this Post?');" /> | @Html.ActionLink("Back to List", "Index")
+                   
+                </div>
+            }
+        </div>
+    </fieldset>
+</div>
+
+<script>
+
+    function validation()
+    {
+        swal("Good job!", "Login", "success")
+    }
+    //document.querySelector('input#test-3').onclick = function () {
+    //    swal({
+    //        title: "Are you sure?",
+    //        text: "Your will not be able to recover this imaginary file!",
+    //        type: "warning",
+    //        showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Yes, delete it!"
+    //    });
+    //};
+    //function deletealert(ctl, event) {
+    //    // STORE HREF ATTRIBUTE OF LINK CTL (THIS) BUTTON
+    //    var defaultAction = $(ctl).prop("href");
+    //    // CANCEL DEFAULT LINK BEHAVIOUR
+    //    event.preventDefault();
+    //    swal({
+    //        title: "Are you sure?",
+    //        text: "You will not be able to recover this imaginary   file!",
+    //        type: "warning",
+    //        showCancelButton: true,
+    //        confirmButtonColor: "#DD6B55",
+    //        confirmButtonText: "Yes, delete it!",
+    //        cancelButtonText: "No, cancel plx!",
+    //        closeOnConfirm: false,
+    //        closeOnCancel: false
+    //    },
+    //    function (isConfirm) {
+    //        if (isConfirm) {
+    //            swal({ title: "Deleted!", text: "Your imaginary file has been deleted.", type: "success", confirmButtonText: "OK!", closeOnConfirm: false },
+    //            function () {
+    //                // RESUME THE DEFAULT LINK ACTION
+    //                window.location.href = defaultAction;
+    //                return true;
+    //            });
+    //        } else {
+    //            swal("Cancelled", "Your imaginary file is safe :)", "error");
+    //            return false;
+    //        }
+    //    });
+    //}
+</script>
+
+    
+    
