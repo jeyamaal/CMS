@@ -20,27 +20,42 @@ namespace AccessControlManagement.Controllers
     {
         
         private CMSEntities db = new CMSEntities();
-        
-                public ActionResult Index()
+
+        /// <summary>
+        /// To View Profile
+        /// </summary>
+        /// <returns>It returns Profile of the User</returns>
+        /// Created by- Jeyamaal
+        /// Date-9/10/2016
+
+        public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
+        //public ActionResult About()
+        //{
+        //    ViewBag.Message = "Your application description page.";
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+        //    return View();
+        //}
 
-            return View();
-        }
+        //public ActionResult Contact()
+        //{
+        //    ViewBag.Message = "Your contact page.";
+
+        //    return View();
+        //}
 
 
+
+        /// <summary>
+        /// To View Profile
+        /// </summary>
+        /// <returns>It returns Profile of the User</returns>
+        /// Created by- Jeyamaal
+        /// Date-9/9/2016
         public ActionResult ProfileView()
         {
             if (Session["LogedAdminID"] != null)
@@ -80,16 +95,34 @@ namespace AccessControlManagement.Controllers
             }
 
         }
-      
+
+
+
+        /// <summary>
+        /// To Login to the System via GetMethod
+        /// </summary>
+        /// <returns>It returns the Login page</returns>
+        /// Created by- Jeyamaal
+        /// Date-13/9/2016
+
         public ActionResult Login()
         {
             return View();
         }
 
-       
-     
-          [HttpPost]
-        //  [ValidateAntiForgeryToken]
+
+
+        /// <summary>
+        /// To Login to the System via GetMethod
+        /// </summary>
+        /// <param name="un">username of the user</param>
+        /// <param name="pwd">password of the user</param>
+        /// <returns>Return page according to the credentials</returns>
+        /// Created by- Jeyamaal
+        /// Date-13/9/2016
+
+        [HttpPost]
+      //[ValidateAntiForgeryToken]
         public ActionResult Login(string un, string pwd)
         {
             try
@@ -163,7 +196,12 @@ namespace AccessControlManagement.Controllers
 
 
 
-
+        /// <summary>
+        /// To redirect the page acccording to the correct credentials entered by the user
+        /// </summary>
+        /// <returns>User's main page (Admin/Writer/User)</returns>
+        /// Created by- Jeyamaal
+        /// Date-17/9/2016
         public ActionResult AfterLogin()
         {
 
@@ -197,8 +235,17 @@ namespace AccessControlManagement.Controllers
             }
         }
 
-    public ActionResult ChangePassword(string oldPwd, string conPwd,string newPwd)
-     {
+        /// <summary>
+        /// Reset the current password
+        /// </summary>
+        /// <param name="oldPwd">Old password</param>
+        /// <param name="conPwd">Confirm the old password</param>
+        /// <param name="newPwd">new password</param>
+        /// <returns>Change password Modal(HTML Modal)</returns>
+        /// Created by- Jeyamaal
+        /// Date-23/9/2016
+        public ActionResult ChangePassword(string oldPwd, string conPwd,string newPwd)
+       {
        if (Session["LogedAdminID"] != null)
        {
 
@@ -225,27 +272,44 @@ namespace AccessControlManagement.Controllers
                   }
 
                 }catch (Exception ex)
-                            {
-                                    return Json("WrongChangePassword");
-                            }
+                {
+                        return Json("WrongChangePassword");
+                }
                     
          }
          else
          {
                 return Json("WrongChangePassword");
-            }
+          }
 
             return Json("WrongChangePassword");
         }
 
 
-
+        /// <summary>
+        /// Logout from the system
+        /// </summary>
+        /// <returns>It returns the Login page </returns>
+        /// Created by- Jeyamaal
+        /// Date-1/10/2016
         public ActionResult logout()
         {
              Session.Abandon(); // it will clear the session at the end of request
              return RedirectToAction("Login", "Home");
         }
 
+
+
+
+
+        /// <summary>
+        /// Recover the password when user forget the password.
+        /// The new password is sent by the system to user's email address
+        /// </summary>
+        /// <param name="email">User's email address</param>
+        /// <returns></returns>
+        /// Created by- Jeyamaal
+        /// Date-5/10/2016
 
         [HttpPost]
         public ActionResult RecoverPassword(string email )
@@ -295,12 +359,27 @@ namespace AccessControlManagement.Controllers
             return Json("WrongEmail");
 
         }
-
+        /// <summary>
+        /// Change the profile picture of the user via Get method
+        /// </summary>
+        /// <returns>It returns the Modal of the "Change Picture page"</returns>
+        /// Created by- Jeyamaal
+        /// Date-5/10/2016
         public ActionResult ChangeProfilePicture()
         {
             return View();
         }
 
+
+        /// <summary>
+        /// Change the profile picture of the user via Post method
+        /// user has to input image file.
+        /// </summary>
+        /// <param name="file">Image file</param>
+        /// <param name="u">user details</param>
+        /// <returns>It return the Modal of the "Change Picture page"</returns>
+        /// Created by- Jeyamaal
+        /// Date-19/10/2016
         [HttpPost]
         public ActionResult ChangeProfilePicture(HttpPostedFileBase file, user u)
         {
@@ -373,7 +452,14 @@ namespace AccessControlManagement.Controllers
 
 
         }
-
+        /// <summary>
+        /// To Get the file extension of the File
+        /// </summary>
+        /// <param name="path">Full path of the file</param>
+        /// <param name="startAfterPart">Where we want to  extract from the path name</param>
+        /// <returns>It returs the customize file path</returns>
+        /// Created by- Jeyamaal
+        /// Date-19/10/2016
         private static string GetRightPartOfPath(string path, string startAfterPart)
         {
             // use the correct seperator for the environment
@@ -398,6 +484,12 @@ namespace AccessControlManagement.Controllers
         }
 
 
+        /// <summary>
+        /// Deactivate the user's account by the user
+        /// </summary>
+        /// <returns>It returns Confirmation message,according to the users response it will deactivavte the account  or not</returns>
+        /// Created by- Jeyamaal
+        /// Date-26/10/2016
         public ActionResult DeactiveAccount()
         {
             try
@@ -420,7 +512,12 @@ namespace AccessControlManagement.Controllers
             return View();
         }
 
-
+        /// <summary>
+        /// It will show the graph of the the No of the posts orederd by month 
+        /// </summary>
+        /// <returns>It returns the NOOfPostsGraph.cshtml</returns>
+        /// Created by- Jeyamaal
+        /// Date-26/10/2016
         public ActionResult NoOfPostsGraph()
         {
             if (Session["LogedAdminID"] != null)
@@ -436,7 +533,12 @@ namespace AccessControlManagement.Controllers
         }
 
 
-
+        /// <summary>
+        /// It will show the graph of the AccountStatus (Number of Active and Deactive users) 
+        /// </summary>
+        /// <returns>It returns the AccountStatusGraph.cshtml</returns>
+        /// Created by- Jeyamaal
+        /// Date-26/10/2016
         public ActionResult AccountStatusGraph()
         {
             if (Session["LogedAdminID"] != null)
@@ -451,7 +553,12 @@ namespace AccessControlManagement.Controllers
             return View();
         }
 
-
+        /// <summary>
+        /// It will show the graph of the AdvertisementStatus (Number of advertisements posted/pending/accept) 
+        /// </summary>
+        /// <returns>It returns the AdvertisementStatusGraph.cshtml</returns>
+        /// Created by- Jeyamaal
+        /// Date-26/10/2016
         public ActionResult AdvertisementStatusGraph()
         {
             if (Session["LogedAdminID"] != null)
@@ -468,10 +575,16 @@ namespace AccessControlManagement.Controllers
 
 
 
-     
 
 
 
+        /// <summary>
+        /// To send the feedback as a text to system
+        /// </summary>
+        /// <param name="u">user details</param>
+        /// <returns>It return the Modal of the Feedback page</returns>
+        /// Created by- Jeyamaal
+        /// Date-10/11/2016
         [HttpPost]
  
         public ActionResult SendFeedBack(user u)

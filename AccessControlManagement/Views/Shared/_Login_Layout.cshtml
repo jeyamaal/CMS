@@ -1,0 +1,70 @@
+﻿@model AccessControlManagement.Models.user
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*<link rel="stylesheet" type="text/css" href="themes/twitter.css">*@
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Scripts/sweetalert.css">
+
+</head>
+<body>
+    @if (Session["LogedAdminID"] != null || Session["LogedUserID"] != null || Session["LogedAdevertiserID"] != null)
+    {
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Be Blogger</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+
+                    @try
+                    {
+
+                        if (Model.picture != null)
+                        {
+                            <img src=@Url.Content(Model.picture) height="55" width="55">
+
+                        }
+
+                        else
+                        {
+                            <img src=# height="55" width="55">
+                        }
+
+
+
+
+                        <br>
+
+                        @Html.DisplayFor(model => model.username)
+                        <br>
+                        @Html.ActionLink("Log Out", "logout", "Home")
+                    }
+                    catch (Exception e)
+                    {
+
+
+                    }
+
+
+                </ul>
+            </div>
+        </nav>
+    }
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer></footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

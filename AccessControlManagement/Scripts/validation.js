@@ -53,7 +53,7 @@ function OnLogin(content) {
         success: function (data) {
            if (data == "WrongCredits") {
 
-               sweetAlert("Invalid UserName or Password", "Input the correct credentials!", "error");
+               sweetAlert("Invalid UserName or Password", "Enter the correct credentials!", "error");
 
                //hide the login loading image
                $(document).ready(function () {

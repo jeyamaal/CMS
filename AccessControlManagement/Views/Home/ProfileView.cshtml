@@ -42,54 +42,61 @@
 </head>
 
 
-<h2>AfterLogin</h2>
 
 @*@if (Session["LogedUserFullname"] != null)
-{*@
+  {*@
 
-    <div class="col-md-3">
-        <ul class="nav nav-pills nav-stacked">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#" data-target="#profPicModal" data-toggle="modal">Change Profile Picture</a>
-            <li><a href="#" data-target="#ChangePasswordModal" data-toggle="modal">Change Password</a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Change Template</a></li>
-            @Html.ActionLink("Deactive Account", "DeactiveAccount", "Home",
-            new { onclick = "return confirm('Are you sure you wish to Deactive the Account');" })
-            <li><a href="#" data-target="#FeedBackModal" data-toggle="modal">FeedBack</a></li>
+                <div class="col-md-3">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#" data-target="#profPicModal" data-toggle="modal">Change Profile Picture</a>
+                        <li><a href="#" data-target="#ChangePasswordModal" data-toggle="modal">Change Password</a></li>
+                        <li><a href="#">Reports</a></li>
+                        <li><a href="#">Change Template</a></li>
+                        @Html.ActionLink("Deactive Account", "DeactiveAccount", "Home",
+new { onclick = "return confirm('Are you sure you wish to Deactive the Account');" })
+                        <li><a href="#" data-target="#FeedBackModal" data-toggle="modal">FeedBack</a></li>
 
-        </ul>
-    </div>
+                    </ul>
+                </div>
 
 
-    <div class="col-sm-offset-3" title="text" id="printableArea">
+            <div class="col-sm-offset-3" title="text" id="printableArea">
 
-        <p><font face="verdana" color="green" size="6">Analysis of Posts</font></p>
-        @*<button type="button" class="btn-group-lg" onclick="printDiv('printableArea')">Print</button>*@
+                <p><font face="verdana" color="green" size="6">Analysis of Posts</font></p>
+                @*<button type="button" class="btn-group-lg" onclick="printDiv('printableArea')">Print</button>*@
 
-        <iframe src='@Url.Action("NoOfPostsGraph", "Home")' id="print-content" title="Right Click and Save the Image" width="100%" height="500" frameBorder="0" ></iframe>
-        
-        
-    </div>
-    @*<input type="button" onclick="printDiv('printableArea')" value="print a div!" />*@
+                <iframe src='@Url.Action("NoOfPostsGraph", "Home")' id="print-content" title="Right Click and Save the Image" width="100%" height="600" frameBorder="0"></iframe>
 
-    <div class="col-sm-offset-3">
-        
-        <p><font face="verdana" color="green" size="6">Status of AccountDetails</font></p>
 
-        <iframe src='@Url.Action("AccountStatusGraph", "Home")'width="100%"  height="500" frameBorder="0"  ></iframe>
+            </div>
+                            @*<input type="button" onclick="printDiv('printableArea')" value="print a div!" />*@
 
-    </div>
+            @if (Session["LogedAdminID"] != null)
+            {
+                <div class="col-sm-offset-3">
 
-    <div class="col-sm-offset-3">
+                    <p><font face="verdana" color="green" size="6">Status of AccountDetails</font></p>
 
-        <p><font face="verdana" color="green" size="6">Status of Advertisment</font></p>
+                    <iframe src='@Url.Action("AccountStatusGraph", "Home")' width="100%" height="500" frameBorder="0"></iframe>
 
-        <iframe src='@Url.Action("AdvertisementStatusGraph", "Home")' width="100%" height="500" frameBorder="0"></iframe>
+                </div>
+            }
 
-    </div>
-   
-    <div>
+                @if (Session["LogedAdminID"] != null)
+                {
+                    <div class="col-sm-offset-3">
+
+                        <p><font face="verdana" color="green" size="6">Status of Advertisment</font></p>
+
+                        <iframe src='@Url.Action("AdvertisementStatusGraph", "Home")' width="100%" height="500" frameBorder="0"></iframe>
+
+                    </div>
+                }
+
+
+    
+@*<div>
 
         <text>
             Welcome @Session["LogedUserFullname"].ToString()
@@ -107,9 +114,9 @@
             Your username is @Html.DisplayFor(model => model.username)
         </text>
 
-    </div>
+    </div>*@
 
-    @*}*@
+@*}*@
 
 <!--modal-->
 <!--Changa Profile picture-->
@@ -250,13 +257,13 @@
 
                                                         @*<input id="firstname" name="first_name" placeholder="First Name" class="form-control" value="@Model.fullname" type="text" readonly="readonly">*@
 
-                                                        @Html.TextBoxFor(a=>a.fullname, new { @required = "true", @class = "form-control input-lg", @placeholder = "User name", @tabindex = "3", @readonly = "readonly" })
+                                                        @Html.TextBoxFor(a => a.fullname, new { @required = "true", @class = "form-control input-lg", @placeholder = "User name", @tabindex = "3", @readonly = "readonly" })
 
                                                         @Html.TextBoxFor(a => a.email_id, new { @required = "true", @class = "form-control input-lg", @placeholder = "Email", @tabindex = "3", @readonly = "readonly" })
 
-                                                        @Html.TextBoxFor(a => a.feedbacks, new { @required = "true", @class = "form-control input-lg", @placeholder = "FeedBack", @tabindex = "3" })
+                                                        @Html.TextBoxFor(a => a.feedbacks, new { @required = "true", @class = "form-control input-lg", @placeholder = "FeedBack", @tabindex = "3", @minlength = "5", @autocomplete = "off" })
 
-                                           
+
 
                                                         <input class="btn btn-lg btn-info" value="Send" type="submit">
 
@@ -303,63 +310,63 @@
 {
     <script type="text/javascript">
 
-        sweetAlert("Error", "Please Choose an image file", "error");
+        sweetAlert("Please Choose an image file", "max:20MB", "error");
 
     </script>
 }
 
 
-@*Validation for Sucess Feedback*@
+    @*Validation for Sucess Feedback*@
 
-@if  (TempData["SucessFeedbackMessage"] != null)
-{
-    <script type="text/javascript">
+    @if (TempData["SucessFeedbackMessage"] != null)
+    {
+        <script type="text/javascript">
 
-        swal("Sent!", "Thank you for your valuabale feedback!", "success")
+            swal("Sent!", "Thank you for your valuabale feedback!", "success")
 
-    </script>
-}
-
-
-@*Validation for Error Feedback*@
-
-@if (TempData["ErrorFeedbackMessage"] != null)
-{
-    <script type="text/javascript">
-
-        sweetAlert("Error", "Failed to Send Feedback", "error");
-
-    </script>
-}
-
-
-
-
-@section Scripts{
-    
-    @*for ImageUpload*@
-    
-    <script>
-
-    function readURL(input) {
-
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#blah').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
+        </script>
     }
 
-    $("#imgInp").change(function () {
-        readURL(this);
-    });
+
+    @*Validation for Error Feedback*@
+
+    @if (TempData["ErrorFeedbackMessage"] != null)
+    {
+        <script type="text/javascript">
+
+            sweetAlert("Error", "Failed to Send Feedback", "error");
+
+        </script>
+    }
 
 
-    </script>
-    
-  
-}
+
+
+    @section Scripts{
+
+        @*for ImageUpload*@
+
+        <script>
+
+            function readURL(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#blah').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#imgInp").change(function () {
+                readURL(this);
+            });
+
+
+        </script>
+
+
+    }

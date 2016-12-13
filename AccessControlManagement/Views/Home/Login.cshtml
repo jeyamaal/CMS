@@ -1,9 +1,12 @@
 ﻿@model AccessControlManagement.Models.user
 
 @{
-     Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
+    ViewBag.Title = "Profile View";
+    Layout = "~/Views/Shared/_Login_Layout.cshtml";
+
+
+}
 <head>
     @*@Styles.Render("~/Content/bootstrapcss")*@
     <link href="@Url.Content("~/Content/Login.css")" rel="stylesheet" type="text/css" />
