@@ -5335,7 +5335,7 @@ a.list-group-item:focus {
 }
 
 .panel-body {
-  padding: 15px;
+  padding: 0px;
 }
 
 .panel-body:before,
@@ -5439,7 +5439,7 @@ a.list-group-item:focus {
 }
 
 .panel-default {
-  border-color: #dddddd;
+  border-color: #05BB96;
 }
 
 .panel-default > .panel-heading {
