@@ -112,7 +112,7 @@
         .form-style-5 input[type="submit"],
         .form-style-5 input[type="button"] {
             position: relative;
-            display: block;
+            /*display: block;*/
             color: #FFF;
             background: #1abc9c;
             font-size: 18px;
@@ -121,7 +121,7 @@
             width: 10%;
             border: 1px solid #16a085;
             border-width: 1px 1px 3px;
-            margin-left: 85px;
+            margin-left: 20px;
         }
 
             .form-style-5 input[type="submit"]:hover,
@@ -134,101 +134,156 @@
     }
 </style>
 
-@*<script>
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-});
-</script>*@
+<div class="form-style-5">
+    <legend>
+        <span class="number">P</span>History of Posts
+    </legend>
+    <br />
 
+    @using (Html.BeginForm("Index", "Post", FormMethod.Get))
+    {
+            <label class="p1">Title</label> @Html.TextBox("search") <input type="submit" value="Search"/>
+            <br />
+    }
 
-
-if (TempData["Success"] != null)
-{
-    <div class="alert alert-success alert-dismissible fade in" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Success</strong> @TempData["Success"]
-    </div>
-}
-
-    <div class="form-style-5">
-        <legend>
-            <span class="number">P</span>History of Posts
-        </legend>
-        <br />
-
-        @using (Html.BeginForm("Index", "Post", FormMethod.Get))
+    @{
+        if (TempData["Delete"] != null)
         {
-
-                <label class="p1">Title</label> @Html.TextBox("search") <input type="submit" value="Search"/>
-                <br />
-
+            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Error</strong> @TempData["Delete"]
+            </div>
         }
 
-        <table class="table table-hover">
-            <tr>
-                <th>
-                    Post Number
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category.category_name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.post_date)
-                </th>
-                @*<th>
-                        @Html.DisplayNameFor(model => model.picture)
-                    </th>*@
-                @*<th>
-                        @Html.DisplayNameFor(model => model.post_description)
-                    </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.activity_log)
-                </th>
-                <th>
-                    <a href="@Url.Action("Create", "Post")"><i class="fa fa-pencil fa-2x"></i> </a> | 
-                    <a href="@Url.Action("Home", "Post")"><i class="fa fa-home fa-2x"></i> </a> | 
-                    <a href="@Url.Action("MyPost", "Post")"><i class="fa fa-list-alt fa-2x"></i> </a>  
-                </th>
-            </tr>
+        if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Success</strong> @TempData["Success"]
+            </div>
+        }
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayName(postNumber.ToString())
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Category.category_name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.post_date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.activity_log)
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.picture)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.post_description)
-                        </td>*@
-                    <td>
-                        @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
-                        @Html.ActionLink("Details", "Details", new { id = item.post_id }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.Prima ryKey */ })
-                    </td>
-                </tr>
-                postNumber++;
-            }
+        if (TempData["DeleteSuccess"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Success</strong> @TempData["DeleteSuccess"]
+            </div>
+        }
 
-        </table>
+        if (TempData["EditSuccess"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Success</strong> @TempData["EditSuccess"]
+            </div>
+        }
+    }
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            Dropdown Example
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="@Url.Action("Education", "Post")">Education</a></li>
+            <li><a href="@Url.Action("BabyCare", "Post")">Baby Care</a></li>
+            <li><a href="@Url.Action("FoodNutrition", "Post")">Food & Nutrition</a></li>
+            <li><a href="@Url.Action("Others", "Post")">Others</a></li>
+        </ul>
     </div>
+    <table class="table table-hover">
+        <tr>
+            <th>
+                Post Number
+            </th>
+            <th>
+                Title
+                @*@Html.DisplayNameFor(model => model.title)*@
+            </th>
+            <th>
+                Catergory
+                @*@Html.DisplayNameFor(model => model.Category.category_name)*@
+            </th>
+            <th>
+                Post Date
+                @*@Html.DisplayNameFor(model => model.post_date)*@
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.picture)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.post_description)
+                </th>*@
+            <th>
+                Status
+                @*@Html.DisplayNameFor(model => model.activity_log)*@
+            </th>
+            <th>
+                <a href="@Url.Action("Create", "Post")"><i class="fa fa-pencil fa-2x"></i> </a> | 
+                <a href="@Url.Action("Home", "Post")"><i class="fa fa-home fa-2x"></i> </a> | 
+                <a href="@Url.Action("MyPost", "Post")"><i class="fa fa-list-alt fa-2x"></i> </a>  
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayName(postNumber.ToString())
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.category_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.post_date)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.activity_log)*@
+
+                    @{
+                        var status = item.activity_log;
+                        if (status == "Accepted")
+                        {
+                            <b style="color: forestgreen">@Html.DisplayFor(modelItem => item.activity_log)</b>
+                        }
+
+                        else if (status == "Requested")
+                        {
+                            <b style="color:  goldenrod">@Html.DisplayFor(modelItem => item.activity_log)</b>
+                        }
+
+                        else if (status == "Rejected")
+                        {
+                            <b style="color:  darkred">@Html.DisplayFor(modelItem => item.activity_log)</b>
+                        }
+                    }
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.picture)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.post_description)
+                    </td>*@
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {  id=item.post_id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.post_id }) |
+                    @Html.ActionLink("Delete", "Delete", new {  id=item.post_id })
+                </td>
+            </tr>
+            postNumber++;
+        }
+
+    </table>
+</div>
 }
