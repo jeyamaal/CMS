@@ -11,7 +11,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body style="padding-top:0px">
 
     <div id="nav-area" class="panel panel-default pull-left">
         <div class="panel-body">
@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    <div id="site-area" class="panel panel-default">
+    @*<div id="site-area" class="panel panel-default">*@
         <div class="panel-body" style="padding-bottom: 0px;">
             <div id="logo-area"></div>
             <div class="row" style="margin-left: 20px;">
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    @*</div>*@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
