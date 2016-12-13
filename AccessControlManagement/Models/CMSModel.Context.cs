@@ -35,6 +35,7 @@ namespace AccessControlManagement.Models
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<Feedback> Feedbacks { get; set; }
     
         public virtual int usp_Category_delete(string catname)
         {
@@ -69,6 +70,15 @@ namespace AccessControlManagement.Models
                 new ObjectParameter("newCatName", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Category_update", oldcatnameParameter, newCatNameParameter);
+        }
+    
+        public virtual int usp_request_Expiry_date(Nullable<int> adID)
+        {
+            var adIDParameter = adID.HasValue ?
+                new ObjectParameter("adID", adID) :
+                new ObjectParameter("adID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_request_Expiry_date", adIDParameter);
         }
     }
 }

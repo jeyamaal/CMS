@@ -6,14 +6,77 @@
 }
 @*@Styles.Render("~/Content/css")
 @Scripts.Render("~/bundles/modernizr")*@
-<div id="table-category" class="row">
+
+<style type="text/css">
+    .table-category-class i {
+        color: #1abc9c;
+    }
+
+    .table-category-class {
+        max-width: 1000px;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        margin: 10px auto;
+        padding: 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+
+        .table-category-class myCategory {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .table-category-class text {
+            font-size: 0.8em;
+            color: #808080;
+        }
+
+        .table-category-class th {
+            font-size: 1em;
+            color: #35ad95;
+        }
+
+    .p1 {
+        font-size: 1em;
+        color: #35ad95;
+        font-style: normal;
+        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .table-category-class .catNumber {
+        background: #1abc9c;
+        color: #fff;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        font-size: 1em;
+        margin-right: 4px;
+        line-height: 30px;
+        text-align: center;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+        border-radius: 15px 15px 15px 0px;
+    }
+
+</style>
+
+
+
+<div id="table-category" class="row table-category-class">
     <div class="col-sm-6 col-sm-offset-3">
-        <table class="table table-hover" style="border:2px solid black; margin-top:50px">
-            <tr style="border:2px solid black; background-color:#DADBDE">
-                <th style="border-right:2px solid black; text-align:center">
+
+        <myCategory>
+            <span class="catNumber">C</span> 
+            Category Details
+        </myCategory>
+
+        <table class="table table-hover" style="margin-top:50px">
+            <tr>
+                <th style="text-align:center">
                     Category Name
                 </th>
-                <th style="border-right:2px solid black; text-align:center">
+                <th style="text-align:center">
                     Status
                 </th>
                 <th style="width:170px"></th>
@@ -22,15 +85,26 @@
             @foreach (var item in listCategory)
             {
                 <tr>
-                    <td style="border-right:2px solid black; text-align:center" data-toggle="tooltip" data-placement="left" title="@item.category_name">
+                    <td text-align:center" data-toggle="tooltip" data-placement="left" title="@item.category_name">
                         @Html.DisplayFor(modelItem => item.category_name)
                     </td>
-                    <td style="border-right:2px solid black; text-align:center">
-                        @Html.DisplayFor(modelItem => item.status)
+                    <td text-align:center">
+                        @{
+                            var statusOfCategory = item.status;
+                            if (statusOfCategory == "Active")
+                            {
+                               <b style="color:forestgreen"> @Html.DisplayFor(modelItem => item.status) </b>
+                            }
+                            else
+                            {
+                                <b style="color:darkred"> @Html.DisplayFor(modelItem => item.status) </b>
+                            }
+                        }
+                       
                     </td>
-                    <td style="border-right:2px solid black; width:170px">
+                    <td width:170px">
                         <!-- Edit the Category -->
-                        <button id="edit-btn-category-@item.category_id" type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-modal-category-@item.category_id"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                        <button id="edit-btn-category-@item.category_id" type="button" data-toggle="modal" data-target="#edit-modal-category-@item.category_id"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 
                         <!-- Modal -->
                         <div class="modal fade" id="edit-modal-category-@item.category_id" role="dialog">
@@ -69,7 +143,7 @@
                         </div>
 
                         <!-- View the details of Category -->
-                        <button id="view-btn-category" type="button" class="btn btn-success" data-toggle="modal" data-target="#view-modal-category-@item.category_id" onclick="SeeMore()"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                        <button id="view-btn-category" type="button" data-toggle="modal" data-target="#view-modal-category-@item.category_id" onclick="SeeMore()"><i class="fa fa-eye" aria-hidden="true"></i></button>
 
                         <div class="modal fade" id="view-modal-category-@item.category_id" role="dialog">
                             <div class="modal-dialog">
@@ -79,7 +153,8 @@
                                         <h4 class="modal-title">View Post Details of the Category @item.category_name</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="row" style="margin-top:10px" id="post-table-category-@item.category_id">
+                                        <div class="row" style="margin-top:10px" id="post-table-category-@item.category_id">                                         
+                                            
                                             <table class="table table-hover" style="border:2px solid black; margin-top:50px">
                                                 <tr style="border:2px solid black; background-color:#DADBDE">
                                                     <th style="border-right:2px solid black; text-align:center">Title</th>
@@ -125,7 +200,7 @@
                         </div>
 
                         <!-- Delete the Category -->
-                        <button id="delete-btn-category-@item.category_id" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal-category-@item.category_id"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button id="delete-btn-category-@item.category_id" type="button" data-toggle="modal" data-target="#delete-modal-category-@item.category_id"><i class="fa fa-trash" aria-hidden="true"></i></button>
 
                         <!-- Modal -->
                         <div class="modal fade" id="delete-modal-category-@item.category_id" role="dialog">

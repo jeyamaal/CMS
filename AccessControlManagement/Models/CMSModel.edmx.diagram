@@ -20,6 +20,7 @@
         <AssociationConnector Association="CMSModel.FK_Comment_Post" ManuallyRouted="false" />
         <AssociationConnector Association="CMSModel.fk_userid_comment" ManuallyRouted="false" />
         <AssociationConnector Association="CMSModel.fk_p" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CMSModel.Feedback" Width="1.5" PointX="8.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

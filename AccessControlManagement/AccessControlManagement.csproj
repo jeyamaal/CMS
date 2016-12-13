@@ -188,6 +188,9 @@
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EmailForm.cs" />
+    <Compile Include="Models\Feedback.cs">
+      <DependentUpon>CMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Post.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
@@ -241,7 +244,6 @@
       <DependentUpon>CMSModel.edmx</DependentUpon>
       <LastGenOutput>CMSModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Resources\5.gif" />
     <Content Include="Resources\images.png" />
     <Content Include="Resources\jeyamaal_images\g1.jpg" />
     <Content Include="Resources\jeyamaal_images\g2.jpg" />
@@ -249,6 +251,7 @@
     <Content Include="Resources\jeyamaal_images\g4.jpg" />
     <Content Include="Resources\jeyamaal_images\loding_login.gif" />
     <Content Include="Resources\jeyamaal_images\prof-pic.png" />
+    <Content Include="Resources\loading.gif" />
     <Content Include="Resources\slimframeworkicon.png" />
     <Content Include="Scripts\alertify.js" />
     <Content Include="Scripts\alertify.min.js" />

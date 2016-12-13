@@ -53,7 +53,7 @@ namespace AccessControlManagement.Controllers
                                      {
                                          adID = ad.ADD_id,
                                          categoryName = c.category_name,
-                                         postedDate = ad.postedDate.ToString(),
+                                         postedDate = ad.wantToPostDate.ToString(),
                                          title = ad.title,
                                          status = ad.status,
                                          expirayDate = ad.dueDate.ToString()
@@ -78,25 +78,46 @@ namespace AccessControlManagement.Controllers
             }
         }
 
+        public ActionResult RequestExpiraryDate(string advertisementID)
+        {
+            try
+            {
+                int adNo = Int32.Parse(advertisementID);
+                int resultRequestAD = db.usp_request_Expiry_date(adNo);
+                if (resultRequestAD == 1)
+                {
+                    return Json("Requested", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("Request Failed", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch
+            {
+                return Json("Request Error", JsonRequestBehavior.AllowGet);
+            }
+        }
+
         //public ActionResult ChangeAdStatus(int adID, string statusAD)
         //{
-        //    //try
-        //    //{
-        //    //    int resultStatusUpdate = db.usp_Advertisement_statusUpdate(adID, statusAD);
-        //    //    Debug.WriteLine("Advetisement update" + resultStatusUpdate);
-        //    //    if (resultStatusUpdate == 1)
-        //    //    {
-        //    //        return Json("Status is successfully Changed!", JsonRequestBehavior.AllowGet);
-        //    //    }
-        //    //    else
-        //    //    {
-        //    //        return Json("Status is not Changed!", JsonRequestBehavior.AllowGet);
-        //    //    }
-        //    //}
-        //    //catch
-        //    //{
-        //    //    return Json("Failed To Update!!", JsonRequestBehavior.AllowGet);
-        //    //}
+        //    try
+        //    {
+        //        int resultStatusUpdate = db.usp_Advertisement_statusUpdate(adID, statusAD);
+        //        Debug.WriteLine("Advetisement update" + resultStatusUpdate);
+        //        if (resultStatusUpdate == 1)
+        //        {
+        //            return Json("Status is successfully Changed!", JsonRequestBehavior.AllowGet);
+        //        }
+        //        else
+        //        {
+        //            return Json("Status is not Changed!", JsonRequestBehavior.AllowGet);
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        return Json("Failed To Update!!", JsonRequestBehavior.AllowGet);
+        //    }
         //}
         // GET: Categories
         public ActionResult _Setting()

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Advertisement">
           <Key>
             <PropertyRef Name="post_id" />
@@ -29,6 +29,7 @@
           <Property Name="updatedDate" Type="datetime" />
           <Property Name="dueDate" Type="datetime" />
           <Property Name="category_id" Type="int" />
+          <Property Name="adImage" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -63,6 +64,16 @@
           <Property Name="post_id" Type="int" />
           <Property Name="description" Type="nvarchar(max)" />
           <Property Name="comment_date" Type="date" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="feed_date" Type="datetime" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
@@ -191,6 +202,9 @@
           <Parameter Name="oldcatname" Type="varchar" Mode="In" />
           <Parameter Name="newCatName" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="usp_request_Expiry_date" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="adID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="CMSModelStoreContainer">
           <EntitySet Name="Advertisement" EntityType="Self.Advertisement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AdvertisementDetails" EntityType="Self.AdvertisementDetails" Schema="dbo" store:Type="Tables" />
@@ -198,6 +212,7 @@
           <EntitySet Name="ArticleHasAd" EntityType="Self.ArticleHasAd" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Advertise__categ__29572725" Association="Self.FK__Advertise__categ__29572725">
@@ -229,8 +244,7 @@
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -260,6 +274,7 @@
           <Property Name="dueDate" Type="DateTime" Precision="3" />
           <Property Name="category_id" Type="Int32" />
           <NavigationProperty Name="Category1" Relationship="Self.FK__Advertise__categ__29572725" FromRole="AdvertisementDetails" ToRole="Category" />
+          <Property Name="adImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -461,7 +476,7 @@
             <End Role="Post" EntitySet="Posts" />
           </AssociationSet>
           <FunctionImport Name="usp_Category_delete">
-            <Parameter Name="catname" Mode="In" Type="String" />
+          <Parameter Name="catname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="usp_Category_insert">
             <Parameter Name="categoryID" Mode="In" Type="Int32" />
@@ -471,7 +486,21 @@
             <Parameter Name="oldcatname" Mode="In" Type="String" />
             <Parameter Name="newCatName" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Feedbacks" EntityType="CMSModel.Feedback" />
+          <FunctionImport Name="usp_request_Expiry_date">
+            <Parameter Name="adID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="feed_date" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -492,6 +521,7 @@
           <EntitySetMapping Name="AdvertisementDetails">
             <EntityTypeMapping TypeName="CMSModel.AdvertisementDetail">
               <MappingFragment StoreEntitySet="AdvertisementDetails">
+                <ScalarProperty Name="adImage" ColumnName="adImage" />
                 <ScalarProperty Name="ADD_id" ColumnName="ADD_id" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="category" ColumnName="category" />
@@ -574,6 +604,18 @@
           <FunctionImportMapping FunctionImportName="usp_Category_delete" FunctionName="CMSModel.Store.usp_Category_delete" />
           <FunctionImportMapping FunctionImportName="usp_Category_insert" FunctionName="CMSModel.Store.usp_Category_insert" />
           <FunctionImportMapping FunctionImportName="usp_Category_update" FunctionName="CMSModel.Store.usp_Category_update" />
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="CMSModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="feed_date" ColumnName="feed_date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_request_Expiry_date" FunctionName="CMSModel.Store.usp_request_Expiry_date" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

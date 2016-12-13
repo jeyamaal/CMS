@@ -152,7 +152,7 @@
     height: 700px;
     position: absolute;
     z-index: 13;
-    background: url('../Resources/5.gif') no-repeat center center
+    background: url('../Resources/loading.gif') no-repeat center center
 }
 
 #site-other-relevent{

@@ -260,46 +260,112 @@
         }
     });
 
-    //$(".user-edit-request-advertisement").on('click', function () {
-    //    var aid = $(this).attr('id').split('-')[4];
-    //    console.log("User id : " + aid);
+    $(".user-edit-request-advertisement").on('click', function () {
+        //var reAD = $(this).attr('id').split('-')[4];
 
-        
+        //var date = document.getElementById('txt-edit-posteddate-' + reAD).value;
+        //console.log(date);
+        //var month = date.split(' ')[0];
+        //console.log(month);
 
-    //    swal({
-    //        title: "Extendtion the Period for Advertisment",
-    //        text: "Do you want to extend the period for this Advertisment?",
-    //        type: "info",
-    //        showCancelButton: true,
-    //        confirmButtonColor: "#DD6B55",
-    //        confirmButtonText: "Send Request",
-    //        closeOnConfirm: false
-    //    },
-    //    function () {
+        //var monthNo = getMonthName(month);
+        //console.log(monthNo);
+        //var date = date.split(' ')[1];
+        //var year = date.split(' ')[1];
+        //console.log(year + " jhsdajs");
+        //var expiryDate = year + "-" + monthNo + "-" + date;
+        //console.log(expiryDate);
 
-            
+        //var currentdate = new Date();
+        //var cuurrentMonth = getMonthNumber(currentdate.getMonth());
+        //var currentYear = currentdate.getFullYear();
+        //var currentDay = currentdate.getDate();
+        //var stringFullDate = currentYear + "-" + cuurrentMonth + "-" + currentDay;
+  
+        //if (expiryDate < stringFullDate)
+        //{
+        //    console.log("Expired");
+        //}
+        //else
+        //{
+        //    console.log("Not Expired")
+        //}
 
-    //        var expirayDate = $("#txt-edit-title-" + aid).val();
-    //        var currentdate = new Date();
-    //        var cuurrentMonth = getMonthNumber(currentdate.getMonth());
-    //        var currentYear = currentdate.getFullYear();
-    //        var currentDay = currentdate.getDate();                   
+        swal({
+            title: "Extension period for Advertisment!",
+            text: "Do you want to extend the period for this Advertisment?",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Send Request",
+            closeOnConfirm: false
+        }, 
+        function () {
+            $.ajax({
+                url: "/Categories/RequestExpiraryDate",
+                data: {
+                    advertisementID: reAD
+                },
+                type: "POST",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    if (result == "Requested") {
+                        $("#load-view").load("/Categories/Index/", function () {
+                            CategorySaveChanges();
+                        });
+                        swal("Success!", "Request has been sent.", "success");
+                    }
+                    else if (result == "Request Failed") {
+                        $("#load-view").load("/Categories/Index/", function () {
+                            CategorySaveChanges();
+                        });
+                        swal("Failed!", "Request has been not sent.", "Error");
+                    }
+                    else {
+                        $("#load-view").load("/Categories/Index/", function () {
+                            CategorySaveChanges();
+                        });
+                        swal("Not Updated!", "Network issues. Please re-try again", "error");
+                    }
+                },
+                error: function (e) {
+                }
+            });
+        });
+    });
+}
 
-    //        var stringFullDate = currentYear + "-" + cuurrentMonth + "-" + currentDay;
+function getMonthName(month) {
+    switch (month) {
+        case "Jan": return "01";
+            break;
+        case "Feb": return "02";
+            break;
+        case "Mar": return "03";
+            break;
+        case "Apr": return "04";
+            break;
+        case "May": return "05";
+            break;
+        case "Jun": return "06";
+            break;
+        case "Jul": return "07";
+            break;
+        case "Aug": return "08";
+            break;
+        case "Sep": return "09";
+            break;
+        case "Oct": return "10";
+            break;
+        case "Nov": return "11";
+            break;
+        case "Dec": return "12";
+            break;
+        default: return (month);
+    }
 
-    //        var expiryDateDate = Date.parse(expirayDate);
-    //        var currentDateDate = Date.parse(stringFullDate);
 
-    //        if (expiryDateDate <= currentDateDate) {
-    //            console.log("Yess");
-    //        }
-    //        else
-    //        {
-    //            console.log("noooooooooo")
-    //        }
-    //        swal("Deleted!", "Your imaginary file has been deleted.", "success");
-    //    });
-    //});
 }
 
 
