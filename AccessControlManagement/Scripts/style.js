@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-
+    
     $(".nav-links").each(function (index) {
 
         $(this).click(function () {
@@ -25,13 +25,13 @@
 
                         if (index == 0)
                         {
+                            $("#nav-place").text("HOME ");
+
                             $("#header").fadeTo("1000", 1, function () { });
                             $("#load-view").load("/Categories/Index/0", function () {
                                 $("#loading-place").removeClass("still-loading");
                                 $(".nav-links").css("pointer-events", "");
-                                //CategorySaveChanges();
-                                //$(".add-new-btn").removeAttr("id");
-                                //$(".add-new-btn").attr("data-target", "#add-modal-category");                               
+                                //CategorySaveChanges();;
                             }).error(function (a) {
 
                             });
@@ -46,11 +46,14 @@
                         }
                         else if (index == 2)
                         {
+                            $("#nav-place").html("");
+                            $("#nav-place").text("Category");
                             //Settings
                             $("#load-view").load("/Categories/_Setting", function () {
+                                $("#nav-time").after("<button id='newButton' data-toggle='modal' class='add-new-btn btn btn-default btn-lg'><i class='fa fa-plus-circle fa-2x'></i></button>");
                                 CategorySaveChanges();
-                                //$(".add-new-btn").removeAttr("id");
-                               // $(".add-new-btn").attr("data-target", "#add-modal-category");
+                                $(".add-new-btn").removeAttr("id");
+                                $(".add-new-btn").attr("data-target", "#add-modal-category");
                                 $("#header").fadeTo("1000", 1, function () { });
                                 $("#load-view").fadeTo("1000", 1, function () {
                                     $("#loading-place").removeClass("still-loading");

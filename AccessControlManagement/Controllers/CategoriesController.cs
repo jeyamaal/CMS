@@ -148,10 +148,50 @@ namespace AccessControlManagement.Controllers
                 var id = (from c in db.Categories
                           select c.category_id).ToList();
 
-                var countID = id.Count();
+                var categories = (from cat in db.Categories
+                                  select cat.category_name);
 
-                if (countID <= 0)
+                var status = from catS in db.Categories
+                             select catS.status;
+
+                string [] categoryNameArray = categories.ToArray();
+                string[] arrayStatus = status.ToArray();
+
+                var countID = id.Count();
+                int i = 0; 
+                if (countID >= 0)
                 {
+
+                    do
+                    {
+                        if (categoryNameArray[i] == category_name)
+                        {
+                            if (arrayStatus[i] == "Active")
+                            {
+                                return Content("The Category is already exists.");
+                            }
+                            else
+                            {
+                                var query = from ub3 in db.Categories
+                                            where ub3.category_name == category_name
+                                            select ub3;
+
+                                foreach (var ob in query)
+                                {
+                                    ob.category_name = category_name;
+                                    ob.status = "Active";
+                                }
+
+                                db.SaveChanges();
+                                return Content("The Category " + category_name + " is again inserted.");
+                            }
+                        }
+                        else
+                        {
+                            i++;
+                        }
+                    } while (categoryNameArray.Length > i);
+
                     countID = countID + 1;
                     int resultInsertCategory = db.usp_Category_insert(countID, category_name);
 

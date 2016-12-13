@@ -17,28 +17,45 @@
                 $("#add-modal-category").hide();
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
-                alertify.success("Successfully Inserted Category");
+                swal("Inserted!", "New Category " + new_category_name + " has been Inserted.", "success");
+            }
+
+            else if (result == "The Category is already exists.")
+            {
+                console.log("The Category is already exists.");
+                $("#add-modal-category").hide();
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+                swal("Not Inserted!", "The Category is already exists.", "warning");
+            }
+
+            else if (result == "The Category " + new_category_name + " is again inserted.") {
+                console.log("The Category is already exists.");
+                $("#add-modal-category").hide();
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+                swal("Inserted!", "The Category " + new_category_name + " is again inserted.", "Success");
             }
             else if (result == "Not Inserted") {
                 console.log("Not Inserted");
                 $("#add-modal-category").hide();
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
-                alertify.error("Not Successfully Inserted Category");
+                swal("Not Inserted!", "New Category " + new_category_name + " has not been Inserted.", "Error");
             }
             else if (result == "Number of count") {
                 console.log("Number of count");
                 $("#add-modal-category").hide();
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
-                alertify.error("Database is empty");
+                swal("Not Inserted!", "New Category " + new_category_name + " has not been Inserted because Database is Empty", "warning");
             }
             else {
                 console.log("came to error");
                 $("#add-modal-category").hide();
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
-                alertify.error("Error");
+                swal("Not Inserted!", "New Category " + new_category_name + " has not been Inserted!! Try Again.", "Error");
             }
         }).error(function (e) {
 
