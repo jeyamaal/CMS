@@ -276,6 +276,8 @@
     <Content Include="Resources\PostImages\1333648179-1118117-abstract_floral_background_29-mb_7456284-4_www.hqtexture.com.jpg" />
     <Content Include="Resources\PostImages\2.PNG" />
     <Content Include="Resources\PostImages\4.PNG" />
+    <Content Include="Resources\PostImages\autumn1.png" />
+    <Content Include="Resources\PostImages\images %285%29.jpg" />
     <Content Include="Scripts\alertify.js" />
     <Content Include="Scripts\alertify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
