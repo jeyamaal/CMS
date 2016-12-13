@@ -150,10 +150,31 @@
         margin-left: 10px;
         margin-right: 10px;
     }
+
+    .form-style-7 i {
+            color: #ffffff;
+            margin-left:350px;
+        }
+
+    .form-style-7 {
+        max-width: 700px;
+        color: white;
+        margin: 10px auto;
+        /*padding: 20px;*/
+        background: #1abc9c;
+        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    }
 </style>
 
 @using (Html.BeginForm("Home", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{ 
+{
+    <div class="form-style-7">
+        <fieldset>
+            @*<legend><span class="number"></span>Education</legend>*@
+            <center><h1> Posts</h1></center>@*<a href="@Url.Action("Index", "Post")"><i class="fa fa-arrow-circle-left"></i> </a>*@
+        </fieldset>
+    </div>
+
     foreach (var item in listPost)
     {
         var po = 1;
@@ -171,9 +192,13 @@
                 <p>
                     @Html.DisplayFor(modelItem => item.post_description)
                 </p>
+
+                <img src="@Url.Content(item.image)" alt="Image" height="250" width="250" style="margin-left:100px"/>
+                @*@Html.HiddenFor(modelItem => item.post_id, new { id = "hdnPostId"; Value = item.post_id; }               })*@
+                @*<input id="hdnPostId" name="hdnPostId" type="hidden" value="@modelItem => item.post_id.ToString()" />*@
             </fieldset>
 
-            <a data-toggle="collapse" data-target=#@item.post_id.ToString()><i class="fa fa-comment"></i></a>
+            @*<a data-toggle="collapse" data-target=#@item.post_id.ToString()><i class="fa fa-comment"></i></a>
             <div class="form-style-6">
                 <div id=@item.post_id.ToString() class="collapse">
                     @foreach (var comment in commentList)
@@ -184,13 +209,14 @@
                             <br />
                             <div class="c2">@Html.DisplayFor(modelItem => comment.description)</div>
                             <br />
+                            
                         }
 
                     }
                     <legend><span class="number1">C</span>@TempData["User"]</legend>                                     
                     @Html.TextBox("txtComment") <input type="submit" value="Comment" />
                 </div>
-            </div>
+            </div>*@
             <br />
         </div>
         }
