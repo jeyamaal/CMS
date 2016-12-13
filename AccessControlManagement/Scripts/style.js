@@ -24,15 +24,9 @@
 
                         if (index == 0)
                         {
-                            $("#load-view").load("/Categories/Index", function () {
+                            $("#load-view").load("/Post/Index", function () {
                                 //CategorySaveChanges();
-                                //$(".add-new-btn").removeAttr("id");
-                                //$(".add-new-btn").attr("data-target", "#add-modal-category");
-
-                                //$("#header").fadeTo("1000", 1, function () { });
-                                //$("#load-view").fadeTo("1000", 1, function () {
-                                //    $(".nav-links").css("pointer-events", "");
-                                //});
+                                
                             }).error(function (a) {
 
                             });
@@ -44,15 +38,8 @@
                         else if (index == 2)
                         {
                             //Settings
-                            $("#load-view").load("/Categories/_Setting", {partial: true }, function () {
-                                CategorySaveChanges();
-                                $(".add-new-btn").removeAttr("id");
-                                $(".add-new-btn").attr("data-target", "#add-modal-category");
-
-                                $("#header").fadeTo("1000", 1, function () { });
-                                $("#load-view").fadeTo("1000", 1, function () {
-                                    $(".nav-links").css("pointer-events", "");
-                                });
+                            $("#load-view").load("/Post/Viewww", function () {
+                                
                             }).error(function (a) {
 
                             });
