@@ -11,7 +11,7 @@ namespace AccessControlManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class user
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +21,7 @@ namespace AccessControlManagement.Models
             this.Comments = new HashSet<Comment>();
             this.Posts = new HashSet<Post>();
         }
-    
+
         public int user_id { get; set; }
         public string username { get; set; }
         public string fullname { get; set; }
@@ -32,8 +32,8 @@ namespace AccessControlManagement.Models
         public string status { get; set; }
 
         public string ConfirmPassword { get; set; }
-
         public string newPassword { get; set; }
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Article> Articles { get; set; }

@@ -11,7 +11,7 @@ namespace AccessControlManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class Post
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,16 +19,28 @@ namespace AccessControlManagement.Models
         {
             this.Comments = new HashSet<Comment>();
         }
-    
+
         public int post_id { get; set; }
+
+        [Required(ErrorMessage = "Required")]
         public System.DateTime post_date { get; set; }
+
         public int user_id { get; set; }
         public Nullable<int> category_id { get; set; }
+
+        [Required(ErrorMessage = "Required")]
         public string post_description { get; set; }
+
         public string activity_log { get; set; }
+
+        [Required(ErrorMessage = "Required")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "The Title must be a string with a minimum length of 3 and a maximum length of 100.")]
         public string title { get; set; }
-        public byte[] image { get; set; }
-    
+
+        [Display(Name = "Image")]
+        // [RegularExpression(@"^.*\.(jpg|gif|jpeg|png|bmp)$", ErrorMessage = "Please use an image with an extension of .jpg, .png, .gif, .bmp")]
+        public string image { get; set; }
+
         public virtual Advertisement Advertisement { get; set; }
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
