@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width" />
     
     <title>Content Management System</title>
-    <link rel="icon" href="~/images.png" />
+    <link rel="icon" href="~/images.ico"/>
 
 
     @Styles.Render("~/Content/css")
@@ -28,10 +28,10 @@
    {
        if (Session["LogedAdminID"] != null)
        {
-           <nav class="navbar navbar-default">
+           <nav class="navbar navbar-default" style="background-color:#A8E4D7; border-color:#04634F">
                 <div class="container-fluid">
                      <div class="navbar-header">
-                         <a class="navbar-brand" href="#">Be Blogger</a>
+                         <a class="navbar-brand" href="#" style="font-family:'Baskerville Old Face'; font-size:50px; padding-left:550px; padding-top:35px; color:#466760">Find More</a>
                      </div>
                      <ul class="nav navbar-nav navbar-right">
  
@@ -105,13 +105,13 @@
     </div>
 
     <div id="site-area" class="panel panel-default">
-        <div class="panel-body" style="padding-bottom: 0px;">
+        <div class="panel-body" style="padding-bottom: 0px; background-color:#21b697">
             <div id="logo-area"></div>
             <div class="row" style="margin-left: 20px;">
                 <div id="site-main-area" class="col-sm-11 panel panel-default">
                     <div id="loading-place" class="panel-body">
                         <div class="row">
-                            <div id="header" class="col-sm-12 panel panel-default" style="font-family:Baskerville Old Face; color:white; background-color:#0B0758; margin-bottom: 0px;">
+                            <div id="header" class="col-sm-12 panel panel-default" style="font-family:Baskerville Old Face; color:white; background-color:#04634F; margin-bottom: 0px;">
                                 <div class="panel-body">
                                     <label id="nav-place"></label>
                                     <div id="nav-time">
