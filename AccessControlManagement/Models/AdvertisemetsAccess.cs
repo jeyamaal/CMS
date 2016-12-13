@@ -16,6 +16,8 @@ namespace AccessControlManagement.Models
         public Nullable<System.DateTime> postedDate { get; set; }
         public Nullable<System.DateTime> updatedDate { get; set; }
         public Nullable<System.DateTime> dueDate { get; set; }
+        public Nullable<int> category_id { get; set; }
+
 
         public virtual Category Category1 { get; set; }
     }

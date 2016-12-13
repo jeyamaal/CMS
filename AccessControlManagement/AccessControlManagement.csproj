@@ -203,6 +203,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\bjqs.css" />
+    <Content Include="assets\demo.css" />
+    <Content Include="assets\js\bjqs-1.3.js" />
+    <Content Include="assets\js\bjqs-1.3.min.js" />
+    <Content Include="assets\js\libs\jquery.secret-source.min.js" />
     <Content Include="Content\alertifyjs\alertify.css" />
     <Content Include="Content\alertifyjs\alertify.min.css" />
     <Content Include="Content\alertifyjs\alertify.rtl.css" />
@@ -329,6 +334,8 @@
     <Content Include="Views\Advertisement\Edit.cshtml" />
     <Content Include="Views\Advertisement\Index.cshtml" />
     <Content Include="Views\Shared\_Advertisement_Layout.cshtml" />
+    <Content Include="Views\Sweet\Alert.cshtml" />
+    <Content Include="Views\TinyMCESampleJQuery\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -214,17 +214,70 @@ namespace AccessControlManagement.Controllers
         // User can update the advertisemnet details 
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["LogedAdevertiserID"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                try
+                {
+
+                    if (id == null)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+
+                    List<object> advtList = new List<object>();
+
+                    int i = int.Parse(Session["LogedAdevertiserID"].ToString());
+
+
+                    var advertisementDetails = (from c in db.AdvertisementDetails
+                                                where c.ADD_id==id                                               select new AdvertisemetsAccess
+                                                {
+                                                    ADD_id = c.ADD_id,
+                                                    title = c.title,
+                                                    category = c.category,
+                                                    description = c.description,
+                                                    wantToPostDate = c.wantToPostDate,
+                                                    postedDate = c.postedDate,
+                                                    updatedDate = c.updatedDate,
+                                                    dueDate = c.dueDate,
+                                                    //category_id = c.category_id   
+    });
+
+
+                    var myadvt = advertisementDetails.ToList();
+                    var usermm = (from c in db.users
+                                  where c.user_id == i
+                                  select c).ToList();
+
+                    advtList.Add(usermm);
+                    advtList.Add(myadvt);
+
+
+                    AdvertisementDetail advertisementDetail = db.AdvertisementDetails.Find(id);
+
+                    ViewBag.category_id = new SelectList(db.Categories, "category_id", "category_name", advertisementDetail.category_id);
+
+                    return View(advtList);
+
+                    //AdvertisementDetail advertisementDetail = db.AdvertisementDetails.Find(id);
+                    //if (advertisementDetail == null)
+                    //{
+                    //    return HttpNotFound();
+                    //}
+                    //ViewBag.category_id = new SelectList(db.Categories, "category_id", "category_name", advertisementDetail.category_id);
+                    //return View(advertisementDetail);
+                }
+                catch (Exception e)
+                {
+
+                    return View(e);
+                }
             }
-            AdvertisementDetail advertisementDetail = db.AdvertisementDetails.Find(id);
-            if (advertisementDetail == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Login", "Home");
             }
-            ViewBag.category_id = new SelectList(db.Categories, "category_id", "category_name", advertisementDetail.category_id);
-            return View(advertisementDetail);
         }
 
         // POST: Advertisement/Edit/5
