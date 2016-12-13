@@ -8,6 +8,8 @@ using AccessControlManagement.Models;
 using System.Net;
 using System.Globalization;
 using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace AccessControlManagement.Controllers
 {
@@ -70,88 +72,316 @@ namespace AccessControlManagement.Controllers
         /// <param name="collection"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Create(Post createPost, FormCollection form, HttpPostedFileBase imageOfPost)
+        public ActionResult Create(Post createPost, FormCollection form, HttpPostedFileBase file)
         {
-            if (Session["LogedUserID"] != null)
+            try
             {
-                if (ModelState.IsValid)
+                if (Session["LogedUserID"] != null)
                 {
-                    using (CMSEntities cm = new CMSEntities())
+                    if (ModelState.IsValid)
                     {
-                        user userId = new user();
-                        Post post = new Post();
-
-                        int loginId = int.Parse(Session["LogedUserID"].ToString());
-                        userId = database.users.Find(loginId);
-
-                        string catergoryIdInString = form["list"].ToString();
-                        int catergoryId = int.Parse(catergoryIdInString);
-                        //int categoryId = 2;
-                        string status = "Requested";
-
-                        //string catergory = createPost.Category.category_name;
-                        var postList = (from p in database.Posts select p.post_id).ToList();
-
-                        //Calculating the post id
-                        if (!database.Posts.Any())
+                        using (CMSEntities cm = new CMSEntities())
                         {
-                            int firstPostId = 1;
-                            createPost.post_id = firstPostId;
+                            user userId = new user();
+                            Post post = new Post();
+
+                            int loginId = int.Parse(Session["LogedUserID"].ToString());
+                            userId = database.users.Find(loginId);
+
+                            string catergoryIdInString = form["list"].ToString();
+                            int catergoryId = int.Parse(catergoryIdInString);
+                            //int categoryId = 2;
+                            string status = "Requested";
+
+                            //string catergory = createPost.Category.category_name;
+                            var postList = (from p in database.Posts select p.post_id).ToList();
+
+                            //Calculating the post id
+                            if (!database.Posts.Any())
+                            {
+                                int firstPostId = 1;
+                                createPost.post_id = firstPostId;
+                            }
+                            else
+                            {
+                                int maxPostId = database.Posts.Max(model => model.post_id);
+                                int newPostId = maxPostId + 1;
+                                createPost.post_id = newPostId;
+                            }
+
+                            string dbPath = null;
+
+                            HttpPostedFileBase file1 = file;
+                            int num = file.ContentLength;
+                            bool e = file.ContentType.Contains("image");
+
+                            if (file.ContentLength > 0 && file.ContentType.Contains("image"))
+                            {
+                                var fileName = Path.GetFileName(file.FileName);
+                                var files = Path.GetExtension(".jpg");
+
+                                if (files != null)
+                                {
+                                    var img = Image.FromStream(file.InputStream);
+
+                                    if (img.RawFormat.Equals(ImageFormat.Png) || img.RawFormat.Equals(ImageFormat.Jpeg))
+                                    {
+                                        string filestring = fileName.ToString();
+                                        var path = Path.Combine(Server.MapPath("/Resources/PostImages"), fileName);
+                                        file.SaveAs(path);
+                                        string absoulte_path = path.ToString();
+                                        dbPath = "\\" + GetRightPartOfPath(absoulte_path, "Resources") + "\\" + filestring;
+
+                                        post.post_id = createPost.post_id;
+                                        post.user_id = userId.user_id;
+                                        post.post_date = createPost.post_date;
+                                        post.category_id = catergoryId;
+                                        post.post_description = createPost.post_description;
+                                        post.image = dbPath;
+                                        post.activity_log = status;
+                                        post.title = createPost.title;
+
+                                        database.Posts.Add(post);
+                                        database.SaveChanges();
+
+                                        TempData["Success"] = "Post has been created successfully!";
+
+                                        return RedirectToAction("Index");
+                                    }
+
+                                    else
+                                    {
+                                        TempData["UnsuccessImage"] = "Image Format should be .png or .jpg";
+                                        return RedirectToAction("Create");
+                                    }
+                                }
+
+                                else
+                                {
+                                    TempData["NullImage"] = "Image Format should be .png or .jpg11111";
+                                    return RedirectToAction("Create");
+                                }
+                            }
+
+                            else
+                            {
+                                TempData["UnsuccessNullImage"] = "Not Image";
+                                return View("Create");
+                            }
+
+                            //post.post_id = createPost.post_id;
+                            //post.user_id = userId.user_id;
+                            //post.post_date = createPost.post_date;
+                            //post.category_id = catergoryId;
+                            //post.post_description = createPost.post_description;
+                            //post.image = dbPath;
+                            //post.activity_log = status;
+                            //post.title = createPost.title;
+
+                            //database.Posts.Add(post);
+                            //database.SaveChanges();
+
+                            //TempData["Success"] = "Post has been created successfully!";
+
+                            //return RedirectToAction("Index");
                         }
-                        else
-                        {
-                            int maxPostId = database.Posts.Max(model => model.post_id);
-                            int newPostId = maxPostId + 1;
-                            createPost.post_id = newPostId;
-                        }
 
-                        //if (imageOfPost != null)
-                        //{
-                        //    //To save images
-                        //    post.image = new byte[imageOfPost.ContentLength];
-                        //    imageOfPost.InputStream.Read(post.image, 0, imageOfPost.ContentLength);
 
-                        //    string pic = System.IO.Path.GetFileName(imageOfPost.FileName);
-                        //    string path = System.IO.Path.Combine(
-                        //                           Server.MapPath("E:\\Project\\AccessControlManagement\\PostImages"), pic);
-                        //    // file is uploaded
-                        //    imageOfPost.SaveAs(path);
 
-                        //    // save the image path path to the database or you can send image 
-                        //    // directly to database
-                        //    // in-case if you want to store byte[] ie. for DB
-                        //    using (MemoryStream ms = new MemoryStream())
-                        //    {
-                        //        imageOfPost.InputStream.CopyTo(ms);
-                        //        byte[] array = ms.GetBuffer();
-                        //    }
-                        //}
-                        
-
-                        post.post_id = createPost.post_id;
-                        post.user_id = userId.user_id;
-                        post.post_date = createPost.post_date;
-                        post.category_id = catergoryId;
-                        post.post_description = createPost.post_description;
-                        post.activity_log = status;
-                        post.title = createPost.title;
-
-                        database.Posts.Add(post);
-                        database.SaveChanges();
-
-                        TempData["Success"] = "Post has been created successfully!";
-                        
-                        return RedirectToAction("Index");
                     }
 
-                    
-
                 }
-                
+
+                return View("Create");
             }
 
-            return View("Create");
+            catch (Exception e)
+            {
+                TempData["UnsuccessNullImage"] = "Null" + e;
+                return View("Create");
+            }
         }
+
+        public static string GetRightPartOfPath(string path, string startAfterPart)
+        {
+            // use the correct seperator for the environment
+            var pathParts = path.Split(Path.DirectorySeparatorChar);
+
+            // this assumes a case sensitive check. If you don't want this, you may want to loop through the pathParts looking
+            // for your "startAfterPath" with a StringComparison.OrdinalIgnoreCase check instead
+            int startAfter = Array.IndexOf(pathParts, startAfterPart);
+
+            if (startAfter == -1)
+            {
+                // path path not found
+                return null;
+            }
+
+            // try and work out if last part was a directory - if not, drop the last part as we don't want the filename
+            var lastPartWasDirectory = pathParts[pathParts.Length - 1].EndsWith(Path.DirectorySeparatorChar.ToString());
+            return string.Join(
+                Path.DirectorySeparatorChar.ToString(),
+                pathParts, startAfter,
+                pathParts.Length - startAfter - (lastPartWasDirectory ? 0 : 1));
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var getCatergoryList = database.Categories.ToList();
+            ViewBag.list = new SelectList(database.Categories, "category_id", "category_name").Distinct();
+
+            Post post = database.Posts.Single(p => p.post_id == id);
+
+            if (post == null)
+                return HttpNotFound();
+            
+            return View(post);
+        }
+
+
+        [HttpPost]
+        public ActionResult Edit(Post createPost, FormCollection form, HttpPostedFileBase file)
+        {
+            try
+            {
+                if (Session["LogedUserID"] != null)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        using (CMSEntities cm = new CMSEntities())
+                        {
+                            int id = createPost.post_id;
+
+                            user userId = new user();
+                            Post post = new Post();
+
+                            post = database.Posts.Find(id);
+
+                            int loginId = int.Parse(Session["LogedUserID"].ToString());
+                            userId = database.users.Find(loginId);
+
+                            string catergoryIdInString = form["list"].ToString();
+                            int catergoryId = int.Parse(catergoryIdInString);
+
+                            string dbPath = null;
+
+                            HttpPostedFileBase file1 = file;
+                            int num = file.ContentLength;
+                            bool e = file.ContentType.Contains("image");
+
+                            if (file.ContentLength > 0 && file.ContentType.Contains("image"))
+                            {
+                                var fileName = Path.GetFileName(file.FileName);
+                                var files = Path.GetExtension(".jpg");
+
+                                if (files != null)
+                                {
+                                    var img = Image.FromStream(file.InputStream);
+
+                                    if (img.RawFormat.Equals(ImageFormat.Png) || img.RawFormat.Equals(ImageFormat.Jpeg))
+                                    {
+                                        string filestring = fileName.ToString();
+                                        var path = Path.Combine(Server.MapPath("/Resources/PostImages"), fileName);
+                                        file.SaveAs(path);
+                                        string absoulte_path = path.ToString();
+                                        dbPath = "\\" + GetRightPartOfPath(absoulte_path, "Resources") + "\\" + filestring;
+
+                                        post.post_date = createPost.post_date;
+                                        post.category_id = catergoryId;
+                                        post.post_description = createPost.post_description;
+                                        post.image = dbPath;
+                                        post.title = createPost.title;
+
+                                        database.Entry(post).State = EntityState.Modified;
+                                        database.SaveChanges();
+                                        
+                                        TempData["EditSuccess"] = "Post has been Updated successfully!";
+
+                                        return RedirectToAction("Index");
+                                    }
+
+                                    else
+                                    {
+                                        TempData["UnsuccessImage"] = "Image Format should be .png or .jpg";
+                                        return RedirectToAction("Create");
+                                    }
+                                }
+
+                                else
+                                {
+                                    TempData["NullImage"] = "Image Format should be .png or .jpg11111";
+                                    return RedirectToAction("Create");
+                                }
+                            }
+
+                            else
+                            {
+                                TempData["UnsuccessNullImage"] = "Not Image";
+                                return View("Create");
+                            }
+
+                            //post.post_id = createPost.post_id;
+                            //post.user_id = userId.user_id;
+                            //post.post_date = createPost.post_date;
+                            //post.category_id = catergoryId;
+                            //post.post_description = createPost.post_description;
+                            //post.image = dbPath;
+                            //post.activity_log = status;
+                            //post.title = createPost.title;
+
+                            //database.Posts.Add(post);
+                            //database.SaveChanges();
+
+                            //TempData["Success"] = "Post has been created successfully!";
+
+                            //return RedirectToAction("Index");
+                        }
+
+
+
+                    }
+
+                }
+
+                return View("Create");
+            }
+
+            catch (Exception e)
+            {
+                TempData["UnsuccessNullImage"] = "Null" + e;
+                return View("Create");
+            }
+
+            //try
+            //{
+            //    if (ModelState.IsValid)
+            //    {
+            //        db.Entry(employee).State = System.Data.Entity.EntityState.Modified;
+            //        db.SaveChanges();
+            //        return RedirectToAction("Index");
+            //    }
+            //    return View(employee);
+            //}
+
+            //catch
+            //{
+            //    return View();
+            //}
+        }
+        //public ActionResult Edit(int id)
+        //{
+        //    if (id == null)
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    Employee employee = db.Employees.Find(id);
+
+        //    if (employee == null)
+        //        return HttpNotFound();
+        //    return View(employee);
+        //}
 
         /// <summary>
         /// Method for Viewing Details page of Posts
@@ -173,7 +403,7 @@ namespace AccessControlManagement.Controllers
             {
                 return HttpNotFound();
             }
-
+    
             return View(post);            
         }
 
@@ -220,6 +450,9 @@ namespace AccessControlManagement.Controllers
                         user = database.users.Find(loginId);
 
                         string description = form["txtComment"].ToString();
+                        
+                       // string postIdInString = form["hdnPostId"].ToString();
+                        //int postId = int.Parse(postIdInString);
 
                         comment.user_id = user.user_id;
                         comment.post_id = commentPost.post_id;
@@ -234,6 +467,8 @@ namespace AccessControlManagement.Controllers
                         return RedirectToAction("Home");
                     }
                 }
+
+
             }
             return View("Create");        
         }
@@ -247,6 +482,118 @@ namespace AccessControlManagement.Controllers
                 return View(postList);
             }
             return View();
+        }
+
+        public ActionResult Viewww()
+        {
+
+            return View("View");
+
+        }
+
+
+        // GET: /Movies/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Post post = database.Posts.Find(id);
+
+            string status = post.activity_log;
+        
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (status == "Requested")
+            {
+                TempData["Delete"] = "You cannot delete the post because the post Status is Requested";
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+                return View(post);
+            }
+        }
+
+        // POST: /Movies/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Post post = database.Posts.Find(id);
+
+            database.Posts.Remove(post);
+            database.SaveChanges();
+
+            TempData["DeleteSuccess"] = "Successfully DELETED";
+            
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Education()
+        {
+            if (Session["LogedUserID"] != null)
+            {
+                int userId = int.Parse(Session["LogedUserID"].ToString());
+                var postList = (from p in database.Posts where (p.activity_log.Equals("Accepted")) && (p.Category.category_name.Equals("Education")) orderby p.post_id ascending select p).ToList();
+                return View(postList);
+            }
+
+            else
+            {
+                return View("Index");
+            }
+        }
+
+        public ActionResult BabyCare()
+        {
+            if (Session["LogedUserID"] != null)
+            {
+                int userId = int.Parse(Session["LogedUserID"].ToString());
+                var postList = (from p in database.Posts where (p.activity_log.Equals("Accepted")) && (p.Category.category_name.Equals("Baby Care")) orderby p.post_id ascending select p).ToList();
+                return View(postList);
+            }
+
+            else
+            {
+                return View("Index");
+            }
+        }
+
+        public ActionResult FoodNutrition()
+        {
+            if (Session["LogedUserID"] != null)
+            {
+                int userId = int.Parse(Session["LogedUserID"].ToString());
+                var postList = (from p in database.Posts where (p.activity_log.Equals("Accepted")) && (p.Category.category_name.Equals("Food & Nutrition")) orderby p.post_id ascending select p).ToList();
+                return View(postList);
+            }
+
+            else
+            {
+                return View("Index");
+            }
+        }
+
+        public ActionResult Others()
+        {
+            if (Session["LogedUserID"] != null)
+            {
+                int userId = int.Parse(Session["LogedUserID"].ToString());
+                var postList = (from p in database.Posts where (p.activity_log.Equals("Accepted")) && (p.Category.category_name.Equals("Science") || p.Category.category_name.Equals("Business Management")) orderby p.post_id ascending select p).ToList();
+                return View(postList);
+            }
+
+            else
+            {
+                return View("Index");
+            }
         }
 
     }
