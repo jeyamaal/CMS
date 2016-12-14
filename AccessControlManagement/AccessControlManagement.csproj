@@ -258,11 +258,15 @@
       <DependentUpon>CMSModel.edmx</DependentUpon>
       <LastGenOutput>CMSModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Resources\Advetrisement_Image\Australia offer.jpg" />
     <Content Include="Resources\Advetrisement_Image\banner01.jpg" />
     <Content Include="Resources\Advetrisement_Image\banner02.jpg" />
     <Content Include="Resources\Advetrisement_Image\banner03.jpg" />
+    <Content Include="Resources\Advetrisement_Image\Dialog-Special-Offers.jpg" />
     <Content Include="Resources\Advetrisement_Image\free Pizza Hut coupons may 2015.png" />
+    <Content Include="Resources\Advetrisement_Image\oppo f1s offer.jpg" />
     <Content Include="Resources\Advetrisement_Image\pizza.jpg" />
+    <Content Include="Resources\Advetrisement_Image\sliit new intake.png" />
     <Content Include="Resources\Advetrisement_Image\title3.jpg" />
     <Content Include="Resources\images.png" />
     <Content Include="Resources\jeyamaal_images\g1.jpg" />
@@ -305,7 +309,6 @@
     <Content Include="Content\sweetalert\sweet-alert-animations.less" />
     <Content Include="Content\sweetalert\sweet-alert-combine.less" />
     <Content Include="Content\sweetalert\sweet-alert.less" />
-    <Content Include="Resources\Advetrisement_Image\Thumbs.db" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\category.js" />
     <Content Include="Scripts\reports.js" />
