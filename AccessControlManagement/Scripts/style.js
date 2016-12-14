@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    
+
     $(".nav-links").each(function (index) {
 
         $(this).click(function () {
@@ -23,8 +23,7 @@
                     $("#load-view").fadeTo("1000", 0, function () {
                         $("#loading-place").addClass("still-loading");
 
-                        if (index == 0)
-                        {
+                        if (index == 0) {
                             //Home
                             $("#nav-place").text("HOME ");
 
@@ -39,15 +38,14 @@
 
                             });
                         }
-                        else if (index == 1)
-                        {
+                        else if (index == 1) {
                             //Advertisement
                             $("#nav-place").html("");
                             $("#nav-place").text("Advertisment");
 
                             $(".add-new-btn").hide();
 
-                            $("#load-view").load("/Categories/_Advertisement", function () {                                
+                            $("#load-view").load("/Categories/_Advertisement", function () {
                                 //CategorySaveChanges();
                                 $("#header").fadeTo("1000", 1, function () { });
                                 $("#load-view").fadeTo("1000", 1, function () {
@@ -65,9 +63,9 @@
                             $("#nav-place").text("Writer Post");
                             $(".add-new-btn").hide();
                             $("#load-view").load("/Categories/_Post", function () {
-                                
+
                                 CategorySaveChanges();
-                               
+
                                 $("#header").fadeTo("1000", 1, function () { });
                                 $("#load-view").fadeTo("1000", 1, function () {
                                     $("#loading-place").removeClass("still-loading");
@@ -78,8 +76,7 @@
                             });
                         }
 
-                        else if (index == 3)
-                        {
+                        else if (index == 3) {
                             //Category
                             $("#nav-place").html("");
                             $("#nav-place").text("Category");
@@ -100,13 +97,8 @@
 
                             });
                         }
-                        else if(index == 4)
-                        {
+                        else if (index == 4) {
                             // Profile
-
-                            $("#nav-place").html("");
-                            $("#nav-place").text("Profile View");
-
                             $("#load-view").load("/Home/ProfileView", function () {
                                 //CategorySaveChanges();
                                 //$(".add-new-btn").removeAttr("id");

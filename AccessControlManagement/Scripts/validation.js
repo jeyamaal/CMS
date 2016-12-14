@@ -46,7 +46,7 @@ function OnLogin(content) {
 
     $.ajax({
         type: "POST",
-        url: window.location.pathname + 'Home/Login/',
+        url: window.location.pathname,
         data: { "un": username, "pwd": password },
 
 
@@ -63,7 +63,7 @@ function OnLogin(content) {
             }
 
             else {
-                window.location.replace("home/AfterLogin");
+                window.location.replace("AfterLogin");
             }
 
 
