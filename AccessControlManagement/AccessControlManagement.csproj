@@ -364,7 +364,6 @@
     <Content Include="Views\ViewAdvertisement\Index.cshtml" />
     <Content Include="Views\Advertisement\Create.cshtml" />
     <Content Include="Views\Advertisement\Delete.cshtml" />
-    <Content Include="Views\Advertisement\Details.cshtml" />
     <Content Include="Views\Advertisement\Edit.cshtml" />
     <Content Include="Views\Advertisement\Index.cshtml" />
     <Content Include="Views\Shared\_Advertisement_Layout.cshtml" />
