@@ -1,82 +1,120 @@
-﻿@{
-    ViewBag.Title = "Index";
-    @model IEnumerable<object>
+﻿@*@model IEnumerable<AccessControlManagement.Models.AdvertisementDetail>*@
 
-    List<AccessControlManagement.Models.InsertAdd> ADDdetails = Model.ToList()[0] as List<AccessControlManagement.Models.InsertAdd>;
+@model IEnumerable<object>
+@{
+
+    List<AccessControlManagement.Models.user> userss = Model.ToList()[0] as List<AccessControlManagement.Models.user>;
+    List<AccessControlManagement.Models.AdvertisemetsAccess> advt = Model.ToList()[1] as List<AccessControlManagement.Models.AdvertisemetsAccess>;
+
+
 }
 
 
-<div class="col-xs-12">
-    <label for="">Search</label>
-    <input type="text" align="right" id="search" placeholder="Type to search Advertisement">
-</div>
-<h2>Index</h2>
+@{
+    Layout = "~/Views/Shared/_Advertisement_Layout.cshtml";
+}
 
-<p>
-    @Html.ActionLink("Add New Advertisement", "Create")
-</p>
-<table class="table table-striped table-bordered table-hover" id="table">
+<br/>
+<br/>
+
+<div>
+    <div>
+        <p style="font-size:20px">
+            @Html.ActionLink("Add new advertisement", "Create")
+        </p>
+    </div>
+
+    <div class="pull-right" style="margin-right:100px">
+
+        <a href="@Url.Action("Home", "Post")">View Home</a>
+        @*<button style="border:none; font-size:20px;">View Post</button>*@
+    </div>
+</div>
+
+<table class="table advertise-table" name="dash">
     <tr>
-        <th>Add ID</th>
-        <th>Title</th>
-        <th>Posted date</th>
-        <th>Updated date</th>
-        <th>Due date</th>
-        <th>Status</th>
+        <th>
+            Title
+        </th>
+
+        <th>
+            Want to post
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Posted Date
+        </th>
+        <th>
+            Updated Date
+        </th>
+        <th>
+            Due Date
+        </th>
+        <th>
+            Category
+        </th>
         <th></th>
     </tr>
 
+    @foreach (var item in advt)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.wantToPostDate)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>*@
+            <td>
+            @{
+                var status = item.status;
+                if (status == "Accepted")
+                {
+                    <b style="color: forestgreen"> @Html.DisplayFor(modelItem => item.status)</b>
+                }
+
+                else if (status == "Pending")
+                {
+                    <b style="color: goldenrod"> @Html.DisplayFor(modelItem => item.status) </b>
+                }
+                else if (status == "Reject")
+                {
+                    <b style="color: darkred"> @Html.DisplayFor(modelItem => item.status) </b>
+                }
+                else if (status == "Request for Renew")
+                {
+                    <b style="color: darkred"> @Html.DisplayFor(modelItem => item.status) </b>
+                }
+                
+            }
 
 
+            </td>
 
-    @{
-
-        foreach (var item in ADDdetails)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(a => item.ADD_id)
-                </td>
-                <td>
-                    @Html.DisplayFor(a => item.title)
-                </td>
-                <td>
-                    @Html.DisplayFor(a => item.postedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(a => item.updatedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(a => item.dueDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(a => item.status)
-                </td>
-
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ADD_id })
-                    @Html.ActionLink("View", "View", new { id = item.ADD_id })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ADD_id },
-    new { onclick = "return confirm('Are you sure you wish to delete this Adverisement?');" })
-                </td>
-            </tr>
-        }
+            <td>
+                @Html.DisplayFor(modelItem => item.postedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.updatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category1.category_name)
+            </td>
+            <td>
+                @Html.ActionLink("Update", "Edit", new { id = item.ADD_id }) |
+               
+                @Html.ActionLink("Delete", "Delete", new { id = item.ADD_id })
+            </td>
+        </tr>   
     }
+
 </table>
-
-@section Scripts{
-    <script>
-
-    var $rows = $('#table tr');
-    $('#search').keyup(function () {
-        var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-
-        $rows.show().filter(function () {
-            var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-            return !~text.indexOf(val);
-        }).hide();
-    });
-
-    </script>
-}
-

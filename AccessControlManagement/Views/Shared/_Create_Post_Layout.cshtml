@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*<link rel="stylesheet" type="text/css" href="themes/twitter.css">*@
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Scripts/sweetalert.css">
+
+</head>
+<body>
+          
+
+            <div id="site-area" class="panel panel-default">
+                <div class="panel-body" style="padding-bottom: 0px;">
+                    <div id="logo-area"></div>
+                    <div class="row" style="margin-left: 20px;">
+                        <div id="site-main-area" class="col-sm-11 panel panel-default">
+                            <div id="loading-place" class="panel-body">
+                                <div class="row">
+                                   
+                                </div>
+
+
+                                <div class="row">
+                                    <div id="load-view" class="col-sm-12">
+                                        @RenderBody()
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    catch (Exception e)
+    {
+
+
+    }
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+</body>
+</html>

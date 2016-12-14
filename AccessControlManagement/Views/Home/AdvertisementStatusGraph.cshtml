@@ -1,0 +1,24 @@
+﻿@using WebMatrix.Data;
+@model AccessControlManagement.Models.user
+
+@*Graph details of the Adrvertsiement Details*@
+
+@{
+
+    ViewBag.Title = "Profile View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@if (Session["LogedUserFullname"] != null)
+{
+    var db = Database.Open("CMSGraphs");
+    var data = db.Query("select status,COUNT(status)as nos from AdvertisementDetails group by status");
+    var myChart = new Chart(width: 600, height: 400, theme: ChartTheme.Green)
+    .AddTitle("Advertisement Details")
+    .AddSeries("Default",
+    chartType: "pie",
+    xValue: data, xField: "status",
+    yValues: data, yFields: "nos");
+    myChart.Write();
+}
+

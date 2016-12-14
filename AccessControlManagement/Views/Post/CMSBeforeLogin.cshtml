@@ -1,0 +1,260 @@
+﻿@model IEnumerable<object>
+
+@{
+    Layout = "~/Views/Shared/_Home_Layout.cshtml";
+    List<AccessControlManagement.Models.Post> listPost = Model.ToList()[0] as List<AccessControlManagement.Models.Post>;
+    List<AccessControlManagement.Models.AdvertisementDetail> listAdvertisment = Model.ToList()[1] as List<AccessControlManagement.Models.AdvertisementDetail>;
+}
+
+
+<style type="text/css"> 
+    .form-style-5 {
+        max-width: 500px;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        margin: 10px auto;
+        padding: 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .form-style-6 {
+        max-width: 500px;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        margin: 10px auto;
+        padding: 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .form-style-5 i {
+        color: #1abc9c;
+        /*margin-right:140px;*/
+    }
+
+    .form-style-5 fieldset {
+        border: 1px;
+    }
+
+    .form-style-5 legend {
+        font-size: 1.4em;
+        margin-bottom: 10px;
+    }
+
+    .form-style-5 label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .form-style-5 text {
+        font-size: 0.8em;
+        color: #808080;
+    }
+
+    .form-style-5 small {
+        font-size: 1em;
+        color: #35ad95;
+    }
+
+    .form-style-5 h3 {
+        color: #1abc9c;
+    }
+
+    .form-style-5 p {
+        text-align: justify;
+    }
+
+    .c1 {
+        font-size: 1.2em;
+        color: #1abc9c;
+    }
+
+    .c2 {
+        font-size: 0.9em;
+        margin-left: 15px;
+    }
+
+    .form-style-5 .number {
+        background: #1abc9c;
+        color: #fff;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        font-size: 1em;
+        margin-right: 4px;
+        line-height: 30px;
+        text-align: center;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+        border-radius: 15px 15px 15px 0px;
+    }
+
+    .form-style-5 .number1 {
+        background: #1abc9c;
+        color: #fff;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        font-size: 1em;
+        margin-right: 4px;
+        line-height: 30px;
+        text-align: center;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+        border-radius: 15px 15px 15px 0px;
+    }
+
+    .form-style-5 input[type="submit"],
+    .form-style-5 input[type="button"] {
+        position: relative;
+        color: #FFF;
+        background: #1abc9c;
+        font-size: 15px;
+        text-align: center;
+        font-style: normal;
+        width: 25%;
+        border: 1px solid #16a085;
+        border-width: 1px 1px 3px;
+    }
+
+        .form-style-5 input[type="submit"]:hover,
+        .form-style-5 input[type="button"]:hover {
+            background: #109177;
+        }
+
+    input[type="text"] {
+        width: 200px;
+    }
+
+    .form-style-5 input[type="text"] {
+        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+        background: rgba(255,255,255,.1);
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        margin: 0;
+        outline: 0;
+        padding: 7px;
+        width: 100%;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        background-color: #e8eeef;
+        color: #8a97a0;
+        -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+        box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+        margin-bottom: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .form-style-7 i {
+        color: #ffffff;
+        margin-left: 350px;
+    }
+
+    .form-style-7 {
+        max-width: 700px;
+        color: white;
+        margin: 10px auto;
+        /*padding: 20px;*/
+        background: #011914;
+        border-bottom-width: 0px;
+        border-top-width: 0px;
+        border-left-width: 0px;
+        border-right-width: 0px;
+        font-family: Baskerville Old Face;
+    }
+</style>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" href="../assets/bjqs.css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../assets/demo.css">
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="../assets/js/bjqs-1.3.min.js"></script>
+</head>
+
+<div class="form-style-7">
+    
+        <center><h1> FindMore</h1></center>
+</div>
+
+
+
+
+<div id="container">
+    <a href="@Url.Action("Login", "Home")">Login</a>
+
+    @*<a href="@Html.RouteLink("Privacy")">Login</a>*@
+
+   
+
+    <form id="form1">
+
+
+        <div id="banner-fade">
+            <ul class="bjqs">
+                @foreach (var item in listAdvertisment)
+                {
+                    <li>
+                        <img src='@Html.DisplayFor(modelItem => item.adImage)'
+                             title='@Html.DisplayFor(modelItem => item.title)' alt="">
+                    </li>
+
+                }
+
+            </ul>
+        </div>
+
+        <script src="../assets/js/libs/jquery.secret-source.min.js"></script>
+        <script>
+            jQuery(function ($) {
+
+                $('.secret-source').secretSource({
+                    includeTag: false
+                });
+
+                $('#banner-fade').bjqs({
+                    height: 320,
+                    width: 620,
+                    responsive: true
+                });
+            });
+        </script>
+    </form>
+
+
+    @using (Html.BeginForm("Home", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        foreach (var item in listPost)
+        {
+            var po = 1;
+            <div class="form-style-5">
+                <fieldset>
+                    <legend><span class="number">P</span>@Html.DisplayFor(modelItem => item.user.username)</legend>
+
+                    <small>@Html.DisplayFor(modelItem => item.Category.category_name)</small>
+
+                    <text>@Html.DisplayFor(modelItem => item.post_date)</text>
+                    <br />
+
+                    <h3>@Html.DisplayFor(modelItem => item.title)</h3>
+
+                    <p>
+                        @Html.DisplayFor(modelItem => item.post_description)
+                    </p>
+
+                    <img src="@Url.Content(item.image)" alt="Image" height="250" width="250" style="margin-left:100px" />
+                </fieldset>
+
+                <br />
+            </div>
+        }
+
+    }
+</div>
+

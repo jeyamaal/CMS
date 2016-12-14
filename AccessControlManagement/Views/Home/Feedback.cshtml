@@ -1,0 +1,119 @@
+﻿@using AccessControlManagement.Models
+
+@model Tuple<List<AccessControlManagement.Models.user>, IEnumerable<AccessControlManagement.Models.Feedback>>
+
+@model Tuple<List<AccessControlManagement.Models.user>,<List<AccessControlManagement.Models.Feedback>>
+
+
+@model Tuple<AccessControlManagement.Models.user, AccessControlManagement.Models.Feedback>
+
+@model AccessControlManagement.Models.user
+
+@{
+
+    ViewBag.Title = "Profile View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@if (Session["LogedUserFullname"] != null)
+{
+   
+
+<div class="container">
+
+    @*<form class="well form-horizontal" action="fd" method="post" id="contact_form">*@
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend>Contact Us Today!</legend>
+
+            <!-- Text input-->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">First Name</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+               
+                        <input id="firstname" name="first_name" placeholder="First Name" class="form-control" value="@Model.fullname"  type="text" readonly="readonly">
+                        @*@Html.TextBoxFor(model=>model.Item2.firstname, new { @required = "true", @class = "form-control input-lg", @placeholder = "User name", @tabindex = "3", @readonly = "readonly" })*@
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text input-->
+
+         
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label">E-Mail</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input id="email_id" name="email" placeholder="First Name" class="form-control" value="@Model.email_id" type="text" readonly="readonly">
+                        @*@Html.TextBoxFor(Model=>Model.Item2.email, new { @required = "true", @class = "form-control input-lg", @placeholder = "User name", @tabindex = "3", @readonly = "readonly" })*@
+                    </div>
+                </div>
+            </div>
+
+
+         
+
+ 
+            <!-- Text area -->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label">Feed back</label>
+                <div class="col-md-4 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        <textarea id="description" class="form-control" name="comment" placeholder="Your Valuable Feedback"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success message -->
+            <div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Thanks for contacting us, we will get back to you shortly.</div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label"></label>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-warning" onclick="OnFeedBack()">Send <span class="glyphicon glyphicon-send"></span></button>
+                </div>
+            </div>
+
+        </fieldset>
+    @*</form>*@
+
+    </div><!-- /.container -->
+}
+
+@section Scripts{
+    <script>
+
+    function OnFeedBack() {
+
+ 
+
+    var fname = $("#firstname").val();
+    var email = $("#email_id").val();
+    var description = $('#description')
+
+    console.log(fname);
+    console.log(email);
+
+    $.ajax({
+    type: "POST",
+    url: 'Home/Feedback/',
+    data: { "fname": fname, "email": email, "description": description },
+    success: function (data) {
+
+        console.log("Suceessfull PAdd feedback");
+    }
+
+    });
+    }
+   </script> 
+    
+}

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<object>
+@{
+    List<AccessControlManagement.Models.CategoryPost> listPost = Model.ToList()[0] as List<AccessControlManagement.Models.CategoryPost>;
+}
+
+    <div id="created-post-tab">
+        <h3>Post Details</h3>
+        <div class="col-sm-offset-1">
+            <div>
+                <label>User Name: </label>
+            </div>
+
+            <div>
+                @Html.DropDownList("UsersNameList", null, "Select", htmlAttributes: new { @class = "form-control", id = "usernamelist", onchange = "DropDownValueUser()" })
+            </div>
+        </div>
+
+        <div class="col-md-offset-1">
+            <div class="row" style="margin-top:10px">
+                <table class="table table-hover" style="margin-top:50px" id="setting-table-created-post" hidden>
+                    @*<thead>
+                        <tr style="border:2px solid black; background-color:#DADBDE">
+                            <th style="text-align:center">Category</th>
+                            <th style="text-align:center">Date</th>
+                            <th style="text-align:center">Post Title</th>
+                            <th></th>
+                        </tr>
+                    </thead>*@
+                    <tbody>
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

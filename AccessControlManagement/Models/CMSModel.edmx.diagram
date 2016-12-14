@@ -4,19 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="09f9d0c257ba47acb45f539f15fb028a" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="CMSModel.Advertisement" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CMSModel.Article" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CMSModel.ArticleHasAd" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="CMSModel.Category" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CMSModel.Post" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="CMSModel.user" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+      <Diagram DiagramId="d26f9971f3ca463f8a5d04f873bf6dd9" Name="Diagram1">
+        <EntityTypeShape EntityType="CMSModel.Advertisement" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.AdvertisementDetail" Width="1.5" PointX="6" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.Article" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.ArticleHasAd" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.Category" Width="1.5" PointX="3.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.Comment" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.Feedback" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.Post" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.user" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
         <AssociationConnector Association="CMSModel.fk_ad" ManuallyRouted="false" />
-        <AssociationConnector Association="CMSModel.fk_a" ManuallyRouted="false" />
-        <AssociationConnector Association="CMSModel.fk_ahd" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSModel.FK__Advertise__categ__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSModel.fk_article" ManuallyRouted="false" />
         <AssociationConnector Association="CMSModel.fk_p1" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSModel.FK_Comment_Post" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSModel.fk_userid_comment" ManuallyRouted="false" />
         <AssociationConnector Association="CMSModel.fk_p" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="CMSModel.InsertAdd" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

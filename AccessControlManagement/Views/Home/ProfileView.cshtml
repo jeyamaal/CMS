@@ -1,0 +1,371 @@
+﻿
+@model AccessControlManagement.Models.user
+
+
+
+@{
+
+    ViewBag.Title = "Profile View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+
+}
+
+<head>
+    @*script of printing html page*@
+    <script type="text/javascript" src="~/Scripts/validation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+    <script>
+        (function () {
+            var beforePrint = function () {
+                console.log('Functionality to run before printing.');
+            };
+            var afterPrint = function () {
+                console.log('Functionality to run after printing');
+            };
+
+            if (window.matchMedia) {
+                var mediaQueryList = window.matchMedia('print');
+                mediaQueryList.addListener(function (mql) {
+                    if (mql.matches) {
+                        beforePrint();
+                    } else {
+                        afterPrint();
+                    }
+                });
+            }
+
+            window.onbeforeprint = beforePrint;
+            window.onafterprint = afterPrint;
+        }());
+    </script>
+</head>
+
+
+
+@*@if (Session["LogedUserFullname"] != null)
+  {*@           <br />
+                <br/>
+                <div class="col-md-3">
+                    <ul class="nav nav-stacked">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#" data-target="#profPicModal" data-toggle="modal">Change Profile Picture</a>
+                        <li><a href="#" data-target="#ChangePasswordModal" data-toggle="modal">Change Password</a></li>
+                        <li><a href="#">Reports</a></li>
+                        <li><a href="#">Change Template</a></li>
+                        @Html.ActionLink("Deactive Account", "DeactiveAccount", "Home",new { onclick = "return confirm('Are you sure you wish to Deactive the Account');" })
+                        <li><a href="#" data-target="#FeedBackModal" data-toggle="modal">FeedBack</a></li>
+
+                    </ul>
+                </div>
+
+
+            <div class="col-sm-offset-3" title="text" id="printableArea">
+
+                <p><font face="verdana" color="green" size="6">Analysis of Posts</font></p>
+                @*<button type="button" class="btn-group-lg" onclick="printDiv('printableArea')">Print</button>*@
+
+                <iframe src='@Url.Action("NoOfPostsGraph", "Home")' id="print-content" title="Right Click and Save the Image" width="100%" height="600" frameBorder="0"></iframe>
+
+
+            </div>
+                            @*<input type="button" onclick="printDiv('printableArea')" value="print a div!" />*@
+
+            @if (Session["LogedAdminID"] != null)
+            {
+                <div class="col-sm-offset-3">
+
+                    <p><font face="verdana" color="green" size="6">Status of AccountDetails</font></p>
+
+                    <iframe src='@Url.Action("AccountStatusGraph", "Home")' width="100%" height="500" frameBorder="0"></iframe>
+
+                </div>
+            }
+
+                @if (Session["LogedAdminID"] != null)
+                {
+                    <div class="col-sm-offset-3">
+
+                        <p><font face="verdana" color="green" size="6">Status of Advertisment</font></p>
+
+                        <iframe src='@Url.Action("AdvertisementStatusGraph", "Home")' width="100%" height="500" frameBorder="0"></iframe>
+
+                    </div>
+                }
+
+
+    
+@*<div>
+
+        <text>
+            Welcome @Session["LogedUserFullname"].ToString()
+        </text>
+
+        <br>
+        <br>
+        <text>
+            Your email is @Html.DisplayFor(model => model.email_id, new { @fontcolor = "blue" })
+        </text>
+        <br>
+        <br>
+
+        <text>
+            Your username is @Html.DisplayFor(model => model.username)
+        </text>
+
+    </div>*@
+
+@*}*@
+
+<!--modal-->
+<!--Changa Profile picture-->
+<div id="profPicModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h1 class="text-center">Change Profile Picture</h1>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <p>Smile Please.</p>
+                                <div class="panel-body">
+                                    <fieldset>
+                                        <div class="form-group">
+                                            @using (Html.BeginForm("ChangeProfilePicture", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                            {
+                                                <fieldset>
+                                                    <legend>Upload a file</legend>
+                                                    <div class="col-sm-offset-3">
+                                                        <input type="file" name="file" id="imgInp" />
+                                                    </div>
+                                                    <br>
+                                                    <img id="blah" src="~/Resources/jeyamaal_images/prof-pic.png" alt="your image" height="100" width="100" />
+                                                    <div class="editor-field">
+
+                                                        <input class="btn btn-lg btn-info" value="Change Profile Picture" type="submit">
+
+                                                    </div>
+                                                </fieldset>
+
+
+                                            }
+                                        </div>
+
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--modal-->
+<!--Changa Password-->
+<div id="ChangePasswordModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h1 class="text-center">Change Password </h1>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <p>Smile Please.</p>
+                                <div class="panel-body">
+                                    <fieldset>
+                                        <div class="form-group">
+
+                                            <fieldset>
+                                                <legend>Change password</legend>
+                                                <div class="col-sm-offset-3">
+
+                                                    @Html.PasswordFor(a => a.password, new { @required = "true", @class = "form-control input-lg", @placeholder = "Current Password", id = "oldPwd" })
+
+
+                                                    @Html.PasswordFor(a => a.ConfirmPassword, new { @required = "true", @class = "form-control input-lg", @placeholder = "New Password", id = "newPwd" })
+
+
+                                                    @Html.PasswordFor(a => a.newPassword, new { @required = "true", @class = "form-control input-lg", @placeholder = "Confirm Password", id = "conPwd" })
+
+                                                    <button type="button" class="btn btn-primary" onclick="OnChangePassword()">Change password</button>
+                                                </div>
+                                            </fieldset>
+
+
+
+                                        </div>
+
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--modal-->
+<!--FeedBack-->
+<div id="FeedBackModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h1 class="text-center">FeedBack </h1>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <p>Contact Us Today!.</p>
+                                <div class="panel-body">
+                                    <fieldset>
+                                        <div class="form-group">
+
+                                            <fieldset>
+                                                <legend>Feed Back</legend>
+                                                <div class="col-sm-offset-3">
+
+                                                    @using (Html.BeginForm("SendFeedBack", "Home", FormMethod.Post))
+                                                    {
+
+                                                        @*<input id="firstname" name="first_name" placeholder="First Name" class="form-control" value="@Model.fullname" type="text" readonly="readonly">*@
+
+                                                        @Html.TextBoxFor(a => a.fullname, new { @required = "true", @class = "form-control input-lg", @placeholder = "User name", @tabindex = "3", @readonly = "readonly" })
+
+                                                        @Html.TextBoxFor(a => a.email_id, new { @required = "true", @class = "form-control input-lg", @placeholder = "Email", @tabindex = "3", @readonly = "readonly" })
+
+                                                        @Html.TextBoxFor(a => a.feedbacks, new { @required = "true", @class = "form-control input-lg", @placeholder = "FeedBack", @tabindex = "3", @minlength = "5", @autocomplete = "off" })
+
+
+
+                                                        <input class="btn btn-lg btn-info" value="Send" type="submit">
+
+
+                                                    }
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-12">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+@*Validation for Image upload*@
+@if (TempData["SucessImageUpload"] != null)
+{
+    <script type="text/javascript">
+
+        swal("Profile  Updated", "Profile Picture has been Updated!", "success")
+
+    </script>
+}
+
+@if (TempData["Message"] != null)
+{
+    <script type="text/javascript">
+
+        sweetAlert("Please Choose an image file", "max:20MB", "error");
+
+    </script>
+}
+
+
+    @*Validation for Sucess Feedback*@
+
+    @if (TempData["SucessFeedbackMessage"] != null)
+    {
+        <script type="text/javascript">
+
+            swal("Sent!", "Thank you for your valuabale feedback!", "success")
+
+        </script>
+    }
+
+
+    @*Validation for Error Feedback*@
+
+    @if (TempData["ErrorFeedbackMessage"] != null)
+    {
+        <script type="text/javascript">
+
+            sweetAlert("Error", "Failed to Send Feedback", "error");
+
+        </script>
+    }
+
+
+
+
+    @section Scripts{
+
+        @*for ImageUpload*@
+
+        <script>
+
+            function readURL(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#blah').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#imgInp").change(function () {
+                readURL(this);
+            });
+
+
+        </script>
+
+
+    }

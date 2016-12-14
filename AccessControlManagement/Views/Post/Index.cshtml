@@ -1,0 +1,301 @@
+﻿@*@model System.Collections.Generic.IEnumerable<AccessControlManagement.Models.Post>*@
+
+@model IEnumerable<object>
+@{
+
+    List<AccessControlManagement.Models.user> userss = Model.ToList()[0] as List<AccessControlManagement.Models.user>;
+    List<AccessControlManagement.Models.PostAccess> postAccess = Model.ToList()[1] as List<AccessControlManagement.Models.PostAccess>;
+    List<AccessControlManagement.Models.AdvertisementDetail> advert = Model.ToList()[2] as List<AccessControlManagement.Models.AdvertisementDetail>;
+
+
+}
+
+@if (Session["LogedUserID"] != null)
+{
+
+    int postNumber = 1;
+    Layout = "~/Views/Shared/_PostLayout.cshtml";
+
+<style type="text/css">
+
+    /*.form-style-1 i{
+        margin-left:20cm;
+        color: #1abc9c;
+        
+    }*/
+    .form-style-5 i {
+            color: #1abc9c;
+            /*margin-right:140px;*/
+        }
+
+    .form-style-5 {
+        max-width: 1000px;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        margin: 10px auto;
+        padding: 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+
+        .form-style-5 fieldset {
+            border: 1px;
+        }
+
+        .form-style-5 legend {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        /*.form-style-5 label {
+            display: block;
+            margin-bottom: 8px;
+        }*/
+
+        .form-style-5 text {
+            font-size: 0.8em;
+            color:#808080
+        }
+
+        .form-style-5 th {
+            font-size: 1em;
+            color:#35ad95
+        }
+
+        .p1 {
+            font-size: 1em;
+            color:#35ad95;
+            font-style:normal;
+            font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .form-style-5 h3 {
+            color: #1abc9c;
+        }
+
+        .form-style-5 p {
+            text-align: justify;
+        }
+
+        .form-style-5 .number {
+            background: #1abc9c;
+            color: #fff;
+            height: 30px;
+            width: 30px;
+            display: inline-block;
+            font-size: 1em;
+            margin-right: 4px;
+            line-height: 30px;
+            text-align: center;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+            border-radius: 15px 15px 15px 0px;
+        }
+
+        .form-style-5 input[type="text"] {
+            font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+            background: rgba(255,255,255,.1);
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 0;
+            outline: 0;
+            padding: 7px;
+            width: 100%;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            background-color: #e8eeef;
+            color: #8a97a0;
+            -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            margin-bottom: 10px;
+            margin-left:50px;
+        }
+
+            .form-style-5 input[type="text"]:focus {
+                background: #d2d9dd;
+            }
+
+
+        .form-style-5 input[type="submit"],
+        .form-style-5 input[type="button"] {
+            position: relative;
+            /*display: block;*/
+            color: #FFF;
+            background: #1abc9c;
+            font-size: 18px;
+            text-align: center;
+            font-style: normal;
+            width: 10%;
+            border: 1px solid #16a085;
+            border-width: 1px 1px 3px;
+            margin-left: 20px;
+        }
+
+            .form-style-5 input[type="submit"]:hover,
+            .form-style-5 input[type="button"]:hover {
+                background: #109177;
+            }
+
+    input[type="text"] {
+        width: 200px;
+    }
+</style>
+
+<div class="form-style-5">
+    <legend>
+        <span class="number">P</span>History of Posts
+    </legend>
+    <br />
+
+    @using (Html.BeginForm("Index", "Post", FormMethod.Get))
+    {
+            <label class="p1">Title</label> @Html.TextBox("search") <input type="submit" value="Search"/>
+            <br />
+    }
+
+    @{
+        if (TempData["Delete"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Error</strong> @TempData["Delete"]
+            </div>
+        }
+
+        if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Success</strong> @TempData["Success"]
+            </div>
+        }
+
+        if (TempData["DeleteSuccess"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Success</strong> @TempData["DeleteSuccess"]
+            </div>
+        }
+
+        if (TempData["EditSuccess"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Success</strong> @TempData["EditSuccess"]
+            </div>
+        }
+    }
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            Catergories
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="@Url.Action("Education", "Post")">Education</a></li>
+            <li><a href="@Url.Action("BabyCare", "Post")">Baby Care</a></li>
+            <li><a href="@Url.Action("FoodNutrition", "Post")">Food & Nutrition</a></li>
+            <li><a href="@Url.Action("Others", "Post")">Others</a></li>
+        </ul>
+    </div>
+    <p></p>
+    <br />
+    <table class="table table-hover">
+        
+        <tr>
+            <th>
+                Post Number
+            </th>
+            <th>
+                Title
+                @*@Html.DisplayNameFor(model => model.title)*@
+            </th>
+            <th>
+                Catergory
+                @*@Html.DisplayNameFor(model => model.Category.category_name)*@
+            </th>
+            <th>
+                Post Date
+                @*@Html.DisplayNameFor(model => model.post_date)*@
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.picture)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.post_description)
+                </th>*@
+            <th>
+                Status
+                @*@Html.DisplayNameFor(model => model.activity_log)*@
+            </th>
+            <th>
+                <a href="@Url.Action("Create", "Post")"><i class="fa fa-pencil fa-2x"></i> </a> | 
+                <a href="@Url.Action("Home", "Post")"><i class="fa fa-home fa-2x"></i> </a> | 
+                <a href="@Url.Action("MyPost", "Post")"><i class="fa fa-list-alt fa-2x"></i> </a>  
+            </th>
+        </tr>
+
+        @foreach (var item in postAccess)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayName(postNumber.ToString())
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.category_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.post_date)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.activity_log)*@
+
+                    @{
+                        var status = item.activity_log;
+                        if (status == "Accepted")
+                        {
+                            <b style="color: forestgreen">@Html.DisplayFor(modelItem => item.activity_log)</b>
+                        }
+
+                        else if (status == "Requested")
+                        {
+                            <b style="color:  goldenrod">@Html.DisplayFor(modelItem => item.activity_log)</b>
+                        }
+
+                        else if (status == "Rejected")
+                        {
+                            <b style="color:  darkred">@Html.DisplayFor(modelItem => item.activity_log)</b>
+                        }
+                    }
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.picture)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.post_description)
+                    </td>*@
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {  id=item.post_id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.post_id }) |
+                    @Html.ActionLink("Delete", "Delete", new {  id=item.post_id })
+                </td>
+            </tr>
+            postNumber++;
+        }
+
+    </table>
+</div>
+}

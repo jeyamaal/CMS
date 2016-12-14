@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -121,10 +122,25 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WebMatrix.Data">
+      <HintPath>C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v2.0\Packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -132,14 +148,24 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdvertisementController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\ViewAdController.cs" />
+    <Compile Include="Controllers\ViewAdvertisement.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Advertisement.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdvertisementCategory.cs" />
+    <Compile Include="Models\AdvertisementDetail.cs">
+      <DependentUpon>CMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AdvertisemetsAccess.cs" />
     <Compile Include="Models\Article.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
@@ -149,6 +175,8 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoryPost.cs" />
+    <Compile Include="Models\CategoryUsers.cs" />
     <Compile Include="Models\CMSModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -164,27 +192,62 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CMSModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\EmailForm.cs" />
-    <Compile Include="Models\InsertAdd.cs">
+    <Compile Include="Models\Comment.cs">
+      <DependentUpon>CMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Feedback.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Post.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PostAccess.cs" />
     <Compile Include="Models\user.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\bjqs.css" />
+    <Content Include="assets\demo.css" />
+    <Content Include="assets\js\bjqs-1.3.js" />
+    <Content Include="assets\js\bjqs-1.3.min.js" />
+    <Content Include="assets\js\libs\jquery.secret-source.min.js" />
+    <Content Include="Content\alertifyjs\alertify.css" />
+    <Content Include="Content\alertifyjs\alertify.min.css" />
+    <Content Include="Content\alertifyjs\alertify.rtl.css" />
+    <Content Include="Content\alertifyjs\alertify.rtl.min.css" />
+    <Content Include="Content\alertifyjs\themes\bootstrap.css" />
+    <Content Include="Content\alertifyjs\themes\bootstrap.min.css" />
+    <Content Include="Content\alertifyjs\themes\bootstrap.rtl.css" />
+    <Content Include="Content\alertifyjs\themes\bootstrap.rtl.min.css" />
+    <Content Include="Content\alertifyjs\themes\default.css" />
+    <Content Include="Content\alertifyjs\themes\default.min.css" />
+    <Content Include="Content\alertifyjs\themes\default.rtl.css" />
+    <Content Include="Content\alertifyjs\themes\default.rtl.min.css" />
+    <Content Include="Content\alertifyjs\themes\semantic.css" />
+    <Content Include="Content\alertifyjs\themes\semantic.min.css" />
+    <Content Include="Content\alertifyjs\themes\semantic.rtl.css" />
+    <Content Include="Content\alertifyjs\themes\semantic.rtl.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Category.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Login.css" />
+    <Content Include="Content\LoginStyle.css" />
     <Content Include="Content\Register.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\sweetalert\bootstrap-sweetalert.png" />
+    <Content Include="Content\sweetalert\docs.css" />
+    <Content Include="Content\sweetalert\sweet-alert.css" />
+    <Content Include="Content\sweetalert\thumbs-up.jpg" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images.ico" />
     <Content Include="Models\CMSModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CMSModel.edmx</DependentUpon>
@@ -195,8 +258,40 @@
       <DependentUpon>CMSModel.edmx</DependentUpon>
       <LastGenOutput>CMSModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Resources\Advetrisement_Image\banner01.jpg" />
+    <Content Include="Resources\Advetrisement_Image\banner02.jpg" />
+    <Content Include="Resources\Advetrisement_Image\banner03.jpg" />
+    <Content Include="Resources\Advetrisement_Image\free Pizza Hut coupons may 2015.png" />
+    <Content Include="Resources\Advetrisement_Image\pizza.jpg" />
+    <Content Include="Resources\Advetrisement_Image\title3.jpg" />
+    <Content Include="Resources\images.png" />
+    <Content Include="Resources\jeyamaal_images\g1.jpg" />
+    <Content Include="Resources\jeyamaal_images\g2.jpg" />
+    <Content Include="Resources\jeyamaal_images\g3.jpg" />
+    <Content Include="Resources\jeyamaal_images\g4.jpg" />
+    <Content Include="Resources\jeyamaal_images\loding_login.gif" />
+    <Content Include="Resources\jeyamaal_images\login-bg-blur.jpg" />
+    <Content Include="Resources\jeyamaal_images\login-bg.jpg" />
+    <Content Include="Resources\jeyamaal_images\prof-pic.png" />
+    <Content Include="Resources\loading.gif" />
+    <Content Include="Resources\PostImages\1.png" />
+    <Content Include="Resources\PostImages\1333648179-1118117-abstract_floral_background_29-mb_7456284-4_www.hqtexture.com.jpg" />
+    <Content Include="Resources\PostImages\2.PNG" />
+    <Content Include="Resources\PostImages\3.PNG" />
+    <Content Include="Resources\PostImages\4.PNG" />
+    <Content Include="Resources\PostImages\autumn1.png" />
+    <Content Include="Resources\PostImages\g1.jpg" />
+    <Content Include="Resources\PostImages\g4.jpg" />
+    <Content Include="Resources\PostImages\images %285%29.jpg" />
+    <Content Include="Scripts\alertify.js" />
+    <Content Include="Scripts\alertify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <EntityDeploy Include="Models\CMSModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CMSModel.Designer.cs</LastGenOutput>
@@ -204,10 +299,19 @@
     <Content Include="Models\CMSModel.edmx.diagram">
       <DependentUpon>CMSModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\bootstrap\mixins.less" />
+    <Content Include="Content\bootstrap\variables.less" />
+    <Content Include="Content\sweetalert\sweet-alert-animations.less" />
+    <Content Include="Content\sweetalert\sweet-alert-combine.less" />
+    <Content Include="Content\sweetalert\sweet-alert.less" />
+    <Content Include="Resources\Advetrisement_Image\Thumbs.db" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\category.js" />
+    <Content Include="Scripts\reports.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.canvasjs.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -216,7 +320,13 @@
     <Content Include="Scripts\Register_checkbox.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\style.js" />
+    <Content Include="Scripts\sweetalert-dev.js" />
+    <Content Include="Scripts\sweetalert.css" />
+    <Content Include="Scripts\sweetalert.min.js" />
+    <Content Include="Scripts\validation.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Styles\sweetalert.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -236,12 +346,46 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\AfterLogin.cshtml" />
     <Content Include="Views\Register\Register.cshtml" />
-    <Content Include="Views\Home\ChangePassword.cshtml" />
-    <Content Include="Views\Advertisement\Index.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\Shared\_Admin_Layout.cshtml" />
+    <Content Include="Views\Categories\_Setting.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\Post\Create.cshtml" />
+    <Content Include="Views\Post\Details.cshtml" />
+    <Content Include="Views\Post\Home.cshtml" />
+    <Content Include="Views\Post\Index.cshtml" />
+    <Content Include="Views\Shared\_PostLayout.cshtml" />
+    <Content Include="Views\Home\ProfileView.cshtml" />
+    <Content Include="Views\Home\NoOfPostsGraph.cshtml" />
+    <Content Include="Views\Home\AccountStatusGraph.cshtml" />
+    <Content Include="Views\Home\AdvertisementStatusGraph.cshtml" />
+    <Content Include="Views\Categories\_Post.cshtml" />
+    <Content Include="Views\ViewAdvertisement\Index.cshtml" />
     <Content Include="Views\Advertisement\Create.cshtml" />
+    <Content Include="Views\Advertisement\Delete.cshtml" />
+    <Content Include="Views\Advertisement\Details.cshtml" />
+    <Content Include="Views\Advertisement\Edit.cshtml" />
+    <Content Include="Views\Advertisement\Index.cshtml" />
+    <Content Include="Views\Shared\_Advertisement_Layout.cshtml" />
+    <Content Include="Views\Shared\_Login_Layout.cshtml" />
+    <Content Include="Views\Categories\_Advertisement.cshtml" />
+    <Content Include="Views\Post\BabyCare.cshtml" />
+    <Content Include="Views\Post\CMSBeforeLogin.cshtml" />
+    <Content Include="Views\Post\Delete.cshtml" />
+    <Content Include="Views\Post\Edit.cshtml" />
+    <Content Include="Views\Post\Education.cshtml" />
+    <Content Include="Views\Post\FoodNutrition.cshtml" />
+    <Content Include="Views\Post\Others.cshtml" />
+    <Content Include="Views\Post\MyPost.cshtml" />
+    <Content Include="Views\Post\Viewww.cshtml" />
+    <Content Include="Views\Shared\_Home_Layout.cshtml" />
+    <Content Include="Views\Shared\_Create_Post_Layout.cshtml" />
+    <Content Include="Views\ViewAd\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="PostImages\" />
+    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
