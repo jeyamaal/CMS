@@ -25,28 +25,61 @@ namespace AccessControlManagement.Controllers
         /// Date - 9/10/2016
         public ActionResult Index(string search)
         {
-            try
+
+            if (Session["LogedUserID"] != null)
             {
-                if (Session["LogedUserID"] != null)
+                try
                 {
                     int userId = int.Parse(Session["LogedUserID"].ToString());
 
+                    List<object> postAccessList = new List<object>();
+
+                    var postDetails = (from c in database.Posts
+
+                                       select new PostAccess
+                                       {
+                                           post_id = c.post_id,
+                                           user_id = c.user_id,
+                                           title = c.title,
+                                           category_id = c.category_id,
+                                           post_description = c.post_description,
+                                           post_date = c.post_date,
+                                           activity_log = c.activity_log,
+                                           image = c.image,
+                                           Category = c.Category
+
+                                       });
                     var postList = (from p in database.Posts where p.user_id == userId select p)/*.ToList()*/;
+
+                    
 
                     if (!String.IsNullOrEmpty(search))
                     {
-                        postList = postList.Where(s => s.title.Contains(search));
+                        postDetails = postDetails.Where(s => s.title.Contains(search));
                     }
-                    return View(postList.ToList());
+
+                    var myPost = postDetails.ToList();
+                    var usermm = (from c in database.users
+                                  where c.user_id == userId
+                                  select c).ToList();
+
+                    postAccessList.Add(usermm);
+                    postAccessList.Add(myPost);
+                    return View(postAccessList);
                 }
-                
-                return View();
+
+                catch (Exception e)
+                {
+                    return View(e);
+                }
             }
 
-            catch (Exception e)
+            else
             {
-                return View(e);
+                return RedirectToAction("Login", "Home");
             }
+
+            
         }
 
         /// <summary>
@@ -60,7 +93,37 @@ namespace AccessControlManagement.Controllers
         {
             var getCatergoryList = database.Categories.ToList();
             ViewBag.list = new SelectList(database.Categories, "category_id", "category_name").Distinct();
-            
+
+            //int userId = int.Parse(Session["LogedUserID"].ToString());
+
+            //List<object> postAccessList = new List<object>();
+
+            //var postDetails = (from c in database.Posts
+
+            //                   select new PostAccess
+            //                   {
+            //                       post_id = c.post_id,
+            //                       user_id = c.user_id,
+            //                       title = c.title,
+            //                       category_id = c.category_id,
+            //                       post_description = c.post_description,
+            //                       post_date = c.post_date,
+            //                       activity_log = c.activity_log,
+            //                       image = c.image,
+            //                       Category = c.Category
+
+            //                   });
+
+
+            //var myPost = postDetails.ToList();
+            //var usermm = (from c in database.users
+            //              where c.user_id == userId
+            //              select c).ToList();
+
+            //postAccessList.Add(usermm);
+            //postAccessList.Add(myPost);
+            //return View(postAccessList);
+
             Post post = new Post();
 
             return View(post);
