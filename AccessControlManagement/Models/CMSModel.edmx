@@ -191,6 +191,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="usp_Advertisement_statusUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="adID" Type="int" Mode="In" />
+          <Parameter Name="ADStatus" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="usp_Category_delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="catname" Type="varchar" Mode="In" />
         </Function>
@@ -488,7 +492,11 @@
           </FunctionImport>
           <EntitySet Name="Feedbacks" EntityType="CMSModel.Feedback" />
           <FunctionImport Name="usp_request_Expiry_date">
+          <Parameter Name="adID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Advertisement_statusUpdate">
             <Parameter Name="adID" Mode="In" Type="Int32" />
+            <Parameter Name="ADStatus" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Feedback">
@@ -616,6 +624,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="usp_request_Expiry_date" FunctionName="CMSModel.Store.usp_request_Expiry_date" />
+          <FunctionImportMapping FunctionImportName="usp_Advertisement_statusUpdate" FunctionName="CMSModel.Store.usp_Advertisement_statusUpdate" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

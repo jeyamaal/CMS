@@ -25,6 +25,7 @@
 
                         if (index == 0)
                         {
+                            //Home
                             $("#nav-place").text("HOME ");
 
                             $("#header").fadeTo("1000", 1, function () { });
@@ -38,17 +39,27 @@
                         }
                         else if (index == 1)
                         {
-                            //$("#load-view").load("/Categories/_Post", {partial:true}, function () {
-                                
-                            //}).error(function (a) {
+                            //Advertisement
+                            $("#nav-place").html("");
+                            $("#nav-place").text("Advertisment");
 
-                            //});
+                            $("#load-view").load("/Categories/_Advertisement", function () {                                
+                                //CategorySaveChanges();
+                                $("#header").fadeTo("1000", 1, function () { });
+                                $("#load-view").fadeTo("1000", 1, function () {
+                                    $("#loading-place").removeClass("still-loading");
+                                    $(".nav-links").css("pointer-events", "");
+                                });
+                            }).error(function (a) {
+
+                            });
                         }
                         else if (index == 2)
                         {
+                            //Category
                             $("#nav-place").html("");
                             $("#nav-place").text("Category");
-                            //Settings
+                            
                             $("#load-view").load("/Categories/_Setting", function () {
                                 $("#nav-time").after("<button id='newButton' data-toggle='modal' class='add-new-btn btn btn-default btn-lg'><i class='fa fa-plus-circle fa-2x'></i></button>");
                                 CategorySaveChanges();

@@ -2,7 +2,7 @@
 @{
     List<AccessControlManagement.Models.user> userss = Model.ToList()[0] as List<AccessControlManagement.Models.user>;
     List<AccessControlManagement.Models.CategoryUsers> listUsers = Model.ToList()[1] as List<AccessControlManagement.Models.CategoryUsers>;
-    List<AccessControlManagement.Models.AdvertisementCategory> listAdvertiser = Model.ToList()[2] as List<AccessControlManagement.Models.AdvertisementCategory>;
+    
 }
 @{ 
     Layout = "~/Views/Shared/_Admin_Layout.cshtml";
@@ -20,17 +20,6 @@
         color: #1abc9c;
     }
 
-    .ad-table-view {
-        max-width: 1000px;
-        padding: 10px 20px;
-        background: #f4f7f8;
-        margin: 10px auto;
-        padding: 20px;
-        background: #f4f7f8;
-        border-radius: 8px;
-        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-    }
-
       .user-table-home {
         max-width: 1000px;
         padding: 10px 20px;
@@ -46,16 +35,6 @@
             font-size: 1.4em;
             margin-bottom: 10px;
         }
-       
-        .ad-table-view  myuserList {
-            font-size: 1.4em;
-            margin-bottom: 10px;
-        }
-
-        .ad-table-view  text {
-            font-size: 0.8em;
-            color: #808080;
-        }
 
         .user-table-home text {
             font-size: 0.8em;
@@ -67,30 +46,12 @@
             color: #35ad95;
         }
 
-         .ad-table-view th {
-            font-size: 1em;
-            color: #35ad95;
-        }
-
+        
     .p1 {
         font-size: 1em;
         color: #35ad95;
         font-style: normal;
         font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-    }
-
-   .ad-table-view  .userNumber {
-        background: #1abc9c;
-        color: #fff;
-        height: 30px;
-        width: 30px;
-        display: inline-block;
-        font-size: 1em;
-        margin-right: 4px;
-        line-height: 30px;
-        text-align: center;
-        text-shadow: 0 1px 0 rgba(255,255,255,0.2);
-        border-radius: 15px 15px 15px 0px;
     }
 
     .user-table-home .userNumber {
@@ -112,8 +73,7 @@
 <div class="container">
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#all-user-tab">View All User</a></li>
-        <li><a data-toggle="tab" href="#created-post-tab">Articles</a></li>
-        <li><a data-toggle="tab" href="#created-advertisements-tab">Advertisements</a></li>
+        <li><a data-toggle="tab" href="#created-post-tab">Articles</a></li>       
     </ul>
 
     <div class="tab-content">
@@ -171,169 +131,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in listAdvertiser)
+                            @*@foreach (var item in listAdvertiser)
                             {
                                 <tr></tr>
-                            }
+                            }*@
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div id="created-advertisements-tab" class="tab-pane fade">
-            <div class="row ad-table-view" style="margin-top:10px">
-
-                <myuserList>
-                    <span class="userNumber">A</span>
-                    Advertisement Details
-                </myuserList>
-
-                <table class="table table-hover" style="margin-top:50px" id="setting-table-created-ads">
-                    <thead>
-                        <tr style="background-color:#DADBDE">
-                            <th style="text-align:center">Category</th>
-                            <th style="text-align:center">Date</th>
-                            <th style="text-align:center">Title</th>
-                            <th style="text-align:center">Status</th>
-                            <th style="text-align:center">Expired Date</th>
-                            <th>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item3 in listAdvertiser)
-                        {
-                            <tr>
-                                @if (item3.categoryName == "")
-                                {
-                                    <td style="text-align:center; color:darkslategrey"><label>-Category Not choosed-</label></td>
-                                }
-                                else
-                                {
-                                    <td style="text-align:center">@item3.categoryName</td>
-                                }
-                                @if (item3.postedDate == "")
-                                {
-                                    <td style="text-align:center; color:darkslategrey"><label> -Date is not definded- </label></td>
-                                }
-                                else
-                                {
-                                    <td style="text-align:center">@item3.postedDate</td>
-                                }
-                                <td style="text-align:center">@item3.title</td>
-                                <td style="text-align:center">
-                                
-                                @{
-                                    var statusAd = item3.status;
-                                    if (statusAd.Contains("Pend"))
-                                    {
-                                        <label style="color:darkorange">@item3.status</label>
-                                    }
-                                    else if (statusAd.Contains("Reject"))
-                                    {
-                                        <label style="color:darkred">@item3.status</label>
-                                    }
-                                    else if (statusAd.Contains("Expire"))
-                                    {
-                                        <label style="color:darkred">@item3.status</label>
-                                    }
-                                    else
-                                    {
-                                        <label style="color:forestgreen">@item3.status</label>
-                                    }
-                                }
-                                </td>
-                                @if (item3.expirayDate == "")
-                                {
-                                    <td style="text-align:center; color:darkslategrey"><label>-Date is not defined-</label></td>
-                                }
-                                else
-                                {
-                                    <td style="text-align:center">@item3.expirayDate</td>
-                                }
-                                <td>
-                                    <button id="edit-status-advertisement" type="button" data-toggle="modal" data-target="#edit-moda-status-advertisment-@item3.adID"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-
-                                    <div class="modal fade" id="edit-moda-status-advertisment-@item3.adID" role="dialog">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header" style="background-color: #f4f7f8; color:#1abc9c">
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">
-                                                        <myuserList>
-                                                            <span class="userNumber">A</span>
-                                                            Advertisements
-                                                        </myuserList>
-                                                    </h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    
-                                                    <div class="row" style="margin-bottom:15px; margin-left:15px">
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-4" for="group-name" style="color:#1abc9c">Name of Category:</label>
-                                                            <div class="col-md-7">
-                                                                <input type="text" id="txt-@item3.adID" name="edit-category-name" class="form-control single-line" value="@item3.categoryName" disabled />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row" style="margin-bottom:15px; margin-left:15px">
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-4" for="group-name" style="color:#1abc9c">Posted Date:</label>
-                                                            <div class="col-md-7">
-                                                                <input type="text" id="txt-edit-posteddate-@item3.adID" class="form-control single-line" value="@item3.postedDate" disabled />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row" style="margin-bottom:15px; margin-left:15px">
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-4" for="group-name" style="color:#1abc9c">Title:</label>
-                                                            <div class="col-md-7">
-                                                                <input type="text" id="txt-edit-title-@item3.adID" class="form-control single-line" value="@item3.title" disabled />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row" style="margin-bottom:15px; margin-left:15px">
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-4" for="group-name" style="color:#1abc9c">Status:</label>
-                                                            <div class="col-md-7">
-                                                                <select id="status_type" name="type">
-                                                                    <option value="Rejected" selected>Rejected</option>
-                                                                    <option value="Accepted">Accepted</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row" style="margin-bottom:15px; margin-left:15px">
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-4" for="group-name" style="color:#1abc9c">Expire Date:</label>
-                                                            <div class="col-md-7">
-                                                                <input type="text" id="txt-edit-expiryDate-@item3.adID" class="form-control" value="@item3.expirayDate" disabled/>
-                                                                <br />
-                                                                <button type="button" class="btn btn-success user-edit-request-advertisement" value="Update" id="btn-edit-cat-request-@item3.adID" onclick="CategorySaveChanges()">Request</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary category-edit-advertisement" value="Update" id="btn-edit-cat-@item3.adID" onclick="CategorySaveChanges()">Update</button>
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
+        
     </div>
 </div>
 

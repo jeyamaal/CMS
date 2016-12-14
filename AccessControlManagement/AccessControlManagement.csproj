@@ -327,6 +327,7 @@
     <Content Include="Views\Home\ProfileView.cshtml" />
     <Content Include="Views\Categories\_Post.cshtml" />
     <Content Include="Views\Sweet\Alert.cshtml" />
+    <Content Include="Views\Categories\_Advertisement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

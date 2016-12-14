@@ -80,5 +80,18 @@ namespace AccessControlManagement.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_request_Expiry_date", adIDParameter);
         }
+    
+        public virtual int usp_Advertisement_statusUpdate(Nullable<int> adID, string aDStatus)
+        {
+            var adIDParameter = adID.HasValue ?
+                new ObjectParameter("adID", adID) :
+                new ObjectParameter("adID", typeof(int));
+    
+            var aDStatusParameter = aDStatus != null ?
+                new ObjectParameter("ADStatus", aDStatus) :
+                new ObjectParameter("ADStatus", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Advertisement_statusUpdate", adIDParameter, aDStatusParameter);
+        }
     }
 }

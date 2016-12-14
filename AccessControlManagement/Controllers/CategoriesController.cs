@@ -47,18 +47,17 @@ namespace AccessControlManagement.Controllers
                              });
 
 
-                var advertisments = (from ad in db.AdvertisementDetails
-                                     join c in db.Categories on ad.category_id equals c.category_id
-                                     select new AdvertisementCategory
-                                     {
-                                         adID = ad.ADD_id,
-                                         categoryName = c.category_name,
-                                         postedDate = ad.wantToPostDate.ToString(),
-                                         title = ad.title,
-                                         status = ad.status,
-                                         expirayDate = ad.dueDate.ToString()
-                                     });
-             
+                //var advertisments = (from ad in db.AdvertisementDetails
+                //                     join c in db.Categories on ad.category_id equals c.category_id
+                //                     select new AdvertisementCategory
+                //                     {
+                //                         adID = ad.ADD_id,
+                //                         categoryName = c.category_name,
+                //                         postedDate = ad.wantToPostDate.ToString(),
+                //                         title = ad.title,
+                //                         status = ad.status,
+                //                         expirayDate = ad.dueDate.ToString()
+                //                     });
                 int i = int.Parse(Session["LogedAdminID"].ToString());
                 //user u1 = db.users.Find(i);
 
@@ -67,8 +66,7 @@ namespace AccessControlManagement.Controllers
                               select c).ToList();
                 postList.Add(usermm);
                 postList.Add(users.ToList());
-                postList.Add(advertisments.ToList());
-        
+                //postList.Add(advertisments.ToList());
                 return View(postList);
             }
 
@@ -99,26 +97,27 @@ namespace AccessControlManagement.Controllers
             }
         }
 
-        //public ActionResult ChangeAdStatus(int adID, string statusAD)
-        //{
-        //    try
-        //    {
-        //        int resultStatusUpdate = db.usp_Advertisement_statusUpdate(adID, statusAD);
-        //        Debug.WriteLine("Advetisement update" + resultStatusUpdate);
-        //        if (resultStatusUpdate == 1)
-        //        {
-        //            return Json("Status is successfully Changed!", JsonRequestBehavior.AllowGet);
-        //        }
-        //        else
-        //        {
-        //            return Json("Status is not Changed!", JsonRequestBehavior.AllowGet);
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        return Json("Failed To Update!!", JsonRequestBehavior.AllowGet);
-        //    }
-        //}
+        public ActionResult ChangeAdStatus(int adID, string statusAD)
+        {
+            try
+            {
+                int resultStatusUpdate = db.usp_Advertisement_statusUpdate(adID, statusAD);
+                Debug.WriteLine("Advetisement update" + resultStatusUpdate);
+                if (resultStatusUpdate == 1)
+                {
+                    return Json("Status is successfully Changed!", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("Status is not Changed!", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch
+            {
+                return Json("Failed To Update!!", JsonRequestBehavior.AllowGet);
+            }
+        }
+
         // GET: Categories
         public ActionResult _Setting()
         {
@@ -129,10 +128,31 @@ namespace AccessControlManagement.Controllers
             return PartialView(myModel);
         }
 
-        //public ActionResult _Post()
-        //{
+        public ActionResult _Advertisement()
+        {
+            try
+            {
+                List<object> advertisementModel = new List<object>();
 
-        //}
+                var advertisments = (from ad in db.AdvertisementDetails
+                                     join c in db.Categories on ad.category_id equals c.category_id
+                                     select new AdvertisementCategory
+                                     {
+                                         adID = ad.ADD_id,
+                                         categoryName = c.category_name,
+                                         postedDate = ad.wantToPostDate.ToString(),
+                                         title = ad.title,
+                                         status = ad.status,
+                                         expirayDate = ad.dueDate.ToString()
+                                     });
+                advertisementModel.Add(advertisments.ToList());
+                return PartialView(advertisementModel);
+            }
+            catch
+            {
+                return PartialView("Error to Load the Advertisements!!");
+            }
+        }
 
         public ActionResult GetDropDownValueUser(string user_name)
         {

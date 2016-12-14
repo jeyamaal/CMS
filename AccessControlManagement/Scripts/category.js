@@ -183,7 +183,7 @@
                 success: function (result) {
                     console.log(result);
                     if (result == "Status is successfully Changed!") {
-                        $("#load-view").load("/Categories/Index/", { partial: true }, function () {
+                        $("#load-view").load("/Categories/_Advertisement/", { partial: true }, function () {
                             CategorySaveChanges();
                         });
                         $("#edit-moda-status-advertisment-" + aid1).hide();
@@ -192,7 +192,7 @@
                         swal("Updated!", "Your response have been sent.", "success");
                     }
                     else if (result == "Status is not Changed!") {
-                        $("#load-view").load("/Categories/Index/", { partial: true }, function () {
+                        $("#load-view").load("/Categories/_Advertisement/", { partial: true }, function () {
                             CategorySaveChanges();
                         });
                         $("#edit-moda-status-advertisment-" + aid1).hide();
@@ -202,7 +202,7 @@
                     }
                     else
                     {
-                        $("#load-view").load("/Categories/Index/",{ partial: true }, function () {
+                        $("#load-view").load("/Categories/_Advertisement/", { partial: true }, function () {
                             CategorySaveChanges();
                         });
                         $("#edit-moda-status-advertisment-" + aid1).hide();
@@ -227,7 +227,7 @@
                 success: function (result) {
                     console.log(result);
                     if (result == "Status is successfully Changed!") {
-                        $("#load-view").load("/Categories/Index/", function () {
+                        $("#load-view").load("/Categories/_Advertisement/", function () {
                             CategorySaveChanges();
                         });
                         $("#edit-moda-status-advertisment-" + aid1).hide();
@@ -236,7 +236,7 @@
                         swal("Updated!", "Your response have been sent.", "success");
                     }
                     else if (result == "Status is not Changed!") {
-                        $("#load-view").load("/Categories/Index/", function () {
+                        $("#load-view").load("/Categories/_Advertisement/", function () {
                             CategorySaveChanges();
                         });
                         $("#edit-moda-status-advertisment-" + aid1).hide();
@@ -245,7 +245,7 @@
                         swal("Not Updated!", "Issues while sending the response.", "warning");
                     }
                     else {
-                        $("#load-view").load("/Categories/Index/", function () {
+                        $("#load-view").load("/Categories/_Advertisement/", function () {
                             CategorySaveChanges();
                         });
                         $("#edit-moda-status-advertisment-" + aid1).hide();
@@ -261,7 +261,7 @@
     });
 
     $(".user-edit-request-advertisement").on('click', function () {
-        //var reAD = $(this).attr('id').split('-')[4];
+        var reAD = $(this).attr('id').split('-')[4];
 
         //var date = document.getElementById('txt-edit-posteddate-' + reAD).value;
         //console.log(date);
@@ -311,21 +311,24 @@
                 success: function (result) {
                     console.log(result);
                     if (result == "Requested") {
-                        $("#load-view").load("/Categories/Index/", function () {
+                        $("#load-view").load("/Categories/_Advertisement/", function () {
                             CategorySaveChanges();
                         });
+                        $('.modal-backdrop').remove();
                         swal("Success!", "Request has been sent.", "success");
                     }
                     else if (result == "Request Failed") {
-                        $("#load-view").load("/Categories/Index/", function () {
+                        $("#load-view").load("/Categories/_Advertisement/", function () {
                             CategorySaveChanges();
                         });
+                        $('.modal-backdrop').remove();
                         swal("Failed!", "Request has been not sent.", "Error");
                     }
                     else {
-                        $("#load-view").load("/Categories/Index/", function () {
+                        $("#load-view").load("/Categories/_Advertisement/", function () {
                             CategorySaveChanges();
                         });
+                        $('.modal-backdrop').remove();
                         swal("Not Updated!", "Network issues. Please re-try again", "error");
                     }
                 },
