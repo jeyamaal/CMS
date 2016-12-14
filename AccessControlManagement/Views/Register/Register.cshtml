@@ -5,9 +5,19 @@
     <script src="@Url.Content("~/Scripts/Register_checkbox.js")"></script>
 }
 
+@{
+    Layout = "~/Views/Shared/_Register_Layout.cshtml";
+}
+
 <head>
     @*@Styles.Render("~/Content/bootstrapcss")*@
     <link href="@Url.Content("~/Content/Register.css")" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*<link rel="stylesheet" type="text/css" href="themes/twitter.css">*@
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Scripts/sweetalert.css">
 
 </head>
 

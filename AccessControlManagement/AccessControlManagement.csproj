@@ -385,6 +385,7 @@
     <Content Include="Views\Shared\_Home_Layout.cshtml" />
     <Content Include="Views\Shared\_Create_Post_Layout.cshtml" />
     <Content Include="Views\ViewAd\Index.cshtml" />
+    <Content Include="Views\Shared\_Register_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
