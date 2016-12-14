@@ -153,6 +153,7 @@
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\ViewAdController.cs" />
     <Compile Include="Controllers\ViewAdvertisement.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -336,6 +337,7 @@
     <Content Include="Views\Shared\_Advertisement_Layout.cshtml" />
     <Content Include="Views\Sweet\Alert.cshtml" />
     <Content Include="Views\TinyMCESampleJQuery\Index.cshtml" />
+    <Content Include="Views\ViewAd\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
