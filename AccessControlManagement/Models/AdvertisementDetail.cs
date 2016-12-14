@@ -11,18 +11,25 @@ namespace AccessControlManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class AdvertisementDetail
     {
         public int ADD_id { get; set; }
         public string title { get; set; }
         public string category { get; set; }
         public string description { get; set; }
-        public Nullable<System.DateTime> wantToPostDate { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime? wantToPostDate { get; set; }
         public string status { get; set; }
-        public Nullable<System.DateTime> postedDate { get; set; }
-        public Nullable<System.DateTime> updatedDate { get; set; }
-        public Nullable<System.DateTime> dueDate { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime? postedDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? updatedDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? dueDate { get; set; }
         public Nullable<int> category_id { get; set; }
         public string adImage { get; set; }
     

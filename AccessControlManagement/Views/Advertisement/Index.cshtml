@@ -58,9 +58,35 @@
             <td>
                 @Html.DisplayFor(modelItem => item.wantToPostDate)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.status)
+            </td>*@
+            <td>
+            @{
+                var status = item.status;
+                if (status == "Accepted")
+                {
+                    <b style="color: forestgreen"> @Html.DisplayFor(modelItem => item.status)</b>
+                }
+
+                else if (status == "Pending")
+                {
+                    <b style="color: goldenrod"> @Html.DisplayFor(modelItem => item.status) </b>
+                }
+                else if (status == "Reject")
+                {
+                    <b style="color: darkred"> @Html.DisplayFor(modelItem => item.status) </b>
+                }
+                else if (status == "Request for Renew")
+                {
+                    <b style="color: darkred"> @Html.DisplayFor(modelItem => item.status) </b>
+                }
+                
+            }
+
+
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.postedDate)
             </td>
@@ -75,10 +101,10 @@
             </td>
             <td>
                 @Html.ActionLink("Update", "Edit", new { id = item.ADD_id }) |
-                @Html.ActionLink("View", "Details", new { id = item.ADD_id }) |
+               
                 @Html.ActionLink("Delete", "Delete", new { id = item.ADD_id })
             </td>
-        </tr>
+        </tr>   
     }
 
 </table>
