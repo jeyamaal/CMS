@@ -412,7 +412,7 @@ function DropDownValueUser() {
     console.log(selectedUser);
 
     $.ajax({
-        url: window.mainURL + "/Categories/GetDropDownValueUser",
+        url: "/Categories/GetDropDownValueUser",
 
         data: { user_name: selectedUser },
         type: "GET",
@@ -447,44 +447,31 @@ function DropDownValueUser() {
         }
     });
 
-    $.post("/Categories/GetDropDownValueUser", {
-        user_name: selectedUser
-    }, function (result) {
-        console.log(result);
+    //$.post("/Categories/GetDropDownValueUser", {
+    //    user_name: selectedUser
+    //}, function (result) {
+    //    console.log(result);
 
-        if (result != null) {
-            drawTable(result, "");
-        }
-        else if (result == "No post has been written by " + selectedUser) {
-            drawTable(null, "No post written to show");
-        }
-        else {
-            drawTable(null, "No post has been written to show");
-        }
+    //    if (result != null) {
+    //        drawTable(result, "");
+    //    }
+    //    else if (result == "No post has been written by " + selectedUser) {
+    //        drawTable(null, "No post written to show");
+    //    }
+    //    else {
+    //        drawTable(null, "No post has been written to show");
+    //    }
 
-        $("#load-view").load("/Categories/_Post/", function () {
-            CategorySaveChanges();  
-        });
-        //$("#load-view").load("/Categories/Index", function () {
-            //console.log()
-            //CategorySaveChanges();
-            //if (result != "null") {
-            //    drawTable(result);
-            //}
-            //else if (result == "Error") {
-            //    console.log(result);
-            //}
-            //else {
-            //    console.log(result);
-            //}
-        //});
-
-    }).error(function (e) {
-        console.log("error" + e)
-    });  
+    //    $("#load-view").load("/Categories/_Post/", function () {
+    //        CategorySaveChanges();  
+    //    });
+        
+    //}).error(function (e) {
+    //    console.log("error" + e)
+    //});  
 }
 
-function drawTable(data, message) {
+function drawTable(data) {
 
     $('#setting-table-created-post thead tr').show();
 
