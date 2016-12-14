@@ -333,6 +333,7 @@
     <Content Include="Views\Advertisement\Index.cshtml" />
     <Content Include="Views\Shared\_Advertisement_Layout.cshtml" />
     <Content Include="Views\Shared\_Login_Layout.cshtml" />
+    <Content Include="Views\Categories\_Advertisement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

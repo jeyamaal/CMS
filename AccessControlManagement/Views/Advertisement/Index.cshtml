@@ -14,14 +14,22 @@
     Layout = "~/Views/Shared/_Advertisement_Layout.cshtml";
 }
 
+<br/>
+<br/>
 
+<div>
+    <div>
+        <p style="font-size:20px">
+            @Html.ActionLink("Add new advertisement", "Create")
+        </p>
+    </div>
 
-<h2>Index</h2>
+    <div class="pull-right" style="margin-right:100px">
+        <button style="border:none; font-size:20px;">View Post</button>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Add new advertisement", "Create")
-</p>
-<table class="table" name="dash">
+<table class="table advertise-table" name="dash">
     <tr>
         <th>
             Title
