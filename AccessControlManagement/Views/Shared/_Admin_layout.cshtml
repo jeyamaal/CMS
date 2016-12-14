@@ -1,0 +1,147 @@
+﻿@model IEnumerable<object>
+@{
+
+    List<AccessControlManagement.Models.user> userss = Model.ToList()[0] as List<AccessControlManagement.Models.user>;
+    List<AccessControlManagement.Models.Post> listPost = Model.ToList()[1] as List<AccessControlManagement.Models.Post>;
+    
+
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Content Management System</title>
+    <link rel="icon" href="~/favicon.png" />
+
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @*Jeyamaal's Script file*@
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Scripts/sweetalert.css">
+
+</head>
+<body>
+    @try
+    {
+        if (Session["LogedAdminID"] != null)
+        {
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Be Blogger</a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+
+                        @foreach (var item2 in userss)
+                        {
+                            if (item2.picture != null)
+                            {
+                                <img src=@Url.Content(item2.picture) height="55" width="55">
+                            }
+                            else
+                            {
+                                <img src=# height="55" width="55">
+                            }
+                            <br>
+
+                            @Html.DisplayFor(Model => item2.username)
+                            <br>
+                            @Html.ActionLink("Log Out", "logout", "Home")
+                        }
+                    </ul>
+
+                </div>
+            </nav>
+        }
+    }
+    catch (Exception e)
+    {
+
+
+    }
+
+
+    <div id="nav-area" class="panel panel-default pull-left">
+        <div class="panel-body">
+            <div class="row">
+                <div id="home-link" class="panel panel-default pull-left nav-clicked nav-links" data-toggle="tooltip" data-placement="left" title="Home">
+                    <div class="panel-body">
+                        <i class="fa fa-home fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="post-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Write Post">
+                    <div class="panel-body">
+                        <i class="fa fa-file-text-o fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="settings-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Settings">
+                    <div class="panel-body">
+                        <i class="fa fa-cogs fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div id="profile-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Profile" @*onclick="window.location.href='@Url.Action("ProfileView", "Home")'"*@>
+                    <div class="panel-body">
+                        <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="row">
+                    <div id="exit-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Logout">
+                        <div class="panel-body">
+                            <i class="fa fa-minus-circle fa-2x"></i>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+
+    <div id="site-area" class="panel panel-default">
+        <div class="panel-body" style="padding-bottom: 0px;">
+            <div id="logo-area"></div>
+            <div class="row" style="margin-left: 20px;">
+                <div id="site-main-area" class="col-sm-11 panel panel-default">
+                    <div id="loading-place" class="panel-body">
+                        <div class="row">
+                            <div id="header" class="col-sm-12 panel panel-default" style="font-family:Baskerville Old Face; color:white; background-color:#0B0758; margin-bottom: 0px;">
+                                <div class="panel-body">
+                                    <label id="nav-place"></label>
+                                    <div id="nav-time">
+                                        <label style="font-family: sans-serif"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="load-view" class="col-sm-12">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+</body>
+
+
+
+</html>

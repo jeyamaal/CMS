@@ -29,6 +29,7 @@
           <Property Name="updatedDate" Type="datetime" />
           <Property Name="dueDate" Type="datetime" />
           <Property Name="category_id" Type="int" />
+          <Property Name="adImage" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -64,6 +65,16 @@
           <Property Name="description" Type="nvarchar(max)" />
           <Property Name="comment_date" Type="date" />
         </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="feed_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="Post">
           <Key>
             <PropertyRef Name="post_id" />
@@ -75,7 +86,7 @@
           <Property Name="post_description" Type="nvarchar(max)" />
           <Property Name="activity_log" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="title" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="image" Type="varbinary(max)" />
+          <Property Name="image" Type="varchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -90,7 +101,7 @@
           <Property Name="role" Type="varchar" MaxLength="20" />
           <Property Name="status" Type="varchar" MaxLength="15" />
         </EntityType>
-        <Association Name="FK__Advertise__categ__398D8EEE">
+        <Association Name="FK__Advertise__categ__29572725">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="AdvertisementDetails" Type="Self.AdvertisementDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -180,6 +191,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="usp_Category_delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="catname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_Category_insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="categoryID" Type="int" Mode="In" />
+          <Parameter Name="catname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_Category_update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="oldcatname" Type="varchar" Mode="In" />
+          <Parameter Name="newCatName" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="CMSModelStoreContainer">
           <EntitySet Name="Advertisement" EntityType="Self.Advertisement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AdvertisementDetails" EntityType="Self.AdvertisementDetails" Schema="dbo" store:Type="Tables" />
@@ -187,9 +209,10 @@
           <EntitySet Name="ArticleHasAd" EntityType="Self.ArticleHasAd" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Advertise__categ__398D8EEE" Association="Self.FK__Advertise__categ__398D8EEE">
+          <AssociationSet Name="FK__Advertise__categ__29572725" Association="Self.FK__Advertise__categ__29572725">
             <End Role="Category" EntitySet="Category" />
             <End Role="AdvertisementDetails" EntitySet="AdvertisementDetails" />
           </AssociationSet>
@@ -248,7 +271,8 @@
           <Property Name="updatedDate" Type="DateTime" Precision="3" />
           <Property Name="dueDate" Type="DateTime" Precision="3" />
           <Property Name="category_id" Type="Int32" />
-          <NavigationProperty Name="Category1" Relationship="Self.FK__Advertise__categ__398D8EEE" FromRole="AdvertisementDetails" ToRole="Category" />
+          <Property Name="adImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Category1" Relationship="Self.FK__Advertise__categ__29572725" FromRole="AdvertisementDetails" ToRole="Category" />
         </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -274,7 +298,7 @@
           <Property Name="category_id" Type="Int32" Nullable="false" />
           <Property Name="category_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="status" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AdvertisementDetails" Relationship="Self.FK__Advertise__categ__398D8EEE" FromRole="Category" ToRole="AdvertisementDetails" />
+          <NavigationProperty Name="AdvertisementDetails" Relationship="Self.FK__Advertise__categ__29572725" FromRole="Category" ToRole="AdvertisementDetails" />
           <NavigationProperty Name="Posts" Relationship="Self.fk_p1" FromRole="Category" ToRole="Post" />
         </EntityType>
         <EntityType Name="Comment">
@@ -289,6 +313,16 @@
           <NavigationProperty Name="Post" Relationship="Self.FK_Comment_Post" FromRole="Comment" ToRole="Post" />
           <NavigationProperty Name="user" Relationship="Self.fk_userid_comment" FromRole="Comment" ToRole="user" />
         </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="feed_date" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="Post">
           <Key>
             <PropertyRef Name="post_id" />
@@ -300,7 +334,7 @@
           <Property Name="post_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="activity_log" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="image" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Advertisement" Relationship="Self.fk_ad" FromRole="Post" ToRole="Advertisement" />
           <NavigationProperty Name="Category" Relationship="Self.fk_p1" FromRole="Post" ToRole="Category" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comment_Post" FromRole="Post" ToRole="Comment" />
@@ -336,7 +370,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Advertise__categ__398D8EEE">
+        <Association Name="FK__Advertise__categ__29572725">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
           <End Role="AdvertisementDetails" Type="Self.AdvertisementDetail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -419,13 +453,14 @@
           <EntitySet Name="ArticleHasAds" EntityType="Self.ArticleHasAd" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
           <EntitySet Name="Posts" EntityType="Self.Post" />
           <EntitySet Name="users" EntityType="Self.user" />
           <AssociationSet Name="fk_ad" Association="Self.fk_ad">
             <End Role="Post" EntitySet="Posts" />
             <End Role="Advertisement" EntitySet="Advertisements" />
           </AssociationSet>
-          <AssociationSet Name="FK__Advertise__categ__398D8EEE" Association="Self.FK__Advertise__categ__398D8EEE">
+          <AssociationSet Name="FK__Advertise__categ__29572725" Association="Self.FK__Advertise__categ__29572725">
             <End Role="Category" EntitySet="Categories" />
             <End Role="AdvertisementDetails" EntitySet="AdvertisementDetails" />
           </AssociationSet>
@@ -449,6 +484,17 @@
             <End Role="user" EntitySet="users" />
             <End Role="Post" EntitySet="Posts" />
           </AssociationSet>
+          <FunctionImport Name="usp_Category_delete">
+            <Parameter Name="catname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Category_insert">
+            <Parameter Name="categoryID" Mode="In" Type="Int32" />
+            <Parameter Name="catname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Category_update">
+            <Parameter Name="oldcatname" Mode="In" Type="String" />
+            <Parameter Name="newCatName" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -480,6 +526,7 @@
                 <ScalarProperty Name="updatedDate" ColumnName="updatedDate" />
                 <ScalarProperty Name="dueDate" ColumnName="dueDate" />
                 <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="adImage" ColumnName="adImage" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -521,6 +568,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="CMSModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="feed_date" ColumnName="feed_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="CMSModel.Post">
               <MappingFragment StoreEntitySet="Post">
@@ -549,6 +607,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_Category_delete" FunctionName="CMSModel.Store.usp_Category_delete" />
+          <FunctionImportMapping FunctionImportName="usp_Category_insert" FunctionName="CMSModel.Store.usp_Category_insert" />
+          <FunctionImportMapping FunctionImportName="usp_Category_update" FunctionName="CMSModel.Store.usp_Category_update" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

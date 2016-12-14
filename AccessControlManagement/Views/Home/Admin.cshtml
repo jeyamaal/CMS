@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+}
+
+<h2>Admin</h2>
+
+
+@model AccessControlManagement.Models.user
+
+
+
+
+
+@{
+
+    ViewBag.Title = "After Login";
+    Layout = "~/Views/Shared/_Admin_layout.cshtml";
+
+}
+
+
+
+
+
+
+<h2>AfterLogin</h2>
+
+@if (Session["LogedUserFullname"] != null)
+{
+    <text>
+        Welcome @Session["LogedUserFullname"].ToString()
+    </text>
+
+    <br>
+    <br>
+    <text>
+        Your email is @Html.DisplayFor(model => model.email_id)
+    </text>
+    <br>
+    <br>
+
+    <text>
+        Your username is @Html.DisplayFor(model => model.username)
+    </text>
+
+
+
+}
+

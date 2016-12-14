@@ -12,6 +12,8 @@ namespace AccessControlManagement.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class CMSEntities : DbContext
     {
@@ -31,7 +33,56 @@ namespace AccessControlManagement.Models
         public virtual DbSet<ArticleHasAd> ArticleHasAds { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<user> users { get; set; }
+    
+        public virtual int usp_Advertisement_statusUpdate(Nullable<int> aDID, string aDStatus)
+        {
+            var aDIDParameter = aDID.HasValue ?
+                new ObjectParameter("aDID", aDID) :
+                new ObjectParameter("aDID", typeof(int));
+    
+            var aDStatusParameter = aDStatus != null ?
+                new ObjectParameter("ADStatus", aDStatus) :
+                new ObjectParameter("ADStatus", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Advertisement_statusUpdate", aDIDParameter, aDStatusParameter);
+        }
+    
+        public virtual int usp_Category_delete(string catname)
+        {
+            var catnameParameter = catname != null ?
+                new ObjectParameter("catname", catname) :
+                new ObjectParameter("catname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Category_delete", catnameParameter);
+        }
+    
+        public virtual int usp_Category_insert(Nullable<int> categoryID, string catname)
+        {
+            var categoryIDParameter = categoryID.HasValue ?
+                new ObjectParameter("categoryID", categoryID) :
+                new ObjectParameter("categoryID", typeof(int));
+    
+            var catnameParameter = catname != null ?
+                new ObjectParameter("catname", catname) :
+                new ObjectParameter("catname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Category_insert", categoryIDParameter, catnameParameter);
+        }
+    
+        public virtual int usp_Category_update(string oldcatname, string newCatName)
+        {
+            var oldcatnameParameter = oldcatname != null ?
+                new ObjectParameter("oldcatname", oldcatname) :
+                new ObjectParameter("oldcatname", typeof(string));
+    
+            var newCatNameParameter = newCatName != null ?
+                new ObjectParameter("newCatName", newCatName) :
+                new ObjectParameter("newCatName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Category_update", oldcatnameParameter, newCatNameParameter);
+        }
     }
 }

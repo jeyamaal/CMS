@@ -1,0 +1,315 @@
+﻿@model AccessControlManagement.Models.Post
+<script src="~/Scripts/jquery-1.11.3.min.js">
+</script>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<link href="~/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="~/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+
+<script src="https://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.js"></script>
+<link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />  
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_PostLayout.cshtml";
+}
+
+<style type="text/css">
+    .form-style-5 {
+        max-width: 500px;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        margin: 10px auto;
+        padding: 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+
+        .form-style-5 fieldset {
+            border: none;
+        }
+
+        .form-style-5 legend {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .form-style-5 label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-style-5 input[type="text"],
+        .form-style-5 input[type="date"],
+        .form-style-5 input[type="datetime"],
+        .form-style-5 input[type="email"],
+        .form-style-5 input[type="number"],
+        .form-style-5 input[type="search"],
+        .form-style-5 input[type="time"],
+        .form-style-5 input[type="url"],
+        .form-style-5 textarea,
+        .form-style-5 select {
+            font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+            background: rgba(255,255,255,.1);
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            margin: 0;
+            outline: 0;
+            padding: 7px;
+            width: 100%;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            background-color: #e8eeef;
+            color: #8a97a0;
+            -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+            margin-bottom: 30px;
+        }
+
+            .form-style-5 input[type="text"]:focus,
+            .form-style-5 input[type="date"]:focus,
+            .form-style-5 input[type="datetime"]:focus,
+            .form-style-5 input[type="email"]:focus,
+            .form-style-5 input[type="number"]:focus,
+            .form-style-5 input[type="search"]:focus,
+            .form-style-5 input[type="time"]:focus,
+            .form-style-5 input[type="url"]:focus,
+            .form-style-5 textarea:focus,
+            .form-style-5 select:focus {
+                background: #d2d9dd;
+            }
+
+        .form-style-5 select {
+            -webkit-appearance: menulist-button;
+            height: 35px;
+        }
+
+        .form-style-5 .number {
+            background: #1abc9c;
+            color: #fff;
+            height: 30px;
+            width: 30px;
+            display: inline-block;
+            font-size: 1em;
+            margin-right: 4px;
+            line-height: 30px;
+            text-align: center;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+            border-radius: 15px 15px 15px 0px;
+        }
+
+        .form-style-5 input[type="submit"],
+        .form-style-5 input[type="button"] {
+            position: relative;
+            display: block;
+            padding: 3px 3px 3px 3px;
+            color: #FFF;
+            background: #1abc9c;
+            font-size: 18px;
+            text-align: center;
+            font-style: normal;
+            width: 30%;
+            border: 1px solid #16a085;
+            border-width: 1px 1px 3px;
+            margin-bottom: 10px;
+            margin-left: 30px;
+        }
+
+            .form-style-5 input[type="submit"]:hover,
+            .form-style-5 input[type="button"]:hover {
+                background: #109177;
+            }
+
+            input[type="text"] {
+    width: 200px;
+}
+</style>
+<div class="form-style-5">
+    @*<form>*@
+        <fieldset>
+            <legend><span class="number">P</span> Create Post</legend>
+
+            @using (Html.BeginForm("Create", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control"} })
+                        
+                    </div>
+                </div>
+
+                <div class="form-group">
+        @Html.LabelFor(model => model.Category.category_name, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
+            @Html.DropDownList("list", null, htmlAttributes: new { @class = "form-control" })
+
+        </div>
+    </div>
+
+                <div class="form-group">
+                    @Html.Label("Publish Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.ValidationMessageFor(model => model.post_date, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(model => model.post_date, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here...", type = "date" })                        
+                    </div>
+                </div>
+            <br/>
+                <div class="form-group">
+                    @Html.Label("Content", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        @Html.ValidationMessageFor(model => model.post_description, "", new { @class = "text-danger" })
+                        @Html.TextAreaFor(model => model.post_description, new { @class = "form-control", @cols = 100, @rows = 10, id = "description" })                        
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.image, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.image, htmlAttributes: new { Type="file" })
+
+                            @Html.ValidationMessageFor(model => model.image, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+
+                <div class="form-group">
+                    <div>
+                        <input type="submit" id="btnCreate" value="Send Request" @*onclick="Validate(this, event);"*@ />
+                    </div>
+                </div>
+            
+            }
+            
+    </fieldset>
+ @*</form>*@
+</div>
+
+            @*<br />
+            <br /><br />
+            <div class="container">
+                <div class="col-md-8 col-sm-offset-2">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" style="font-size:20px; color:#ffffff">
+                            Create Post
+                        </div>
+
+                        <div class="panel-body">
+                            @using (Html.BeginForm("Create", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-horizontal" style="margin-left: 10em;">
+
+
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Category.category_name, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.DropDownList("catergoryList", ViewBag.catergoryListName as SelectList, "Select Catergory", htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.post_date, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(model => model.post_date, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here...", type = "date" })
+                                            @Html.ValidationMessageFor(model => model.post_date, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.post_description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.TextAreaFor(model => model.post_description, new { @class = "form-control", @cols = 100, @rows = 10, id = "description" })
+                                            @Html.ValidationMessageFor(model => model.post_description, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                            @Html.LabelFor(model => model.image, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.image, htmlAttributes: new { Type="file" })
+
+                                                @Html.ValidationMessageFor(model => model.image, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Send Request" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>*@
+
+
+<script type="text/javascript">
+   
+
+    //Sweet alert funtion for Confirmation of Send Request
+    //function Validate(ctl, event) {
+    //    event.preventDefault();
+    //    swal({
+    //        title: "Do you want to save it?",
+    //        text: "Please check Information before Submiting!",
+    //        type: "warning",
+    //        showCancelButton: true,
+    //        confirmButtonColor: "#DD6B55",
+    //        confirmButtonText: "Save",
+    //        cancelButtonText: "Cancel",
+    //        closeOnConfirm: false,
+    //        closeOnCancel: false
+    //    },
+    //        function (isConfirm) {
+    //            if (isConfirm) {
+    //                //if (validateData() == true) {
+    //                    $("#CreateForm").submit();
+    //                    swal("Success", "You have Cancelled Form Submission!", "error");
+    //                //}
+    //            } else {
+    //                swal("Cancelled", "You have Cancelled Form Submission!", "error");
+    //            }
+    //        });
+    //}
+
+
+    //to initialize date picker
+    $(function () { // will trigger when the document is ready
+        $('.datepicker').datepicker(); //Initialise any date pickers
+    });
+
+</script>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

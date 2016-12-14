@@ -1,8 +1,20 @@
-﻿@model IEnumerable<AccessControlManagement.Models.AdvertisementDetail>
+﻿@*@model IEnumerable<AccessControlManagement.Models.AdvertisementDetail>*@
+
+@model IEnumerable<object>
+@{
+
+    List<AccessControlManagement.Models.user> userss = Model.ToList()[0] as List<AccessControlManagement.Models.user>;
+    List<AccessControlManagement.Models.AdvertisemetsAccess> advt = Model.ToList()[1] as List<AccessControlManagement.Models.AdvertisemetsAccess>;
+
+
+}
+
 
 @{
-    ViewBag.Title = "Main page of Advertisement";
+    Layout = "~/Views/Shared/_Advertisement_Layout.cshtml";
 }
+
+
 
 <h2>Index</h2>
 
@@ -36,7 +48,7 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in advt)
     {
         <tr>
             <td>
@@ -46,9 +58,35 @@
             <td>
                 @Html.DisplayFor(modelItem => item.wantToPostDate)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.status)
+            </td>*@
+            <td>
+            @{
+                var status = item.status;
+                if (status == "Accepted")
+                {
+                    <b style="color: forestgreen"> @Html.DisplayFor(modelItem => item.status)</b>
+                }
+
+                else if (status == "Pending")
+                {
+                    <b style="color: goldenrod"> @Html.DisplayFor(modelItem => item.status) </b>
+                }
+                else if (status == "Reject")
+                {
+                    <b style="color: darkred"> @Html.DisplayFor(modelItem => item.status) </b>
+                }
+                else if (status == "Request for Renew")
+                {
+                    <b style="color: darkred"> @Html.DisplayFor(modelItem => item.status) </b>
+                }
+                
+            }
+
+
             </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.postedDate)
             </td>
@@ -63,10 +101,10 @@
             </td>
             <td>
                 @Html.ActionLink("Update", "Edit", new { id = item.ADD_id }) |
-                @Html.ActionLink("View", "Details", new { id = item.ADD_id }) |
+               
                 @Html.ActionLink("Delete", "Delete", new { id = item.ADD_id })
             </td>
-        </tr>
+        </tr>   
     }
 
 </table>
