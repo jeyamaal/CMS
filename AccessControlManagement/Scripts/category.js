@@ -5,7 +5,7 @@
         var new_category_name = $("#txt-add-category-name").val();
         console.log("New Catgeory name: " + new_category_name);
 
-        $.post(window.location.pathname + "/Categories/AddNewCategory", {
+        $.post("/Categories/AddNewCategory", {
             category_name: new_category_name
         }, function (result) {
             $("#load-view").load("/Categories/_Setting", function () {
@@ -72,7 +72,7 @@
 
         console.log(category_name + " name of the cat , " + new_category_name + " new cat name");
 
-        $.post(window.location.pathname + "/Categories/Update", {
+        $.post("/Categories/Update", {
             oldCategoryName: category_name,
             newCategoryName: new_category_name
         }, function (result) {
@@ -109,7 +109,7 @@
         console.log(cid);
 
         $.ajax({
-            url:window.location.pathname +  "/Categories/GetCategoryName",
+            url: "/Categories/GetCategoryName",
             data: {
                 categoryID: cid
             },
@@ -173,7 +173,7 @@
         console.log(type);
         if (type == "Rejected") {
             $.ajax({
-                url: window.location.pathname + "/Categories/ChangeAdStatus",
+                url: "/Categories/ChangeAdStatus",
                 data: {
                     adID: aid1,
                     statusAD: "Reject"
@@ -217,7 +217,7 @@
         }
         else if (type == "Accepted") {
             $.ajax({
-                url: window.location.pathname + "/Categories/ChangeAdStatus",
+                url: "/Categories/ChangeAdStatus",
                 data: {
                     adID: aid1,
                     statusAD: "Accept"
@@ -302,7 +302,7 @@
         }, 
         function () {
             $.ajax({
-                url: window.location.pathname + "/Categories/RequestExpiraryDate",
+                url: "/Categories/RequestExpiraryDate",
                 data: {
                     advertisementID: reAD
                 },
