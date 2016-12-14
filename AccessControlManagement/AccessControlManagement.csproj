@@ -283,6 +283,7 @@
     <Content Include="Resources\PostImages\g1.jpg" />
     <Content Include="Resources\PostImages\g4.jpg" />
     <Content Include="Resources\PostImages\images %285%29.jpg" />
+    <Content Include="Resources\slimframeworkicon.png" />
     <Content Include="Scripts\alertify.js" />
     <Content Include="Scripts\alertify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
