@@ -10,13 +10,21 @@ namespace AccessControlManagement.Controllers
 {
     public class RegisterController : Controller
     {
-
+        /// <summary>
+        ///To get the Register page via Get method 
+        ///
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Register()
         {
             return View();
         }
 
-
+        /// <summary>
+        /// Pass the registered user deatils to database
+        /// </summary>
+        /// <param name="u">User details entered by user</param>
+        /// <returns>It return the Register page</returns>
 
         // GET: Register
         [HttpPost]
