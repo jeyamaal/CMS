@@ -1,88 +1,40 @@
-﻿@model AccessControlManagement.Models.AdvertisementDetail
+﻿
+@model IEnumerable<object>
+@{
+
+    List<AccessControlManagement.Models.user> userss = Model.ToList()[0] as List<AccessControlManagement.Models.user>;
+    List<AccessControlManagement.Models.AdvertisemetsAccess> advt = Model.ToList()[1] as List<AccessControlManagement.Models.AdvertisemetsAccess>;
+
+
+}
 
 @{
-    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Advertisement_Layout.cshtml";
 }
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this Advertisement?</h3>
 <div>
     <h4>Delete the advertisement</h4>
     <hr />
     <dl class="dl-horizontal">
+
+
+@foreach (var item in advt)
+{
+
         <dt>
          Title of the advertisement
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.title)
+            @Html.DisplayFor(modelItem => item.title)
         </dd>
 
-        <dt>
-         Category
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.category)
-        </dd>
-
-        <dt>
-           Content 
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.description)
-        </dd>
-
-        <dt>
-          Wanted to post the date 
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.wantToPostDate)
-        </dd>
-
-        <dt>
-          Status
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.status)
-        </dd>
-
-        <dt>
-         Posted Date 
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.postedDate)
-        </dd>
-
-        <dt>
-         Updated Date
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.updatedDate)
-        </dd>
-
-        <dt>
-           Due Date
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.dueDate)
-        </dd>
-
-        <dt>
-        Category
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Category1.category_name)
-        </dd>
-
+        
+        
+}
     </dl>
 
     @using (Html.BeginForm()) {

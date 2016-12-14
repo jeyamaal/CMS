@@ -331,13 +331,12 @@
     <Content Include="Views\ViewAdvertisement\Index.cshtml" />
     <Content Include="Views\Advertisement\Create.cshtml" />
     <Content Include="Views\Advertisement\Delete.cshtml" />
-    <Content Include="Views\Advertisement\Details.cshtml" />
-    <Content Include="Views\Advertisement\Edit.cshtml" />
     <Content Include="Views\Advertisement\Index.cshtml" />
     <Content Include="Views\Shared\_Advertisement_Layout.cshtml" />
     <Content Include="Views\Sweet\Alert.cshtml" />
     <Content Include="Views\TinyMCESampleJQuery\Index.cshtml" />
     <Content Include="Views\ViewAd\Index.cshtml" />
+    <Content Include="Views\Advertisement\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
