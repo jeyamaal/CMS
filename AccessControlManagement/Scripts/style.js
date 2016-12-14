@@ -4,7 +4,7 @@
 
         $(this).click(function () {
 
-            if (index != 3) {
+            if (index != 4) {
                 $("#home-link").css('color', '');
                 $("#home-link").css('background-color', '');
 
@@ -28,6 +28,8 @@
                             //Home
                             $("#nav-place").text("HOME ");
 
+                            $(".add-new-btn").hide();
+
                             $("#header").fadeTo("1000", 1, function () { });
                             $("#load-view").load("/Categories/Index/0", function () {
                                 $("#loading-place").removeClass("still-loading");
@@ -43,6 +45,8 @@
                             $("#nav-place").html("");
                             $("#nav-place").text("Advertisment");
 
+                            $(".add-new-btn").hide();
+
                             $("#load-view").load("/Categories/_Advertisement", function () {                                
                                 //CategorySaveChanges();
                                 $("#header").fadeTo("1000", 1, function () { });
@@ -54,12 +58,34 @@
 
                             });
                         }
-                        else if (index == 2)
+
+                        else if (index == 2) {
+                            //Posts
+                            $("#nav-place").html("");
+                            $("#nav-place").text("Writer Post");
+                            $(".add-new-btn").hide();
+                            $("#load-view").load("/Categories/_Post", function () {
+                                
+                                CategorySaveChanges();
+                               
+                                $("#header").fadeTo("1000", 1, function () { });
+                                $("#load-view").fadeTo("1000", 1, function () {
+                                    $("#loading-place").removeClass("still-loading");
+                                    $(".nav-links").css("pointer-events", "");
+                                });
+                            }).error(function (a) {
+
+                            });
+                        }
+
+                        else if (index == 3)
                         {
                             //Category
                             $("#nav-place").html("");
                             $("#nav-place").text("Category");
-                            
+
+                            $(".add-new-btn").show();
+
                             $("#load-view").load("/Categories/_Setting", function () {
                                 $("#nav-time").after("<button id='newButton' data-toggle='modal' class='add-new-btn btn btn-default btn-lg'><i class='fa fa-plus-circle fa-2x'></i></button>");
                                 CategorySaveChanges();
@@ -74,7 +100,7 @@
 
                             });
                         }
-                        else if(index == 3)
+                        else if(index == 4)
                         {
                             // Profile
                             $("#load-view").load("/Home/ProfileView", function () {

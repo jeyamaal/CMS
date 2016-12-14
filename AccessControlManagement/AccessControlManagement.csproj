@@ -168,6 +168,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoryPost.cs" />
     <Compile Include="Models\CategoryUsers.cs" />
     <Compile Include="Models\CMSModel.Context.cs">
       <AutoGen>True</AutoGen>

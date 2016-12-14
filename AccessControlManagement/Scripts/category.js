@@ -411,26 +411,59 @@ function DropDownValueUser() {
     var selectedUser = e.options[e.selectedIndex].value;
     console.log(selectedUser);
 
+    $.ajax({
+        url: window.mainURL + "/Categories/GetDropDownValueUser",
+
+        data: { user_name: selectedUser },
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            if (data["Error"] == "Yes") {
+                $('#setting-table-created-post').hide();
+                $("#table-display").append(
+                    $("<div class='col-sm-12' style='font-size:small; text-align: center'></div>").append(
+                        $("<label>Error Loading Details..</label>"),
+                        $("<hr/>")
+                    )
+                );                
+            } else {
+                if (data["Empty"] == "0")
+                {
+                    drawTableForGroupList(data["details"]);
+                }
+                else
+                {
+                    $("#tableStickyNote").hide();
+                    $("#sticky-note-display").append(
+                        $("<div class='col-sm-12' style='font-size:small; text-align: center'></div>").append(
+                            $("<label>No Trips</label>"),
+                            $("<hr/>")
+                        )
+                    );
+                }
+            }
+        },
+        error: function (e) {
+        }
+    });
+
     $.post("/Categories/GetDropDownValueUser", {
         user_name: selectedUser
     }, function (result) {
         console.log(result);
 
-        $("#load-view").load("/Categories/Index/", function () {
-            CategorySaveChanges();
+        if (result != null) {
+            drawTable(result, "");
+        }
+        else if (result == "No post has been written by " + selectedUser) {
+            drawTable(null, "No post written to show");
+        }
+        else {
+            drawTable(null, "No post has been written to show");
+        }
 
-            if (result != null)
-            {
-                drawTable(result, "");
-            }
-            else if (result == "No post has been written by " + selectedUser)
-            {
-                drawTable(null, "No post written to show");
-            }
-            else
-            {
-                drawTable(null, "No post has been written to show");
-            }
+        $("#load-view").load("/Categories/_Post/", function () {
+            CategorySaveChanges();  
         });
         //$("#load-view").load("/Categories/Index", function () {
             //console.log()
@@ -452,6 +485,9 @@ function DropDownValueUser() {
 }
 
 function drawTable(data, message) {
+
+    $('#setting-table-created-post thead tr').show();
+
     if (data != null)
     {
         for (var i = 0; i < data.length; i++) {
@@ -471,8 +507,8 @@ function drawRow(rowData) {
     var row = $("<tr />");
     //this will append tr element to table.
     $("#setting-table-created-post").append(row);
-    row.append($("<td>" + rowData.Category.category_name + "</td>"));
-    row.append($("<td>" + rowData.post_date + "</td>"));
+    row.append($("<td>" + rowData.categoryName + "</td>"));
+    row.append($("<td>" + rowData.date + "</td>"));
     row.append($("<td>" + rowData.title + "</td>"));
     row.append($("<td><button id='delete-btn-category-@item.category_id' type='button' class='btn btn-success' data-toggle='modal' data-target='#delete-modal-category-@item.category_id'><i class='fa fa-eye' aria-hidden='true'></i></button>" +
                      "<button id='delete-btn-category-@item.category_id' type='button' class='btn btn-success' data-toggle='modal' data-target='#delete-modal-category-@item.category_id'><i class='fa fa-eye' aria-hidden='true'></i></button>" +
