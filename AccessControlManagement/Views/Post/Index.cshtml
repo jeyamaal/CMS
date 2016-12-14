@@ -5,6 +5,7 @@
 
     List<AccessControlManagement.Models.user> userss = Model.ToList()[0] as List<AccessControlManagement.Models.user>;
     List<AccessControlManagement.Models.PostAccess> postAccess = Model.ToList()[1] as List<AccessControlManagement.Models.PostAccess>;
+    List<AccessControlManagement.Models.AdvertisementDetail> advert = Model.ToList()[2] as List<AccessControlManagement.Models.AdvertisementDetail>;
 
 
 }
@@ -197,7 +198,7 @@
     }
     <div class="dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-            Dropdown Example
+            Catergories
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
@@ -207,7 +208,10 @@
             <li><a href="@Url.Action("Others", "Post")">Others</a></li>
         </ul>
     </div>
+    <p></p>
+    <br />
     <table class="table table-hover">
+        
         <tr>
             <th>
                 Post Number

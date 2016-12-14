@@ -3,6 +3,8 @@
 
     List<AccessControlManagement.Models.user> userss = Model.ToList()[0] as List<AccessControlManagement.Models.user>;
     List<AccessControlManagement.Models.PostAccess> postAccess = Model.ToList()[1] as List<AccessControlManagement.Models.PostAccess>;
+    List<AccessControlManagement.Models.AdvertisementDetail> advert = Model.ToList()[2] as List<AccessControlManagement.Models.AdvertisementDetail>;
+
 
 
 }
@@ -68,7 +70,7 @@
     }
 
 
-    <div id="nav-area" class="panel panel-default pull-left">
+    @*<div id="nav-area" class="panel panel-default pull-left">
         <div class="panel-body">
             <div class="row">
                 <div id="home-link" class="panel panel-default pull-left nav-clicked nav-links" data-toggle="tooltip" data-placement="left" title="Home">
@@ -93,12 +95,12 @@
             </div>
 
             <div class="row">
-                <div id="profile-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Profile" @*onclick="window.location.href='@Url.Action("ProfileView", "Home")'"*@>
-                    <div class="panel-body">
+                <div id="profile-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Profile" @*onclick="window.location.href='@Url.Action("ProfileView", "Home")'">
+                    @*<div class="panel-body">
                         <i class="fa fa-user fa-2x" aria-hidden="true"></i>
                     </div>
                 </div>
-            </div>
+            </div>*@
 
             @*<div class="row">
                     <div id="exit-link" class="panel panel-default pull-left effect-1 effect-2 nav-links" data-toggle="tooltip" data-placement="left" title="Logout">
@@ -106,9 +108,9 @@
                             <i class="fa fa-minus-circle fa-2x"></i>
                         </div>
                     </div>
-                </div>*@
+                </div>
         </div>
-    </div>
+    </div>*@
 
     <div id="site-area" class="panel panel-default">
         <div class="panel-body" style="padding-bottom: 0px;">
@@ -117,14 +119,14 @@
                 <div id="site-main-area" class="col-sm-11 panel panel-default">
                     <div id="loading-place" class="panel-body">
                         <div class="row">
-                            <div id="header" class="col-sm-12 panel panel-default" style="font-family:Baskerville Old Face; color:white; background-color:#0B0758; margin-bottom: 0px;">
+                            @*<div id="header" class="col-sm-12 panel panel-default" style="font-family:Baskerville Old Face; color:white; background-color:#0B0758; margin-bottom: 0px;">
                                 <div class="panel-body">
                                     <label id="nav-place"></label>
                                     <div id="nav-time">
                                         <label style="font-family: sans-serif"></label>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                         <div class="row">
                             <div id="load-view" class="col-sm-12">

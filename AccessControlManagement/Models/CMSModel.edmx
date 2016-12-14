@@ -23,12 +23,13 @@
           <Property Name="title" Type="varchar(max)" />
           <Property Name="category" Type="varchar(max)" />
           <Property Name="description" Type="varchar(max)" />
-          <Property Name="wantToPostDate" Type="datetime" />
+          <Property Name="wantToPostDate" Type="date" />
           <Property Name="status" Type="varchar" MaxLength="50" />
-          <Property Name="postedDate" Type="datetime" />
-          <Property Name="updatedDate" Type="datetime" />
-          <Property Name="dueDate" Type="datetime" />
+          <Property Name="postedDate" Type="date" />
+          <Property Name="updatedDate" Type="date" />
+          <Property Name="dueDate" Type="date" />
           <Property Name="category_id" Type="int" />
+          <Property Name="adImage" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -263,13 +264,14 @@
           <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="category" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="wantToPostDate" Type="DateTime" Precision="3" />
+          <Property Name="wantToPostDate" Type="DateTime" Precision="0" />
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="postedDate" Type="DateTime" Precision="3" />
-          <Property Name="updatedDate" Type="DateTime" Precision="3" />
-          <Property Name="dueDate" Type="DateTime" Precision="3" />
+          <Property Name="postedDate" Type="DateTime" Precision="0" />
+          <Property Name="updatedDate" Type="DateTime" Precision="0" />
+          <Property Name="dueDate" Type="DateTime" Precision="0" />
           <Property Name="category_id" Type="Int32" />
           <NavigationProperty Name="Category1" Relationship="Self.FK__Advertise__categ__29572725" FromRole="AdvertisementDetails" ToRole="Category" />
+          <Property Name="adImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -472,7 +474,7 @@
           </AssociationSet>
           <EntitySet Name="Feedbacks" EntityType="CMSModel.Feedback" />
           <FunctionImport Name="usp_Category_delete">
-            <Parameter Name="catname" Mode="In" Type="String" />
+          <Parameter Name="catname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="usp_Category_insert">
             <Parameter Name="categoryID" Mode="In" Type="Int32" />
@@ -513,6 +515,7 @@
           <EntitySetMapping Name="AdvertisementDetails">
             <EntityTypeMapping TypeName="CMSModel.AdvertisementDetail">
               <MappingFragment StoreEntitySet="AdvertisementDetails">
+                <ScalarProperty Name="adImage" ColumnName="adImage" />
                 <ScalarProperty Name="ADD_id" ColumnName="ADD_id" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="category" ColumnName="category" />

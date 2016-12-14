@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\Project - 22-10-2016-Now Work on this\AccessControlManagement\Models\CMSModel.edmx'. 
+﻿// T4 code generation is enabled for model 'E:\Backup Project\Project - 15-12-2016-V2\AccessControlManagement\Models\CMSModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

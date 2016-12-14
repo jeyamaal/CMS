@@ -63,8 +63,23 @@ namespace AccessControlManagement.Controllers
                                   where c.user_id == userId
                                   select c).ToList();
 
+                    string[] filePaths = Directory.GetFiles(Server.MapPath("~/Resources/Advetrisement_Image/"));
+                    List<AdvertisementDetail> files = new List<AdvertisementDetail>();
+                    foreach (string filePath in filePaths)
+                    {
+                        string fileName = Path.GetFileName(filePath);
+                        files.Add(new AdvertisementDetail
+                        {
+
+                            title = fileName.Split('.')[0].ToString(),
+                            adImage = "../Resources/Advetrisement_Image/" + fileName
+                        });
+                    }
+
+
                     postAccessList.Add(usermm);
                     postAccessList.Add(myPost);
+                    postAccessList.Add(files);
                     return View(postAccessList);
                 }
 
@@ -419,32 +434,9 @@ namespace AccessControlManagement.Controllers
                 return View("Create");
             }
 
-            //try
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        db.Entry(employee).State = System.Data.Entity.EntityState.Modified;
-            //        db.SaveChanges();
-            //        return RedirectToAction("Index");
-            //    }
-            //    return View(employee);
-            //}
-
-            //catch
-            //{
-            //    return View();
-            //}
+           
         }
-        //public ActionResult Edit(int id)
-        //{
-        //    if (id == null)
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    Employee employee = db.Employees.Find(id);
-
-        //    if (employee == null)
-        //        return HttpNotFound();
-        //    return View(employee);
-        //}
+        
 
         /// <summary>
         /// Method for Viewing Details page of Posts
@@ -480,18 +472,56 @@ namespace AccessControlManagement.Controllers
                 int loginId = int.Parse(Session["LogedUserID"].ToString());
                 user = database.users.Find(loginId);
                 TempData["User"] = user.username;
-                
-                //To display the posts
+
                 var postList = (from p in database.Posts where p.activity_log.Equals("Accepted") orderby p.post_id ascending select p).ToList();
 
-                //To display the comments for posts
-                var commentlist = (from c in database.Comments select c).ToList();
+                var postDetails = (from c in database.Posts
+                                   where (c.activity_log.Equals("Accepted")) && (c.user_id == loginId)
+                                   orderby c.post_id ascending
+                                   select new PostAccess
+                                   {
+                                       post_id = c.post_id,
+                                       user_id = c.user_id,
+                                       title = c.title,
+                                       category_id = c.category_id,
+                                       post_description = c.post_description,
+                                       post_date = c.post_date,
+                                       activity_log = c.activity_log,
+                                       image = c.image,
+                                       Category = c.Category,
+                                       user = c.user
+
+                                   });
+                var myPost = postDetails.ToList();
+
+                string[] filePaths = Directory.GetFiles(Server.MapPath("~/Resources/Advetrisement_Image/"));
+                List<AdvertisementDetail> files = new List<AdvertisementDetail>();
+                foreach (string filePath in filePaths)
+                {
+                    string fileName = Path.GetFileName(filePath);
+                    files.Add(new AdvertisementDetail
+                    {
+
+                        title = fileName.Split('.')[0].ToString(),
+                        adImage = "../Resources/Advetrisement_Image/" + fileName
+                    });
+                }
+
+                int userId = int.Parse(Session["LogedUserID"].ToString());
+
+                var usermm = (from c in database.users
+                              where c.user_id == userId
+                              select c).ToList();
 
                 List<Object> myModel = new List<object>();
-                myModel.Add(postList);
-                myModel.Add(commentlist);
+                myModel.Add(usermm);
+                myModel.Add(myPost);
+                myModel.Add(files);
+                
 
                 return View(myModel);
+
+
             }
 
             return View();
@@ -540,9 +570,58 @@ namespace AccessControlManagement.Controllers
         {
             if (Session["LogedUserID"] != null)
             {
+                user user = new user();
+                int loginId = int.Parse(Session["LogedUserID"].ToString());
+                user = database.users.Find(loginId);
+                TempData["User"] = user.username;
+
+                
+
+                var postDetails = (from c in database.Posts
+                                   where (c.activity_log.Equals("Accepted")) && (c.user_id == loginId)
+                                   orderby c.post_id ascending
+                                   select new PostAccess
+                                   {
+                                       post_id = c.post_id,
+                                       user_id = c.user_id,
+                                       title = c.title,
+                                       category_id = c.category_id,
+                                       post_description = c.post_description,
+                                       post_date = c.post_date,
+                                       activity_log = c.activity_log,
+                                       image = c.image,
+                                       Category = c.Category,
+                                       user = c.user
+
+                                   });
+                var myPost = postDetails.ToList();
+
+                string[] filePaths = Directory.GetFiles(Server.MapPath("~/Resources/Advetrisement_Image/"));
+                List<AdvertisementDetail> files = new List<AdvertisementDetail>();
+                foreach (string filePath in filePaths)
+                {
+                    string fileName = Path.GetFileName(filePath);
+                    files.Add(new AdvertisementDetail
+                    {
+
+                        title = fileName.Split('.')[0].ToString(),
+                        adImage = "../Resources/Advetrisement_Image/" + fileName
+                    });
+                }
+
                 int userId = int.Parse(Session["LogedUserID"].ToString());
-                var postList = (from p in database.Posts where (p.activity_log.Equals("Accepted")) && (p.user_id==userId) orderby p.post_id ascending select p).ToList();
-                return View(postList);
+
+                var usermm = (from c in database.users
+                              where c.user_id == userId
+                              select c).ToList();
+
+                List<Object> myModel = new List<object>();
+                myModel.Add(usermm);
+                myModel.Add(myPost);
+                myModel.Add(files);
+
+
+                return View(myModel);
             }
             return View();
         }
@@ -603,9 +682,59 @@ namespace AccessControlManagement.Controllers
         {
             if (Session["LogedUserID"] != null)
             {
+              
+                user user = new user();
+                int loginId = int.Parse(Session["LogedUserID"].ToString());
+                user = database.users.Find(loginId);
+                TempData["User"] = user.username;
+
+
+
+                var postDetails = (from c in database.Posts
+                                   where (c.activity_log.Equals("Accepted")) && (c.Category.category_name.Equals("Education"))
+                                   orderby c.post_id ascending
+                                   select new PostAccess
+                                   {
+                                       post_id = c.post_id,
+                                       user_id = c.user_id,
+                                       title = c.title,
+                                       category_id = c.category_id,
+                                       post_description = c.post_description,
+                                       post_date = c.post_date,
+                                       activity_log = c.activity_log,
+                                       image = c.image,
+                                       Category = c.Category,
+                                       user = c.user
+
+                                   });
+                var myPost = postDetails.ToList();
+
+                string[] filePaths = Directory.GetFiles(Server.MapPath("~/Resources/Advetrisement_Image/"));
+                List<AdvertisementDetail> files = new List<AdvertisementDetail>();
+                foreach (string filePath in filePaths)
+                {
+                    string fileName = Path.GetFileName(filePath);
+                    files.Add(new AdvertisementDetail
+                    {
+
+                        title = fileName.Split('.')[0].ToString(),
+                        adImage = "../Resources/Advetrisement_Image/" + fileName
+                    });
+                }
+
                 int userId = int.Parse(Session["LogedUserID"].ToString());
-                var postList = (from p in database.Posts where (p.activity_log.Equals("Accepted")) && (p.Category.category_name.Equals("Education")) orderby p.post_id ascending select p).ToList();
-                return View(postList);
+
+                var usermm = (from c in database.users
+                              where c.user_id == userId
+                              select c).ToList();
+
+                List<Object> myModel = new List<object>();
+                myModel.Add(usermm);
+                myModel.Add(myPost);
+                myModel.Add(files);
+
+
+                return View(myModel);
             }
 
             else
@@ -618,9 +747,59 @@ namespace AccessControlManagement.Controllers
         {
             if (Session["LogedUserID"] != null)
             {
+
+                user user = new user();
+                int loginId = int.Parse(Session["LogedUserID"].ToString());
+                user = database.users.Find(loginId);
+                TempData["User"] = user.username;
+
+
+
+                var postDetails = (from c in database.Posts
+                                   where (c.activity_log.Equals("Accepted")) && (c.Category.category_name.Equals("Baby Care"))
+                                   orderby c.post_id ascending
+                                   select new PostAccess
+                                   {
+                                       post_id = c.post_id,
+                                       user_id = c.user_id,
+                                       title = c.title,
+                                       category_id = c.category_id,
+                                       post_description = c.post_description,
+                                       post_date = c.post_date,
+                                       activity_log = c.activity_log,
+                                       image = c.image,
+                                       Category = c.Category,
+                                       user = c.user
+
+                                   });
+                var myPost = postDetails.ToList();
+
+                string[] filePaths = Directory.GetFiles(Server.MapPath("~/Resources/Advetrisement_Image/"));
+                List<AdvertisementDetail> files = new List<AdvertisementDetail>();
+                foreach (string filePath in filePaths)
+                {
+                    string fileName = Path.GetFileName(filePath);
+                    files.Add(new AdvertisementDetail
+                    {
+
+                        title = fileName.Split('.')[0].ToString(),
+                        adImage = "../Resources/Advetrisement_Image/" + fileName
+                    });
+                }
+
                 int userId = int.Parse(Session["LogedUserID"].ToString());
-                var postList = (from p in database.Posts where (p.activity_log.Equals("Accepted")) && (p.Category.category_name.Equals("Baby Care")) orderby p.post_id ascending select p).ToList();
-                return View(postList);
+
+                var usermm = (from c in database.users
+                              where c.user_id == userId
+                              select c).ToList();
+
+                List<Object> myModel = new List<object>();
+                myModel.Add(usermm);
+                myModel.Add(myPost);
+                myModel.Add(files);
+
+
+                return View(myModel);
             }
 
             else
@@ -633,9 +812,59 @@ namespace AccessControlManagement.Controllers
         {
             if (Session["LogedUserID"] != null)
             {
+
+                user user = new user();
+                int loginId = int.Parse(Session["LogedUserID"].ToString());
+                user = database.users.Find(loginId);
+                TempData["User"] = user.username;
+
+
+
+                var postDetails = (from c in database.Posts
+                                   where (c.activity_log.Equals("Accepted")) && (c.Category.category_name.Equals("Food & Nutrition"))
+                                   orderby c.post_id ascending
+                                   select new PostAccess
+                                   {
+                                       post_id = c.post_id,
+                                       user_id = c.user_id,
+                                       title = c.title,
+                                       category_id = c.category_id,
+                                       post_description = c.post_description,
+                                       post_date = c.post_date,
+                                       activity_log = c.activity_log,
+                                       image = c.image,
+                                       Category = c.Category,
+                                       user = c.user
+
+                                   });
+                var myPost = postDetails.ToList();
+
+                string[] filePaths = Directory.GetFiles(Server.MapPath("~/Resources/Advetrisement_Image/"));
+                List<AdvertisementDetail> files = new List<AdvertisementDetail>();
+                foreach (string filePath in filePaths)
+                {
+                    string fileName = Path.GetFileName(filePath);
+                    files.Add(new AdvertisementDetail
+                    {
+
+                        title = fileName.Split('.')[0].ToString(),
+                        adImage = "../Resources/Advetrisement_Image/" + fileName
+                    });
+                }
+
                 int userId = int.Parse(Session["LogedUserID"].ToString());
-                var postList = (from p in database.Posts where (p.activity_log.Equals("Accepted")) && (p.Category.category_name.Equals("Food & Nutrition")) orderby p.post_id ascending select p).ToList();
-                return View(postList);
+
+                var usermm = (from c in database.users
+                              where c.user_id == userId
+                              select c).ToList();
+
+                List<Object> myModel = new List<object>();
+                myModel.Add(usermm);
+                myModel.Add(myPost);
+                myModel.Add(files);
+
+
+                return View(myModel);
             }
 
             else
@@ -646,17 +875,138 @@ namespace AccessControlManagement.Controllers
 
         public ActionResult Others()
         {
-            if (Session["LogedUserID"] != null)
+             if (Session["LogedUserID"] != null)
             {
+
+                user user = new user();
+                int loginId = int.Parse(Session["LogedUserID"].ToString());
+                user = database.users.Find(loginId);
+                TempData["User"] = user.username;
+
+
+
+                var postDetails = (from c in database.Posts
+                                   where (c.activity_log.Equals("Accepted")) && (c.Category.category_name.Equals("Science") || c.Category.category_name.Equals("Business Management"))
+                                   orderby c.post_id ascending
+                                   select new PostAccess
+                                   {
+                                       post_id = c.post_id,
+                                       user_id = c.user_id,
+                                       title = c.title,
+                                       category_id = c.category_id,
+                                       post_description = c.post_description,
+                                       post_date = c.post_date,
+                                       activity_log = c.activity_log,
+                                       image = c.image,
+                                       Category = c.Category,
+                                       user = c.user
+
+                                   });
+                var myPost = postDetails.ToList();
+
+                string[] filePaths = Directory.GetFiles(Server.MapPath("~/Resources/Advetrisement_Image/"));
+                List<AdvertisementDetail> files = new List<AdvertisementDetail>();
+                foreach (string filePath in filePaths)
+                {
+                    string fileName = Path.GetFileName(filePath);
+                    files.Add(new AdvertisementDetail
+                    {
+
+                        title = fileName.Split('.')[0].ToString(),
+                        adImage = "../Resources/Advetrisement_Image/" + fileName
+                    });
+                }
+
                 int userId = int.Parse(Session["LogedUserID"].ToString());
-                var postList = (from p in database.Posts where (p.activity_log.Equals("Accepted")) && (p.Category.category_name.Equals("Science") || p.Category.category_name.Equals("Business Management")) orderby p.post_id ascending select p).ToList();
-                return View(postList);
+
+                var usermm = (from c in database.users
+                              where c.user_id == userId
+                              select c).ToList();
+
+                List<Object> myModel = new List<object>();
+                myModel.Add(usermm);
+                myModel.Add(myPost);
+                myModel.Add(files);
+
+
+                return View(myModel);
             }
 
             else
             {
                 return View("Index");
             }
+        }
+
+
+        [HttpGet]
+        public ActionResult CMSBeforeLogin()
+        {
+            var postList = (from p in database.Posts where p.activity_log.Equals("Accepted") orderby p.post_id ascending select p).ToList();
+
+
+            string[] filePaths = Directory.GetFiles(Server.MapPath("~/Resources/Advetrisement_Image/"));
+            List<AdvertisementDetail> files = new List<AdvertisementDetail>();
+            foreach (string filePath in filePaths)
+            {
+                string fileName = Path.GetFileName(filePath);
+                files.Add(new AdvertisementDetail
+                {
+
+                    title = fileName.Split('.')[0].ToString(),
+                    adImage = "../Resources/Advetrisement_Image/" + fileName
+                });
+            }
+
+            List<Object> myModel = new List<object>();
+            myModel.Add(postList);
+            myModel.Add(files);
+
+            return View(myModel);
+
+        }
+
+        [HttpGet]
+        public ActionResult CMSAfterLogin()
+        {
+            //if (Session["LogedUserID"] != null)
+            //{
+            //To display current username
+            //user user = new user();
+            //int loginId = int.Parse(Session["LogedUserID"].ToString());
+            //user = database.users.Find(loginId);
+
+
+            //To display the posts
+            var postList = (from p in database.Posts where p.activity_log.Equals("Accepted") orderby p.post_id ascending select p).ToList();
+
+
+            string[] filePaths = Directory.GetFiles(Server.MapPath("~/Resources/Advetrisement_Image/"));
+            List<AdvertisementDetail> files = new List<AdvertisementDetail>();
+            foreach (string filePath in filePaths)
+            {
+                string fileName = Path.GetFileName(filePath);
+                files.Add(new AdvertisementDetail
+                {
+
+                    title = fileName.Split('.')[0].ToString(),
+                    adImage = "../Resources/Advetrisement_Image/" + fileName
+                });
+            }
+
+
+            //return View(files);
+            ////To display the comments for posts
+            //var commentlist = (from c in database.Comments select c).ToList();
+
+            List<Object> myModel = new List<object>();
+            myModel.Add(postList);
+            myModel.Add(files);
+
+            return View(myModel);
+            //}
+
+            //return View();
         }
 
     }

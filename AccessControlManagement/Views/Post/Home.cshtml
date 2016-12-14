@@ -1,12 +1,11 @@
 ﻿@model IEnumerable<object>
 
-
 @{
     Layout = "~/Views/Shared/_PostLayout.cshtml";
-    List<AccessControlManagement.Models.Post> listPost = Model.ToList()[0] as List<AccessControlManagement.Models.Post>;
-    List<AccessControlManagement.Models.Comment> commentList = Model.ToList()[1] as List<AccessControlManagement.Models.Comment>;
+    List<AccessControlManagement.Models.user> userss = Model.ToList()[0] as List<AccessControlManagement.Models.user>;
+    List<AccessControlManagement.Models.PostAccess> postAccess = Model.ToList()[1] as List<AccessControlManagement.Models.PostAccess>;
+    List<AccessControlManagement.Models.AdvertisementDetail> advert = Model.ToList()[2] as List<AccessControlManagement.Models.AdvertisementDetail>;
 }
-
 
 
 <style type="text/css">
@@ -76,7 +75,7 @@
 
     .c2 {
         font-size: 0.9em;
-        margin-left:15px;
+        margin-left: 15px;
     }
 
     .form-style-5 .number {
@@ -152,90 +151,108 @@
     }
 
     .form-style-7 i {
-            color: #ffffff;
-            margin-left:350px;
-        }
+        color: #ffffff;
+        margin-left: 350px;
+    }
 
     .form-style-7 {
         max-width: 700px;
         color: white;
         margin: 10px auto;
         /*padding: 20px;*/
-        background: #1abc9c;
-        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+        background: #011914;
+        border-bottom-width: 0px;
+        border-top-width: 0px;
+        border-left-width: 0px;
+        border-right-width: 0px;
+        font-family: Baskerville Old Face;
     }
 </style>
 
-@using (Html.BeginForm("Home", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="form-style-7">
-        <fieldset>
-            @*<legend><span class="number"></span>Education</legend>*@
-            <center><h1> Posts</h1></center>@*<a href="@Url.Action("Index", "Post")"><i class="fa fa-arrow-circle-left"></i> </a>*@
-        </fieldset>
-    </div>
+<head>
+    <meta name="viewport" content="width=device-width" />
 
-    foreach (var item in listPost)
-    {
-        var po = 1;
-        <div class="form-style-5">
-            <fieldset>
-                <legend><span class="number">P</span>@Html.DisplayFor(modelItem => item.user.username)</legend>
+    <link rel="stylesheet" href="../assets/bjqs.css">
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../assets/demo.css">
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="../assets/js/bjqs-1.3.min.js"></script>
+</head>
 
-                <small>@Html.DisplayFor(modelItem => item.Category.category_name)</small>
+<div class="form-style-7">
 
-                <text>@Html.DisplayFor(modelItem => item.post_date)</text>
-                <br />
+    <center><h1> FindMore</h1></center>
+</div>
 
-                <h3>@Html.DisplayFor(modelItem => item.title)</h3>
 
-                <p>
-                    @Html.DisplayFor(modelItem => item.post_description)
-                </p>
 
-                <img src="@Url.Content(item.image)" alt="Image" height="250" width="250" style="margin-left:100px"/>
-                @*@Html.HiddenFor(modelItem => item.post_id, new { id = "hdnPostId"; Value = item.post_id; }               })*@
-                @*<input id="hdnPostId" name="hdnPostId" type="hidden" value="@modelItem => item.post_id.ToString()" />*@
-            </fieldset>
 
-            @*<a data-toggle="collapse" data-target=#@item.post_id.ToString()><i class="fa fa-comment"></i></a>
-            <div class="form-style-6">
-                <div id=@item.post_id.ToString() class="collapse">
-                    @foreach (var comment in commentList)
-                    {
-                        if (comment.post_id == item.post_id)
-                        {
-                            <font class="c1">@Html.DisplayFor(modelItem => comment.user.username)</font>
-                            <br />
-                            <div class="c2">@Html.DisplayFor(modelItem => comment.description)</div>
-                            <br />
-                            
-                        }
+<div id="container">
+    <a href="@Url.Action("Index", "Post")">Back To List</a>
+    <br />
 
-                    }
-                    <legend><span class="number1">C</span>@TempData["User"]</legend>                                     
-                    @Html.TextBox("txtComment") <input type="submit" value="Comment" />
-                </div>
-            </div>*@
-            <br />
+    <form id="form1">
+
+
+        <div id="banner-fade">
+            <ul class="bjqs">
+                @foreach (var item in advert)
+                {
+                    <li>
+                        <img src='@Html.DisplayFor(modelItem => item.adImage)'
+                             title='@Html.DisplayFor(modelItem => item.title)' alt="">
+                    </li>
+
+                }
+
+            </ul>
         </div>
+
+        <script src="../assets/js/libs/jquery.secret-source.min.js"></script>
+        <script>
+            jQuery(function ($) {
+
+                $('.secret-source').secretSource({
+                    includeTag: false
+                });
+
+                $('#banner-fade').bjqs({
+                    height: 320,
+                    width: 620,
+                    responsive: true
+                });
+            });
+        </script>
+    </form>
+
+
+    @using (Html.BeginForm("Home", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        foreach (var item in postAccess)
+        {
+            var po = 1;
+            <div class="form-style-5">
+                <fieldset>
+                    <legend><span class="number">P</span>@Html.DisplayFor(modelItem => item.user.username)</legend>
+
+                    <small>@Html.DisplayFor(modelItem => item.Category.category_name)</small>
+
+                    <text>@Html.DisplayFor(modelItem => item.post_date)</text>
+                    <br />
+
+                    <h3>@Html.DisplayFor(modelItem => item.title)</h3>
+
+                    <p>
+                        @Html.DisplayFor(modelItem => item.post_description)
+                    </p>
+
+                    <img src="@Url.Content(item.image)" alt="Image" height="250" width="250" style="margin-left:100px" />
+                </fieldset>
+
+                <br />
+            </div>
         }
 
-}
-
-@*<script>
-    function myFunction() {
-         var str ="";
-        str += "Comment : <input type='text' id='txtcomment' />";
-        str += "<input type='button' name='comment' value='comment' />";
-        document.getElementById("comment").innerHTML = str;
     }
-    </script>*@
-<script>
-function myFunction() {
-     var str ="";
-    str += "Comment : <input type='text' id='txtcomment' />";
-    str += "<input type='button' name='comment' value='comment' />";
-    document.getElementById("comment").innerHTML = str;
-}
-</script>
+</div>
+
