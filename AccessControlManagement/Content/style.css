@@ -2,7 +2,7 @@
      font-family:Calibri;
      padding-bottom: 0px;
      /*padding-top: 100px;*/
-     background-color: #04634F;
+     background-color: #109177;
 }
 
 #welcome-screen{
@@ -75,7 +75,7 @@
     height: 70px;
     position: absolute;
     left: 0px;
-    top: 5px;    
+    top: 5px;
     background-size: contain;
 }
 
@@ -94,7 +94,7 @@
     position: absolute;
     margin-top: -1px;
     z-index: 1;
-    background-color: #04634F;
+    background-color: #EEEDFC;
 }
 
 #nav-area{
@@ -104,27 +104,19 @@
     top: 150px;
     padding-bottom: 5px;
     z-index: 15;
-    background-color: #04634F;
+    background-color: #EEEDFC;
 
 }
 #home-link{
-    margin-top: 0px;
+    margin-top: 65px;
 }
 
 #post-link{
-    margin-top: 70px;
-}
-
-#writer-link {
-    margin-top: 135px;
+    margin-top: 130px;
 }
 
 #settings-link{
-    margin-top: 200px;
-}
-
-#profile-link {
-    margin-top: 265px;
+    margin-top: 195px;
 }
 
 /*#exit-link{
@@ -132,31 +124,25 @@
 }*/
 
 #site-area{
-    background-color: #04634F;
+    background-color: #05BB96;
     border-radius: 0px;
     width: calc(100% - 20px);
     width: -moz-calc(100% - 20px);
     width: -webkit-calc(100% - 20px);
     margin-left: 20px;
-    margin-bottom: 0px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 #site-main-area{
-    background-color: #fdf7fd;
-    margin-bottom: 10px;    
+    background-color: #38D5B5;
+    margin-bottom: 20px; 
+    margin-top: 20px;   
 }
 
 #loading-place{
-    /*background-color: #A8E4D7;*/
-}
-
-.still-loading::before{
-    content: "";
-    width: 100%;
-    height: 700px;
-    position: absolute;
-    z-index: 13;
-    background: url('../Resources/loading.gif') no-repeat center center
+    background-color: #FDF7FD;
+    margin-top:20px
 }
 
 #site-other-relevent{
@@ -171,6 +157,9 @@
 
 #header{
     height: 80px;
+    width: 1110px;
+    margin-left: 20px;
+    margin-top: 5px;
 }
 
 .add-new-btn{
@@ -262,19 +251,15 @@
   height: calc(100vh - 139px);
   height: -moz-calc(100vh - 139px);
   height: -webkit-calc(100vh - 139px);
-  overflow-y:auto;  
-  /*background-color:#A8E4D7;*/ 
+  overflow-y:auto;   
 }
 
 #site-main-area::before {
     content : "";
     display: block;
     position: absolute;
-    background: url('../Resources/slimframeworkicon.png') no-repeat;
     background-size: cover;
     width: 100%;
     height: 100%;
     opacity : 0.02;    
-    
-    /*background-color:#A8E4D7;*/
 }

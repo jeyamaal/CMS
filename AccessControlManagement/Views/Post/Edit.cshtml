@@ -1,13 +1,4 @@
 ﻿@model AccessControlManagement.Models.Post
-
-@*@model IEnumerable<object>
-@{
-
-    List<AccessControlManagement.Models.user> userss = Model.ToList()[0] as List<AccessControlManagement.Models.user>;
-    List<AccessControlManagement.Models.PostAccess> postAccess = Model.ToList()[1] as List<AccessControlManagement.Models.PostAccess>;
-
-
-}*@
 <script src="~/Scripts/jquery-1.11.3.min.js">
 </script>
 
@@ -18,7 +9,7 @@
 <script src="~/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
 
 <script src="https://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.js"></script>
-<link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />  
+<link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Create_Post_Layout.cshtml";
@@ -134,24 +125,24 @@
                 background: #109177;
             }
 
-            input[type="text"] {
-                width: 200px;
-            }
+    input[type="text"] {
+        width: 200px;
+    }
 
-            .form-style-5 i {
-                color: #1abc9c;
-                margin-left:300px;
-            }
+    .form-style-5 i {
+            color: #1abc9c;
+            margin-left:300px;
+        }
 </style>
 
 @if (TempData["UnsuccessImage"] != null)
 {
-<div class="alert alert-danger alert-dismissible fade in" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    <strong>Fail</strong> @TempData["UnsuccessImage"]
-</div>
+    <div class="alert alert-danger alert-dismissible fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Fail</strong> @TempData["UnsuccessImage"]
+    </div>
 }
 
 @if (TempData["NullImage"] != null)
@@ -175,77 +166,79 @@
 }
 
 <div class="form-style-5">
-        <fieldset>
-            <legend><span class="number">P</span> Create Post <a href="@Url.Action("Index", "Post")"><i class="fa fa-arrow-circle-left"></i></a></legend>
+    <fieldset>
+        <legend><span class="number">P</span> Edit Post <a href="@Url.Action("Index", "Post")"><i class="fa fa-arrow-circle-left"></i> </a></legend>
 
-            @using (Html.BeginForm("Create", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("Edit", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                @Html.AntiForgeryToken()
+            @Html.AntiForgeryToken()
 
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                
-               
-                    <div class="form-group">
-                        @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
-                            @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.post_id)
 
-                        </div>
+            <div class="form-group">
+                @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+
+                </div>
+            </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Category.category_name, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
+                        @Html.DisplayFor(model => model.Category.category_name)
+                        
+                        @Html.DropDownList("list", null, htmlAttributes: new { @class = "form-control" })
+
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Category.category_name, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.ValidationMessageFor(model => model.category_id, "", new { @class = "text-danger" })
-                            @Html.DropDownList("list", null, htmlAttributes: new { @class = "form-control" })
-
-                        </div>
+                <div class="form-group">
+                    @Html.Label("Publish Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.ValidationMessageFor(model => model.post_date, "", new { @class = "text-danger" })
+                        @Html.DisplayFor(model => model.post_date)
+                        @Html.TextBoxFor(model => model.post_date, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here...", type = "date" })
                     </div>
-
-                    <div class="form-group">
-                        @Html.Label("Publish Date", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.ValidationMessageFor(model => model.post_date, "", new { @class = "text-danger" })
-                            @Html.TextBoxFor(model => model.post_date, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here...", type = "date" })
-                        </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.Label("Content", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        @Html.ValidationMessageFor(model => model.post_description, "", new { @class = "text-danger" })
+                        @Html.TextAreaFor(model => model.post_description, new { @class = "form-control", @cols = 100, @rows = 10, id = "description" })
                     </div>
-                    <br />
-                    <div class="form-group">
-                        @Html.Label("Content", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-1"></div>
-                        <div class="col-md-10">
-                            @Html.ValidationMessageFor(model => model.post_description, "", new { @class = "text-danger" })
-                            @Html.TextAreaFor(model => model.post_description, new { @class = "form-control", @cols = 100, @rows = 10, id = "description" })
-                        </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Image", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="file" name="file" id="imgInp" />
+                        @*<img id="blah" src="~/Resources/jeyamaal_images/prof-pic.png" alt="your image" height="100" width="100" />*@
+                        @Html.ValidationMessageFor(model => model.image, "", new { @class = "text-danger" })
                     </div>
-
-                    <div class="form-group">
-                        @Html.Label("Image", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <input type="file" name="file" id="imgInp" />
-                            @*<img id="blah" src="~/Resources/jeyamaal_images/prof-pic.png" alt="your image" height="100" width="100" />*@
-                            @Html.ValidationMessageFor(model => model.image, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                
-
-
+                </div>
 
                 <div class="form-group">
                     <div>
-                        <input type="submit" id="btnCreate" value="Send Request" @*onclick="Validate(this, event);"*@ />
+                        <input type="submit" id="btnCreate" value="Send Request"  onclick = "return confirm('Are you sure you wish to update this Post?');" />
+                       
                     </div>
+                        
                 </div>
-            
-            }
-            
+
+        }
+
     </fieldset>
 </div>
 
-           
+
 <script type="text/javascript">
-   
+
 
     //Sweet alert funtion for Confirmation of Send Request
     //function Validate(ctl, event) {
@@ -280,9 +273,7 @@
     });
 
 </script>
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

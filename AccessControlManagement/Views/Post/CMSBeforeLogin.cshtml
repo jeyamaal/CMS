@@ -1,14 +1,13 @@
 ﻿@model IEnumerable<object>
 
 @{
-    Layout = "~/Views/Shared/_PostLayout.cshtml";
-    List<AccessControlManagement.Models.user> userss = Model.ToList()[0] as List<AccessControlManagement.Models.user>;
-    List<AccessControlManagement.Models.PostAccess> postAccess = Model.ToList()[1] as List<AccessControlManagement.Models.PostAccess>;
-    List<AccessControlManagement.Models.AdvertisementDetail> advert = Model.ToList()[2] as List<AccessControlManagement.Models.AdvertisementDetail>;
+    Layout = "~/Views/Shared/_Home_Layout.cshtml";
+    List<AccessControlManagement.Models.Post> listPost = Model.ToList()[0] as List<AccessControlManagement.Models.Post>;
+    List<AccessControlManagement.Models.AdvertisementDetail> listAdvertisment = Model.ToList()[1] as List<AccessControlManagement.Models.AdvertisementDetail>;
 }
 
 
-<style type="text/css">
+<style type="text/css"> 
     .form-style-5 {
         max-width: 500px;
         padding: 10px 20px;
@@ -180,23 +179,21 @@
 </head>
 
 <div class="form-style-7">
-
-    <center><h1> FindMore</h1></center>
+    
+        <center><h1> FindMore</h1></center>
 </div>
 
 
 
 
 <div id="container">
-    <a href="@Url.Action("Index", "Post")">Back To List</a>
-    <br />
-
+    <a href="@Url.Action("Login", "Home")">Login</a>
     <form id="form1">
 
 
         <div id="banner-fade">
             <ul class="bjqs">
-                @foreach (var item in advert)
+                @foreach (var item in listAdvertisment)
                 {
                     <li>
                         <img src='@Html.DisplayFor(modelItem => item.adImage)'
@@ -228,7 +225,7 @@
 
     @using (Html.BeginForm("Home", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        foreach (var item in postAccess)
+        foreach (var item in listPost)
         {
             var po = 1;
             <div class="form-style-5">

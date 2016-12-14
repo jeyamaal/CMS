@@ -31,7 +31,6 @@ namespace AccessControlManagement.Models
         public string role { get; set; }
         public string status { get; set; }
         public string ConfirmPassword { get; set; }
-
         public string newPassword { get; set; }
 
         public string feedbacks { get; set; }
