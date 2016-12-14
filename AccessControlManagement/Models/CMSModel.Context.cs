@@ -36,19 +36,18 @@ namespace AccessControlManagement.Models
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<user> users { get; set; }
-        public virtual DbSet<Feedback> Feedbacks { get; set; }
     
-        public virtual int usp_Advertisement_statusUpdate(Nullable<int> aDID, string aDStatus)
+        public virtual int usp_Advertisement_statusUpdate(Nullable<int> adID, string aDStatus)
         {
-            var aDIDParameter = aDID.HasValue ?
-                new ObjectParameter("aDID", aDID) :
-                new ObjectParameter("aDID", typeof(int));
+            var adIDParameter = adID.HasValue ?
+                new ObjectParameter("adID", adID) :
+                new ObjectParameter("adID", typeof(int));
     
             var aDStatusParameter = aDStatus != null ?
                 new ObjectParameter("ADStatus", aDStatus) :
                 new ObjectParameter("ADStatus", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Advertisement_statusUpdate", aDIDParameter, aDStatusParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Advertisement_statusUpdate", adIDParameter, aDStatusParameter);
         }
     
         public virtual int usp_Category_delete(string catname)
@@ -93,19 +92,6 @@ namespace AccessControlManagement.Models
                 new ObjectParameter("adID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_request_Expiry_date", adIDParameter);
-        }
-    
-        public virtual int usp_Advertisement_statusUpdate(Nullable<int> adID, string aDStatus)
-        {
-            var adIDParameter = adID.HasValue ?
-                new ObjectParameter("adID", adID) :
-                new ObjectParameter("adID", typeof(int));
-    
-            var aDStatusParameter = aDStatus != null ?
-                new ObjectParameter("ADStatus", aDStatus) :
-                new ObjectParameter("ADStatus", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Advertisement_statusUpdate", adIDParameter, aDStatusParameter);
         }
     }
 }

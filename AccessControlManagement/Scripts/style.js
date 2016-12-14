@@ -103,6 +103,10 @@
                         else if(index == 4)
                         {
                             // Profile
+
+                            $("#nav-place").html("");
+                            $("#nav-place").text("Profile View");
+
                             $("#load-view").load("/Home/ProfileView", function () {
                                 //CategorySaveChanges();
                                 //$(".add-new-btn").removeAttr("id");

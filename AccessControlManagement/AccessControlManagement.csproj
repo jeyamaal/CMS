@@ -160,6 +160,7 @@
     <Compile Include="Models\Advertisement.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdvertisementCategory.cs" />
     <Compile Include="Models\AdvertisementDetail.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
@@ -173,6 +174,8 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoryPost.cs" />
+    <Compile Include="Models\CategoryUsers.cs" />
     <Compile Include="Models\CMSModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
