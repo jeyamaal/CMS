@@ -36,7 +36,6 @@ namespace AccessControlManagement.Models
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<user> users { get; set; }
-        public virtual DbSet<Feedback> Feedbacks { get; set; }
     
         public virtual int usp_Advertisement_statusUpdate(Nullable<int> adID, string aDStatus)
         {

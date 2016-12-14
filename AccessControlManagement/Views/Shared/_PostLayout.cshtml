@@ -32,12 +32,12 @@
 <body>
     @try
     {
-        if (Session["LogedUserID"] != null)
+        if (Session["LogedUserID"] != null || Session["LogedAdevertiserID"] != null)
         {
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">Be Blogger</a>
+                        <a class="navbar-brand" href="#" style="font-family:'Baskerville Old Face'; font-size:50px; padding-left:550px; padding-top:35px; color:#466760">Find More</a>
                     </div>
                     <ul class="nav navbar-nav navbar-right">
 

@@ -465,18 +465,18 @@ namespace AccessControlManagement.Controllers
         [HttpGet]
         public ActionResult Home()
         {
-            if (Session["LogedUserID"] != null)
+            if (Session["LogedUserID"] != null || Session["LogedAdevertiserID"] != null)
             {
                 //To display current username
                 user user = new user();
-                int loginId = int.Parse(Session["LogedUserID"].ToString());
-                user = database.users.Find(loginId);
-                TempData["User"] = user.username;
+                //int loginId = int.Parse(Session["LogedUserID"].ToString());
+                //user = database.users.Find(loginId);
+                //TempData["User"] = user.username;
 
                 var postList = (from p in database.Posts where p.activity_log.Equals("Accepted") orderby p.post_id ascending select p).ToList();
 
                 var postDetails = (from c in database.Posts
-                                   where (c.activity_log.Equals("Accepted")) && (c.user_id == loginId)
+                                   where (c.activity_log.Equals("Accepted")) /*&& (c.user_id == loginId)*/
                                    orderby c.post_id ascending
                                    select new PostAccess
                                    {
@@ -507,7 +507,17 @@ namespace AccessControlManagement.Controllers
                     });
                 }
 
-                int userId = int.Parse(Session["LogedUserID"].ToString());
+                int userId = 0;
+                if (Session["LogedUserID"] != null)
+                {
+                    userId = int.Parse(Session["LogedUserID"].ToString());
+                }
+
+                else if (Session["LogedAdevertiserID"] != null)
+                {
+                    userId = int.Parse(Session["LogedAdevertiserID"].ToString());
+                }
+                
 
                 var usermm = (from c in database.users
                               where c.user_id == userId

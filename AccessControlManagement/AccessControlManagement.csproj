@@ -153,6 +153,7 @@
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\ViewAdController.cs" />
     <Compile Include="Controllers\ViewAdvertisement.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -200,12 +201,18 @@
     <Compile Include="Models\Post.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PostAccess.cs" />
     <Compile Include="Models\user.cs">
       <DependentUpon>CMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\bjqs.css" />
+    <Content Include="assets\demo.css" />
+    <Content Include="assets\js\bjqs-1.3.js" />
+    <Content Include="assets\js\bjqs-1.3.min.js" />
+    <Content Include="assets\js\libs\jquery.secret-source.min.js" />
     <Content Include="Content\alertifyjs\alertify.css" />
     <Content Include="Content\alertifyjs\alertify.min.css" />
     <Content Include="Content\alertifyjs\alertify.rtl.css" />
@@ -231,11 +238,16 @@
     <Content Include="Content\LoginStyle.css" />
     <Content Include="Content\Register.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\sweetalert\bootstrap-sweetalert.png" />
+    <Content Include="Content\sweetalert\docs.css" />
+    <Content Include="Content\sweetalert\sweet-alert.css" />
+    <Content Include="Content\sweetalert\thumbs-up.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images.ico" />
     <Content Include="Models\CMSModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CMSModel.edmx</DependentUpon>
@@ -270,6 +282,11 @@
     <Content Include="Models\CMSModel.edmx.diagram">
       <DependentUpon>CMSModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\bootstrap\mixins.less" />
+    <Content Include="Content\bootstrap\variables.less" />
+    <Content Include="Content\sweetalert\sweet-alert-animations.less" />
+    <Content Include="Content\sweetalert\sweet-alert-combine.less" />
+    <Content Include="Content\sweetalert\sweet-alert.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\category.js" />
     <Content Include="Scripts\reports.js" />
@@ -334,6 +351,18 @@
     <Content Include="Views\Shared\_Advertisement_Layout.cshtml" />
     <Content Include="Views\Shared\_Login_Layout.cshtml" />
     <Content Include="Views\Categories\_Advertisement.cshtml" />
+    <Content Include="Views\Post\BabyCare.cshtml" />
+    <Content Include="Views\Post\CMSBeforeLogin.cshtml" />
+    <Content Include="Views\Post\Delete.cshtml" />
+    <Content Include="Views\Post\Edit.cshtml" />
+    <Content Include="Views\Post\Education.cshtml" />
+    <Content Include="Views\Post\FoodNutrition.cshtml" />
+    <Content Include="Views\Post\Others.cshtml" />
+    <Content Include="Views\Post\MyPost.cshtml" />
+    <Content Include="Views\Post\Viewww.cshtml" />
+    <Content Include="Views\Shared\_Home_Layout.cshtml" />
+    <Content Include="Views\Shared\_Create_Post_Layout.cshtml" />
+    <Content Include="Views\ViewAd\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
