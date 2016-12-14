@@ -21,73 +21,73 @@ namespace AccessControlManagement.Controllers
 
 
 
-        public ActionResult ChangePassword(user u)
-        {
-            if (Session["LogedUserID"] != null)
+        //public ActionResult ChangePassword(user u)
+        //{
+        //    if (Session["LogedUserID"] != null)
 
-            {
+        //    {
 
-                if (ModelState.IsValid) // this is check validity
-                {
+        //        if (ModelState.IsValid) // this is check validity
+        //        {
 
-                    using (CMSEntities cm = new CMSEntities())
-                    {
-                        user us = new user();
-
-
-
-                        try
-                        {
-                            int ii = int.Parse(Session["LogedUserID"].ToString());
-                            us = cm.users.Find(ii);
+        //            using (CMSEntities cm = new CMSEntities())
+        //            {
+        //                user us = new user();
 
 
 
-
-                            if (u.password == us.password && u.ConfirmPassword == u.newPassword)
-                            {
-
-                                string s;
-
-                                s = u.newPassword.ToString();
-
-                                us.password = u.newPassword;
+        //                try
+        //                {
+        //                    int ii = int.Parse(Session["LogedUserID"].ToString());
+        //                    us = cm.users.Find(ii);
 
 
-                                cm.Entry(us).State = EntityState.Modified;
-                                cm.SaveChanges();
-
-                                // TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
-
-                                return View("ChangePassword");
-
-                            }
-
-                            else
-                            {
-                                TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
-
-                            }
 
 
-                        }
+        //                    if (u.password == us.password && u.ConfirmPassword == u.newPassword)
+        //                    {
 
-                        catch (Exception ex)
-                        {
+        //                        string s;
 
-                        }
-                     }
-                }
-            }
+        //                        s = u.newPassword.ToString();
 
-            else
-            {
-                return RedirectToAction("Login","Home");
-            }
+        //                        us.password = u.newPassword;
 
-            return View();
 
-        }
+        //                        cm.Entry(us).State = EntityState.Modified;
+        //                        cm.SaveChanges();
+
+        //                        // TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
+
+        //                        return View("ChangePassword");
+
+        //                    }
+
+        //                    else
+        //                    {
+        //                        TempData["notice"] = "Successfully changed" + us.password.ToString() + ii;
+
+        //                    }
+
+
+        //                }
+
+        //                catch (Exception ex)
+        //                {
+
+        //                }
+        //             }
+        //        }
+        //    }
+
+        //    else
+        //    {
+        //        return RedirectToAction("Login","Home");
+        //    }
+
+        //    return View();
+
+        //}
 
 
 

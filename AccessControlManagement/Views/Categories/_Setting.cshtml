@@ -2,18 +2,81 @@
 @{
     List<AccessControlManagement.Models.Category> listCategory = Model.ToList()[0] as List<AccessControlManagement.Models.Category>;
     List<AccessControlManagement.Models.Post> listPost = Model.ToList()[1] as List<AccessControlManagement.Models.Post>;
-    //List<AccessControlManagement.Models.Advertisement> listAdvertisement = Model.ToList()[2] as List<AccessControlManagement.Models.Advertisement>;
+    List<AccessControlManagement.Models.AdvertisementDetail> listAdvertisement = Model.ToList()[2] as List<AccessControlManagement.Models.AdvertisementDetail>;
 }
-@Styles.Render("~/Content/css")
-@Scripts.Render("~/bundles/modernizr")
-<div id="table-category" class="row">
+@*@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")*@
+
+<style type="text/css">
+    .table-category-class i {
+        color: #1abc9c;
+    }
+
+    .table-category-class {
+        max-width: 1000px;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        margin: 10px auto;
+        padding: 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+
+        .table-category-class myCategory {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .table-category-class text {
+            font-size: 0.8em;
+            color: #808080;
+        }
+
+        .table-category-class th {
+            font-size: 1em;
+            color: #35ad95;
+        }
+
+    .p1 {
+        font-size: 1em;
+        color: #35ad95;
+        font-style: normal;
+        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .table-category-class .catNumber {
+        background: #1abc9c;
+        color: #fff;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        font-size: 1em;
+        margin-right: 4px;
+        line-height: 30px;
+        text-align: center;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+        border-radius: 15px 15px 15px 0px;
+    }
+
+</style>
+
+
+
+<div id="table-category" class="row table-category-class">
     <div class="col-sm-6 col-sm-offset-3">
-        <table class="table table-hover" style="border:2px solid black; margin-top:50px">
-            <tr style="border:2px solid black; background-color:#DADBDE">
-                <th style="border-right:2px solid black; text-align:center">
+
+        <myCategory>
+            <span class="catNumber">C</span> 
+            Category Details
+        </myCategory>
+
+        <table class="table table-hover" style="margin-top:50px">
+            <tr>
+                <th style="text-align:center">
                     Category Name
                 </th>
-                <th style="border-right:2px solid black; text-align:center">
+                <th style="text-align:center">
                     Status
                 </th>
                 <th style="width:170px"></th>
@@ -22,15 +85,26 @@
             @foreach (var item in listCategory)
             {
                 <tr>
-                    <td style="border-right:2px solid black; text-align:center" data-toggle="tooltip" data-placement="left" title="@item.category_name">
+                    <td text-align:center" data-toggle="tooltip" data-placement="left" title="@item.category_name">
                         @Html.DisplayFor(modelItem => item.category_name)
                     </td>
-                    <td style="border-right:2px solid black; text-align:center">
-                        @Html.DisplayFor(modelItem => item.status)
+                    <td text-align:center">
+                        @{
+                            var statusOfCategory = item.status;
+                            if (statusOfCategory == "Active")
+                            {
+                               <b style="color:forestgreen"> @Html.DisplayFor(modelItem => item.status) </b>
+                            }
+                            else
+                            {
+                                <b style="color:darkred"> @Html.DisplayFor(modelItem => item.status) </b>
+                            }
+                        }
+                       
                     </td>
-                    <td style="border-right:2px solid black; width:170px">
+                    <td width:170px">
                         <!-- Edit the Category -->
-                        <button id="edit-btn-category-@item.category_id" type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit-modal-category-@item.category_id"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                        <button id="edit-btn-category-@item.category_id" type="button" data-toggle="modal" data-target="#edit-modal-category-@item.category_id"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 
                         <!-- Modal -->
                         <div class="modal fade" id="edit-modal-category-@item.category_id" role="dialog">
@@ -69,7 +143,7 @@
                         </div>
 
                         <!-- View the details of Category -->
-                        <button id="view-btn-category" type="button" class="btn btn-success" data-toggle="modal" data-target="#view-modal-category-@item.category_id" onclick="SeeMore()"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                        <button id="view-btn-category" type="button" data-toggle="modal" data-target="#view-modal-category-@item.category_id" onclick="SeeMore()"><i class="fa fa-eye" aria-hidden="true"></i></button>
 
                         <div class="modal fade" id="view-modal-category-@item.category_id" role="dialog">
                             <div class="modal-dialog">
@@ -79,7 +153,8 @@
                                         <h4 class="modal-title">View Post Details of the Category @item.category_name</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <div class="row" style="margin-top:10px" id="post-table-category-@item.category_id">
+                                        <div class="row" style="margin-top:10px" id="post-table-category-@item.category_id">                                         
+                                            
                                             <table class="table table-hover" style="border:2px solid black; margin-top:50px">
                                                 <tr style="border:2px solid black; background-color:#DADBDE">
                                                     <th style="border-right:2px solid black; text-align:center">Title</th>
@@ -91,7 +166,7 @@
                                                 {
                                                     <tr>
                                                         <td>@item2.title</td>
-                                                        <td class="more">@item2.post_description</td>
+                                                        <td class="comment more" onclick="SeeMore()">@item2.post_description</td>
                                                         <td>@item2.post_date</td>
                                                     </tr>
                                                 }
@@ -125,7 +200,7 @@
                         </div>
 
                         <!-- Delete the Category -->
-                        <button id="delete-btn-category-@item.category_id" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal-category-@item.category_id"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button id="delete-btn-category-@item.category_id" type="button" data-toggle="modal" data-target="#delete-modal-category-@item.category_id"><i class="fa fa-trash" aria-hidden="true"></i></button>
 
                         <!-- Modal -->
                         <div class="modal fade" id="delete-modal-category-@item.category_id" role="dialog">
@@ -177,7 +252,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" value="ADD" id="btn-add-cat" onclick="CategorySaveChanges()">ADD</button>
+                <button type="button" class="btn btn-primary" value="ADD" id="btn-add-cat">ADD</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -186,30 +261,43 @@
 </div>
 
 <script type="text/javascript">
-    var showChar = 120;
+    
     function SeeMore()
     {
-     /* to make sure the script runs after page load */
-        $('.more').each(function (event) { /* select all divs with the  customer_experience class */
+        var showChar = 100;
+        var ellipsestext = "...";
+        var moretext = "more >>";
+        var lesstext = "<< less";
 
-            if ($(this).html().length > showChar) { /* check for content length */
-                var short_content = $(this).html().substr(0, showChar); /* split the content in two parts */
-                var long_content = $(this).html().substr(showChar);
+        $('.more').each(function () {
+            var content = $(this).html();
 
-                $(this).html(short_content +
-                    '<a href="#" class="read_more"><br/>read more...</a>' +
-                    '<span class="more_text" style="display:none;">' + long_content + '</span>'); /* Alter the html to allow the read more functionality */
+            if (content.length > showChar) {
+                var c = content.substr(0, showChar);
+                var h = content.substr(showChar - 1, content.length - showChar);
 
-                $(this).find('a.read_more').click(function (event) { /* find the a.read_more element within the new html and bind the following code to it */
-                    event.preventDefault(); /* prevent the a from changing the url */
-                    $(this).parents('.more').find('.more_text').show(); /* show the .more_text span */
-                });
+                var html = c + '<span class="moreellipses">' + ellipsestext + '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+
+                $(this).html(html);
             }
-        });
+
+            $(".morelink").click(function () {
+                if ($(this).hasClass("less")) {
+                    $(this).removeClass("less");
+                    $(this).html(moretext);
+                } else {
+                    $(this).addClass("less");
+                    $(this).html(lesstext);
+                }
+                $(this).parent().prev().toggle();
+                $(this).prev().toggle();
+                return false;
+            });
+        });   
     }
 </script>
 
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
+@*@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")*@
 
 

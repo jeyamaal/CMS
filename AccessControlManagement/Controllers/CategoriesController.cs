@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AccessControlManagement.Models;
+using System.Diagnostics;
 
 namespace AccessControlManagement.Controllers
 {
@@ -17,12 +18,11 @@ namespace AccessControlManagement.Controllers
         // GET: Categories
         public ActionResult Index()
         {
+            if (Session["LogedAdminID"] != null)
+            {
+                List<object> postList = new List<object>();               
 
-          if (Session["LogedAdminID"] != null)
-          {
-             List<object> postList = new List<object>();
-
-              var groupedUsers = (from p in db.Posts
+                var groupedUsers = from p in db.Posts
                                group p by new
                                {
                                    p.user_id
@@ -31,61 +31,179 @@ namespace AccessControlManagement.Controllers
                                {
                                    userid = p1.Key.user_id,
                                    NoOfPosts = p1.Select(x => x.post_id).Count()
-                               }).ToList();
+                               };
 
-            //var listUsers = (from u in db.users
-            //             join gu in groupedUsers on u.user_id equals gu.userid
-            //             select new CategoryUsers
-            //             {
-            //                 firstName = u.fullname,
-            //                 userName = u.username,
-            //                 email = u.email_id,
-            //                 //role = u.role,
-            //                 postCount = gu.NoOfPosts
-            //             }).ToList();
+                var users = (from u in db.users
+                             join gu in groupedUsers on u.user_id equals gu.userid
+                             select new CategoryUsers
+                             {
+                                 firstName = u.fullname,
+                                 userName = u.username,
+                                 email = u.email_id,
+                                 myrole = u.role.ToString(),
+                                 postCount = gu.NoOfPosts
+                             });
 
-             int i = int.Parse(Session["LogedAdminID"].ToString());
-                
+
+                //var advertisments = (from ad in db.AdvertisementDetails
+                //                     join c in db.Categories on ad.category_id equals c.category_id
+                //                     select new AdvertisementCategory
+                //                     {
+                //                         adID = ad.ADD_id,
+                //                         categoryName = c.category_name,
+                //                         postedDate = ad.wantToPostDate.ToString(),
+                //                         title = ad.title,
+                //                         status = ad.status,
+                //                         expirayDate = ad.dueDate.ToString()
+                //                     });
+                int i = int.Parse(Session["LogedAdminID"].ToString());
+                //user u1 = db.users.Find(i);
 
                 var usermm = (from c in db.users
                               where c.user_id == i
                               select c).ToList();
-
-
                 postList.Add(usermm);
-                postList.Add(groupedUsers);
-                //postList.Add(listUsers); null object
-
-                return View (postList);
+                postList.Add(users.ToList());
+                //postList.Add(advertisments.ToList());
+                return View(postList);
             }
 
             else
             {
-
                 return RedirectToAction("Login", "Home");
             }
+        }
 
+        public ActionResult RequestExpiraryDate(string advertisementID)
+        {
+            try
+            {
+                int adNo = Int32.Parse(advertisementID);
+                int resultRequestAD = db.usp_request_Expiry_date(adNo);
+                if (resultRequestAD == 1)
+                {
+                    return Json("Requested", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("Request Failed", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch
+            {
+                return Json("Request Error", JsonRequestBehavior.AllowGet);
+            }
+        }
 
+        public ActionResult ChangeAdStatus(int adID, string statusAD)
+        {
+            try
+            {
+                int resultStatusUpdate = db.usp_Advertisement_statusUpdate(adID, statusAD);
+                Debug.WriteLine("Advetisement update" + resultStatusUpdate);
+                if (resultStatusUpdate == 1)
+                {
+                    return Json("Status is successfully Changed!", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("Status is not Changed!", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch
+            {
+                return Json("Failed To Update!!", JsonRequestBehavior.AllowGet);
+            }
         }
 
         // GET: Categories
         public ActionResult _Setting()
         {
-
-
             List<object> myModel = new List<object>();
+
             myModel.Add(db.Categories.ToList());
             myModel.Add(db.Posts.ToList());
-            //myModel.Add(db.ArticleHasAds.ToList());
+            myModel.Add(db.AdvertisementDetails.ToList());
 
             return PartialView(myModel);
         }
 
-        //public ActionResult _Post()
-        //{
-            
-        //}
+        public ActionResult _Advertisement()
+        {
+            try
+            {
+                List<object> advertisementModel = new List<object>();
 
+                var advertisments = (from ad in db.AdvertisementDetails
+                                     join c in db.Categories on ad.category_id equals c.category_id
+                                     select new AdvertisementCategory
+                                     {
+                                         adID = ad.ADD_id,
+                                         categoryName = c.category_name,
+                                         postedDate = ad.wantToPostDate.ToString(),
+                                         title = ad.title,
+                                         status = ad.status,
+                                         expirayDate = ad.dueDate.ToString()
+                                     });
+                advertisementModel.Add(advertisments.ToList());
+                return PartialView(advertisementModel);
+            }
+            catch
+            {
+                return PartialView("Error to Load the Advertisements!!");
+            }
+        }
+
+        public ActionResult _Post()
+        {
+            List<object> posts = new List<object>();
+
+            ViewBag.UsersNameList = new SelectList(db.users.Where(t => (t.status.Equals("active")) && (t.role.Equals("writer"))), "username", "username").Distinct();
+
+            var postDetails = (from c in db.Categories
+                               join p in db.Posts on c.category_id equals p.category_id
+                               select new CategoryPost
+                               {
+                                   categoryName = c.category_name,
+                                   date = p.post_date.ToString(),
+                                   title = p.title
+                               });
+
+            posts.Add(postDetails.ToList());
+            return PartialView(posts);
+        }
+
+        public ActionResult GetDropDownValueUser(string user_name)
+        {
+            try
+            {
+                var postDetails = (from u in db.users
+                                   join p in db.Posts on u.user_id equals p.user_id 
+                                   where u.username == user_name
+                                   select new
+                                   {
+                                       p.Category.category_name,
+                                       p.post_date,
+                                       p.title
+                                   });
+
+                if ((postDetails.ToList()) != null)
+                {
+                    var noError = new { Error = "No", Empty = "0", details = postDetails };
+                    return Json(noError, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var noError = new { Error = "No", Empty = "1", message= "No post has been written by " + user_name };
+                    return Json(noError, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch
+            {
+                var Error = new { Error = "Yes", message = "Error while retrieving post Details" };
+                return Json(Error, JsonRequestBehavior.AllowGet);
+            }
+        }
         public ActionResult AddNewCategory(string category_name)
         {
             try
@@ -93,10 +211,50 @@ namespace AccessControlManagement.Controllers
                 var id = (from c in db.Categories
                           select c.category_id).ToList();
 
-                var countID = id.Count();
+                var categories = (from cat in db.Categories
+                                  select cat.category_name);
 
-                if (countID <= 0)
+                var status = from catS in db.Categories
+                             select catS.status;
+
+                string [] categoryNameArray = categories.ToArray();
+                string[] arrayStatus = status.ToArray();
+
+                var countID = id.Count();
+                int i = 0; 
+                if (countID >= 0)
                 {
+
+                    do
+                    {
+                        if (categoryNameArray[i] == category_name)
+                        {
+                            if (arrayStatus[i] == "Active")
+                            {
+                                return Content("The Category is already exists.");
+                            }
+                            else
+                            {
+                                var query = from ub3 in db.Categories
+                                            where ub3.category_name == category_name
+                                            select ub3;
+
+                                foreach (var ob in query)
+                                {
+                                    ob.category_name = category_name;
+                                    ob.status = "Active";
+                                }
+
+                                db.SaveChanges();
+                                return Content("The Category " + category_name + " is again inserted.");
+                            }
+                        }
+                        else
+                        {
+                            i++;
+                        }
+                    } while (categoryNameArray.Length > i);
+
                     countID = countID + 1;
                     int resultInsertCategory = db.usp_Category_insert(countID, category_name);
 
