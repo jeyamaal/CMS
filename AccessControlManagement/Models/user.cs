@@ -30,10 +30,7 @@ namespace AccessControlManagement.Models
         public string picture { get; set; }
         public string role { get; set; }
         public string status { get; set; }
-
-        public string newPassword { get; set; }
-        public string ConfirmPassword { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Article> Articles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
